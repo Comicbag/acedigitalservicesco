@@ -1,0 +1,648 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Preview for Marlene — Lebanon Borough Site</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --paper: #fbfaf6;
+    --paper-warm: #f5f1e7;
+    --ink: #111;
+    --mute: #6b6658;
+    --accent: #b1781e;
+    --accent-soft: #e8a33d;
+    --rule: rgba(17,17,17,0.12);
+    --boro-navy: #1c2a4a;
+    --boro-navy-deep: #0e1830;
+    --boro-cream: #f7f3ea;
+    --live-red: #c41e3a;
+  }
+  html, body { background: var(--paper); color: var(--ink); font-family: Inter, system-ui, sans-serif; line-height: 1.55; }
+
+  /* ── Banner across top ──────────────────────────────────────────────── */
+  .preview-banner {
+    background: var(--ink); color: var(--paper);
+    padding: 12px 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px; letter-spacing: 0.15em; text-transform: uppercase;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 10px;
+  }
+  .preview-banner .left { display: flex; align-items: center; gap: 12px; }
+  .preview-banner .dot {
+    width: 8px; height: 8px; background: var(--accent-soft); border-radius: 50%;
+    box-shadow: 0 0 8px var(--accent-soft);
+  }
+  .preview-banner a {
+    color: var(--accent-soft); text-decoration: none;
+    border-bottom: 1px dotted var(--accent-soft);
+  }
+
+  /* ── Page hero ──────────────────────────────────────────────────────── */
+  .hero {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 72px 32px 24px;
+  }
+  .super {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 14px;
+  }
+  h1.kicker {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: 'opsz' 144;
+    font-size: 56px; line-height: 1.04; font-weight: 400;
+    letter-spacing: -0.02em;
+    color: var(--ink); margin-bottom: 14px;
+  }
+  h1.kicker em { font-style: italic; color: var(--accent); font-weight: 400; }
+  .lede {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: 'opsz' 36;
+    font-size: 19px; font-style: italic; color: var(--mute);
+    max-width: 720px;
+  }
+
+  /* ── Page-level intro line (sits between hero and Section 1) ────────── */
+  .page-intro {
+    max-width: 900px;
+    margin: 4px auto 0;
+    padding: 0 32px;
+    font-size: 16px; line-height: 1.55;
+    color: var(--mute);
+  }
+  @media (max-width: 880px) {
+    .page-intro { padding: 0 18px; font-size: 14.5px; }
+  }
+
+  /* ── Side-by-side comparison ────────────────────────────────────────── */
+  .compare {
+    max-width: 1100px; margin: 56px auto 0; padding: 0 32px;
+  }
+  .compare h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 26px; font-weight: 600; margin-bottom: 8px;
+  }
+  .compare .sub {
+    color: var(--mute); margin-bottom: 26px; font-size: 15px;
+  }
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; }
+
+  .col label {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase;
+    padding: 6px 12px; border-radius: 999px;
+    margin-bottom: 12px;
+  }
+  .col.now label    { background: var(--ink); color: var(--paper); }
+  .col.after label  { background: var(--accent); color: var(--paper); }
+  .col .note { font-size: 13.5px; color: var(--mute); margin-top: 10px; line-height: 1.5; }
+
+  /* ── Realistic borough-style mockup ─────────────────────────────────── */
+  .mock {
+    background: white;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(17,17,17,0.05);
+  }
+  .mock .mock-bar {
+    background: #f4f5f7; border-bottom: 1px solid var(--rule);
+    padding: 8px 12px;
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: #999;
+  }
+  .mock .mock-bar .dots { display: flex; gap: 5px; }
+  .mock .mock-bar .dots span {
+    width: 9px; height: 9px; border-radius: 50%; background: #d6d6d6;
+  }
+  .mock .mock-bar .url {
+    background: white; padding: 3px 10px; border-radius: 4px;
+    border: 1px solid var(--rule);
+    flex: 1; color: #555;
+  }
+
+  /* Borough mockup body */
+  .boro {
+    background: white;
+    font-family: Arial, sans-serif;   /* matches the actual site's font roughly */
+  }
+  .boro .topstrip {
+    background: var(--boro-cream); padding: 8px 16px;
+    font-size: 11px; color: #555;
+    display: flex; justify-content: space-between;
+  }
+  .boro .nav {
+    background: var(--boro-navy); color: white;
+    padding: 14px 16px; display: flex; align-items: center; gap: 14px;
+    font-size: 11px; font-weight: 600;
+  }
+  .boro .nav .logo {
+    width: 32px; height: 32px; background: var(--boro-cream); border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .boro .nav .links { display: flex; gap: 12px; flex-wrap: wrap; color: rgba(255,255,255,0.85); }
+
+  /* HERO area — current vs. proposed */
+  .boro .hero-img {
+    height: 240px;
+    /* AFTER: strong bottom gradient so text sits on dark, readable surface */
+    background:
+      linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.72) 100%),
+      url('assets/boro-hero.jpg') center/cover;
+    position: relative;
+    display: flex; align-items: flex-end; justify-content: center;
+    padding-bottom: 20px;
+  }
+  .boro .hero-img.now-style {
+    /* NOW: barely-there overlay — text fights the photo */
+    background:
+      linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.25)),
+      url('assets/boro-hero.jpg') center/cover;
+    align-items: center;
+    padding-bottom: 0;
+  }
+  .boro .hero-img h2 {
+    font-family: 'Arial', sans-serif;
+    color: white;
+    /* AFTER: crisp, clean — the gradient does the work */
+    text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+    font-size: 22px; font-weight: 700; letter-spacing: 0.02em;
+    text-align: center; line-height: 1.2;
+  }
+  .boro.now .hero-img h2 {
+    /* NOW: weak shadow, text fighting the busy mid-photo background */
+    text-shadow: 0 1px 1px rgba(0,0,0,0.3);
+    font-size: 22px;
+  }
+  .boro .play-btn {
+    position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+    width: 40px; height: 40px; background: rgba(255,255,255,0.85); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; color: var(--boro-navy);
+  }
+
+  /* LIVE livestream banner (the easy win) — proposed only */
+  .live-banner {
+    background: var(--live-red); color: white;
+    padding: 12px 18px;
+    display: flex; align-items: center; gap: 14px;
+    font-size: 14px; font-weight: 600;
+    border-bottom: 2px solid rgba(255,255,255,0.2);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .live-banner:hover { background: #a51932; }
+  .live-banner .live-dot {
+    width: 10px; height: 10px; background: white; border-radius: 50%;
+    animation: pulse 1.6s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+  .live-banner .live-text { flex: 1; }
+  .live-banner .live-text small {
+    display: block; font-size: 11.5px; font-weight: 400;
+    color: rgba(255,255,255,0.85); margin-top: 2px;
+    letter-spacing: 0.05em;
+  }
+  .live-banner .live-cta {
+    background: white; color: var(--live-red);
+    padding: 6px 14px; border-radius: 4px;
+    font-size: 12px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .live-banner.hidden { display: none; }
+
+  /* Tiles */
+  .boro .tiles {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    background: white; padding: 16px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .boro .tile {
+    padding: 14px 8px; text-align: center;
+    font-size: 11px; color: var(--boro-navy); font-weight: 600;
+    border-right: 1px solid var(--rule);
+  }
+  .boro .tile:last-child { border-right: none; }
+  .boro .tile .ico {
+    display: block; font-size: 20px; margin-bottom: 6px;
+  }
+  .boro .tile.new::after {
+    content: 'NEW!';
+    display: inline-block; margin-left: 4px;
+    background: var(--accent); color: white;
+    font-size: 8px; padding: 2px 4px; border-radius: 2px;
+    vertical-align: top;
+  }
+
+  .boro .news-strip {
+    padding: 14px 16px; font-size: 12px; color: var(--mute);
+    background: var(--boro-cream);
+  }
+  .boro .news-strip strong { color: var(--boro-navy); }
+
+  /* ── Toggle controls ──────────────────────────────────────────────── */
+  .toggle-block {
+    max-width: 880px; margin: 22px auto 0; padding: 18px;
+    background: var(--paper-warm); border-radius: 6px;
+    text-align: center;
+  }
+  .toggle-block .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--mute); margin-bottom: 12px;
+  }
+  .btn-row { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+  button.toggle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 10px 16px; border-radius: 5px; border: 1.5px solid var(--ink);
+    background: var(--paper); color: var(--ink); cursor: pointer;
+    transition: all 0.15s;
+  }
+  button.toggle.active { background: var(--ink); color: var(--paper); }
+  button.toggle:hover { transform: translateY(-1px); }
+
+  /* ── Mobile-only collapse for sections 2 & 3 ──────────────────── */
+  .section-toggle {
+    display: none;   /* hidden on desktop — always show full section */
+  }
+  @media (max-width: 880px) {
+    .compare.collapsible .pair,
+    .compare.collapsible .sub { display: none; }
+    .compare.collapsible.open .pair,
+    .compare.collapsible.open .sub { display: grid; }
+    .compare.collapsible.open .sub { display: block; }
+    .section-toggle {
+      display: block;
+      width: 100%;
+      margin-top: 14px;
+      padding: 14px 18px;
+      background: var(--paper-warm);
+      border: 1px dashed var(--accent);
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      cursor: pointer;
+      text-align: left;
+    }
+    .section-toggle::after {
+      content: ' ▾';
+      float: right;
+      transition: transform 0.15s;
+    }
+    .compare.collapsible.open .section-toggle::after {
+      content: ' ▴';
+    }
+    .compare.collapsible.open .section-toggle {
+      background: transparent;
+      border-color: var(--rule);
+      color: var(--mute);
+    }
+    /* Mobile-only nudge banner */
+    .mobile-hint {
+      display: block !important;
+      max-width: 900px; margin: 20px auto 0; padding: 14px 22px;
+      background: var(--paper-warm);
+      border-left: 3px solid var(--accent);
+      font-size: 13px; color: var(--ink);
+      line-height: 1.5;
+    }
+    .mobile-hint .mono {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--accent); display: block; margin-bottom: 4px;
+    }
+
+    /* Stack on mobile — full mockups, full detail */
+    .pair { grid-template-columns: 1fr; gap: 36px; }
+  }
+  .mobile-hint { display: none; }
+
+  /* ── Meeting-agendas table mockup ──────────────────────────────── */
+  .boro-table {
+    width: 100%; border-collapse: collapse;
+    font-family: Arial, sans-serif; font-size: 12px;
+    background: white;
+  }
+  .boro-table thead { background: var(--boro-navy); color: white; }
+  .boro-table th { padding: 8px 10px; text-align: left; font-weight: 600; font-size: 11px; letter-spacing: 0.04em; }
+  .boro-table td { padding: 9px 10px; border-bottom: 1px solid #eee; vertical-align: middle; }
+  .boro-table tr:last-child td { border-bottom: none; }
+  .boro-table .empty { color: #ccc; font-style: italic; font-size: 11px; }
+  .boro-table .empty.after { color: var(--mute); font-style: normal; font-family: Arial, sans-serif; }
+  .boro-table .live-link {
+    color: var(--live-red); font-weight: 700; font-size: 11px;
+    text-decoration: none;
+  }
+  .boro-table .live-link::before { content: '▶ '; }
+
+  /* ── Google snippet mockup ────────────────────────────────────── */
+  .google-result {
+    background: white; padding: 18px 22px;
+    border: 1px solid var(--rule); border-radius: 6px;
+    font-family: Arial, sans-serif;
+  }
+  .google-result .url-line {
+    font-size: 12px; color: #202124; margin-bottom: 4px;
+  }
+  .google-result .url-line .favicon {
+    display: inline-block; width: 14px; height: 14px; vertical-align: middle;
+    background: var(--boro-navy); border-radius: 50%; margin-right: 6px;
+  }
+  .google-result .url-line .domain { color: #5f6368; font-size: 11px; }
+  .google-result .title-line {
+    font-size: 18px; color: #1a0dab; line-height: 1.3;
+    margin-bottom: 6px;
+  }
+  .google-result .snippet {
+    font-size: 13px; color: #4d5156; line-height: 1.5;
+  }
+  .google-result .snippet.improvised { color: #888; font-style: italic; }
+  .google-result .snippet b { color: #202124; font-weight: 700; }
+
+  /* ── Big closer ─────────────────────────────────────────────────────── */
+  .closer {
+    max-width: 760px; margin: 80px auto 0; padding: 56px 32px;
+    text-align: center;
+    border-top: 1px solid var(--rule);
+  }
+  .closer h3 {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: 'opsz' 144;
+    font-size: 32px; font-weight: 400; font-style: italic;
+    line-height: 1.2; margin-bottom: 14px;
+  }
+  .closer p { color: var(--mute); font-size: 16px; margin-bottom: 6px; }
+  .closer .sig {
+    margin-top: 24px;
+    font-family: 'Fraunces', serif; font-style: italic; font-size: 18px;
+  }
+  .closer .sig .name { font-style: normal; font-weight: 600; }
+
+  footer.bottom {
+    margin-top: 60px; padding: 24px 32px;
+    background: var(--ink); color: var(--mute);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase;
+    text-align: center;
+  }
+  footer.bottom .accent { color: var(--accent-soft); }
+</style>
+</head>
+<body>
+
+<div class="preview-banner">
+  <div class="left">
+    <span class="dot"></span>
+    <span>Preview for Marlene Baldinger</span>
+  </div>
+  <span>Designed by Corey Smith · Lebanon resident · acedigitalservicesco.com</span>
+</div>
+
+<p class="page-intro">Below, you'll see a before-and-after for each change.</p>
+
+<!-- ════════════════ HERO COMPARISON ════════════════ -->
+<section class="compare">
+  <h2>1. The homepage</h2>
+  <p class="sub">The welcome page keeps the same photo, same colors, same identity — just two changes. I made the welcome text sharper over the image, and added a banner that only shows up when a meeting is currently being livestreamed.</p>
+
+  <div class="pair">
+    <div class="col now">
+      <label>Now</label>
+      <div class="mock">
+        <div class="mock-bar">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <div class="url">lebanonboro.com</div>
+        </div>
+        <div class="boro now">
+          <div class="topstrip"><span>Translate</span><span>Search</span></div>
+          <div class="nav">
+            <div class="logo"></div>
+            <div class="links">
+              <span>Elected Officials</span>
+              <span>Calendar</span>
+              <span>Departments</span>
+              <span>Directory</span>
+              <span>Contact</span>
+            </div>
+          </div>
+          <div class="hero-img now-style">
+            <h2>WELCOME TO THE BOROUGH OF LEBANON</h2>
+            <div class="play-btn">▶</div>
+          </div>
+          <div class="tiles">
+            <div class="tile new"><span class="ico">📰</span>LEGAL ADS</div>
+            <div class="tile"><span class="ico">📁</span>DIRECTORIES</div>
+            <div class="tile"><span class="ico">📞</span>CONTACT</div>
+            <div class="tile"><span class="ico">📋</span>FORMS</div>
+            <div class="tile"><span class="ico">📅</span>CALENDAR</div>
+          </div>
+          <div class="news-strip"><strong>News &amp; Events</strong> — last updated 2 weeks ago</div>
+        </div>
+      </div>
+      <p class="note">The welcome text washes out against the busy background. The Play button looks like it would play a video, but it actually just links to About Us — that's going to confuse people.</p>
+    </div>
+
+    <div class="col after">
+      <label>After</label>
+      <div class="mock">
+        <div class="mock-bar">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <div class="url">lebanonboro.com</div>
+        </div>
+        <div class="boro">
+          <div class="topstrip"><span>Translate</span><span>Search</span></div>
+          <div class="nav">
+            <div class="logo"></div>
+            <div class="links">
+              <span>Elected Officials</span>
+              <span>Calendar</span>
+              <span>Departments</span>
+              <span>Directory</span>
+              <span>Contact</span>
+            </div>
+          </div>
+          <div id="live-banner-demo" class="live-banner">
+            <div class="live-dot"></div>
+            <div class="live-text">
+              <span>Council meeting is live now</span>
+              <small>Borough Council · 7:30 PM · click to watch</small>
+            </div>
+            <div class="live-cta">Watch live ▶</div>
+          </div>
+          <div class="hero-img">
+            <h2 style="text-shadow: 0 4px 16px rgba(0,0,0,0.8), 0 1px 2px rgba(0,0,0,0.6);">WELCOME TO THE BOROUGH OF LEBANON</h2>
+          </div>
+          <div class="tiles">
+            <div class="tile"><span class="ico">📰</span>NEWS</div>
+            <div class="tile"><span class="ico">📁</span>DEPARTMENTS</div>
+            <div class="tile"><span class="ico">📞</span>CONTACT</div>
+            <div class="tile"><span class="ico">📋</span>FORMS</div>
+            <div class="tile"><span class="ico">📅</span>CALENDAR</div>
+          </div>
+          <div class="news-strip"><strong>News &amp; Events</strong> — latest: 2026 Memorial Day Parade · May 26</div>
+        </div>
+      </div>
+      <p class="note">The welcome text now lives at the bottom of the photo where it's easier to read. The red banner is a representation of what would show up any time a council meeting is being streamed live, making it easy for anyone to find.</p>
+    </div>
+  </div>
+</section>
+
+  <div class="toggle-block">
+    <div class="label">Try it — see both states of the livestream banner</div>
+    <div class="btn-row">
+      <button class="toggle active" onclick="setLive(true)">Council meeting live</button>
+      <button class="toggle" onclick="setLive(false)">No meeting right now</button>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ SECTION 2 — MEETING AGENDAS PAGE ════════════════ -->
+<section class="compare collapsible" id="sec2">
+  <h2>2. The meeting agendas page</h2>
+  <button class="section-toggle" onclick="toggleSection('sec2')">Tap to see this change</button>
+  <p class="sub">The full 2026 schedule is already on the site — every meeting is listed. But most of the Agenda and Minutes slots are blank, so the whole page looks like nobody's been keeping up with it. Swapping those blank cells for "Posted within 7 days" fixes that instantly, and it's actually true — it just sets an expectation.</p>
+
+  <div class="pair">
+    <div class="col now">
+      <label>Now</label>
+      <div class="mock">
+        <div class="mock-bar">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <div class="url">lebanonboro.com/meetings</div>
+        </div>
+        <div class="boro">
+          <div class="topstrip"><span>Translate</span><span>Search</span></div>
+          <div style="padding: 14px 16px; background: white;">
+            <div style="font-size: 14px; font-weight: 700; color: var(--boro-navy); margin-bottom: 10px;">BOARD OF HEALTH — 2026</div>
+            <table class="boro-table">
+              <thead><tr><th>Date</th><th>Time</th><th>Location</th><th>Agenda</th><th>Minutes</th></tr></thead>
+              <tbody>
+                <tr><td>Wed 4/15</td><td>7:30 PM</td><td>6 High St</td><td class="empty">—</td><td class="empty">—</td></tr>
+                <tr><td>Wed 3/18</td><td>7:30 PM</td><td>6 High St</td><td class="empty">—</td><td class="empty">—</td></tr>
+                <tr><td>Wed 2/18</td><td>7:30 PM</td><td>6 High St</td><td class="empty">—</td><td class="empty">—</td></tr>
+                <tr><td>Wed 1/21</td><td>7:30 PM</td><td>6 High St</td><td class="empty">—</td><td class="empty">—</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <p class="note">Empty cells make the page look forgotten — even though documents just haven't been posted yet.</p>
+    </div>
+
+    <div class="col after">
+      <label>After</label>
+      <div class="mock">
+        <div class="mock-bar">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <div class="url">lebanonboro.com/meetings</div>
+        </div>
+        <div class="boro">
+          <div class="topstrip"><span>Translate</span><span>Search</span></div>
+          <div style="padding: 14px 16px; background: white;">
+            <div style="font-size: 14px; font-weight: 700; color: var(--boro-navy); margin-bottom: 10px;">BOARD OF HEALTH — 2026</div>
+            <table class="boro-table">
+              <thead><tr><th>Date</th><th>Time</th><th>Location</th><th>Agenda</th><th>Minutes</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td>Wed 4/15</td><td>7:30 PM</td><td>6 High St</td>
+                  <td><a class="live-link" href="#">Watch recording</a></td>
+                  <td class="empty after">Posted within 7 days</td>
+                </tr>
+                <tr>
+                  <td>Wed 3/18</td><td>7:30 PM</td><td>6 High St</td>
+                  <td><a class="live-link" href="#">Watch recording</a></td>
+                  <td class="empty after">Posted within 7 days</td>
+                </tr>
+                <tr>
+                  <td>Wed 2/18</td><td>7:30 PM</td><td>6 High St</td>
+                  <td><a class="live-link" href="#">Watch recording</a></td>
+                  <td class="empty after">Posted within 7 days</td>
+                </tr>
+                <tr>
+                  <td>Wed 1/21</td><td>7:30 PM</td><td>6 High St</td>
+                  <td><a class="live-link" href="#">Watch recording</a></td>
+                  <td class="empty after">Posted within 7 days</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <p class="note">"Posted within 7 days" reads as intentional even when the minutes aren't up yet. The "Watch recording" links are illustrative — they'd only become real if the council starts livestreaming.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ SECTION 3 — GOOGLE SNIPPET ════════════════ -->
+<section class="compare collapsible" id="sec3">
+  <h2>3. How the site shows up in Google</h2>
+  <button class="section-toggle" onclick="toggleSection('sec3')">Tap to see this change</button>
+  <p class="sub">When residents search "Lebanon Borough" today, there's no description line set on the homepage, so Google improvises with whatever text it finds — currently a random event blurb. Next week it'll change to something else. A single line of clean copy fixes it.</p>
+
+  <div class="pair">
+    <div class="col now">
+      <label>Now</label>
+      <div class="google-result">
+        <div class="url-line">
+          <span class="favicon"></span>
+          <span class="domain">https://www.lebanonboro.com</span>
+        </div>
+        <div class="title-line">Lebanon Borough</div>
+        <div class="snippet improvised">Tickets &amp; RSVP · Resident Tickets: $15.00 · Non-Resident Tickets: $36.00 · RSVP Deadline: June 30 · Registration: Use the "Register Here" QR code on the flyer.</div>
+      </div>
+      <p class="note">Google is grabbing a current event blurb because there's no real description set. Next week it could be anything — whatever happens to be on the page that day.</p>
+    </div>
+
+    <div class="col after">
+      <label>After</label>
+      <div class="google-result">
+        <div class="url-line">
+          <span class="favicon"></span>
+          <span class="domain">https://www.lebanonboro.com</span>
+        </div>
+        <div class="title-line">Lebanon Borough</div>
+        <div class="snippet">The official website of <b>Lebanon Borough</b> in Hunterdon County, NJ — council meetings, calendar, departments, forms, and town news.</div>
+      </div>
+      <p class="note">One line of description text added to the homepage. Next time Google checks the site, it picks up this line and uses it permanently — same description every time, no matter what's on the page that day.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="bottom">
+  <span class="accent">●</span> Concept preview · prepared 2026-05-22 · <span class="accent">acedigitalservicesco.com</span>
+</footer>
+
+<script>
+function setLive(live) {
+  const banner = document.getElementById('live-banner-demo');
+  banner.classList.toggle('hidden', !live);
+  document.querySelectorAll('button.toggle').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+function toggleSection(id) {
+  const section = document.getElementById(id);
+  const button = section.querySelector('.section-toggle');
+  const isOpen = section.classList.toggle('open');
+  button.textContent = isOpen ? 'Hide this' : 'Tap to see this change';
+}
+</script>
+
+</body>
+</html>

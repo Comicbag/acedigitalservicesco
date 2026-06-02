@@ -3,17 +3,28 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Ace Digital Services — Websites & Automation</title>
-<meta name="description" content="Websites, private hosting, and AI-powered automation for small businesses. Built in Hunterdon County, NJ.">
+<title>Ace Digital Services — Websites & Hosting</title>
+<meta name="description" content="Custom websites, private hosting, and tools for small businesses. Built in Hunterdon County, NJ.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ace Digital Services">
+<meta property="og:title" content="Ace Digital Services — Websites & Hosting">
+<meta property="og:description" content="Custom websites, private hosting, and tools for small businesses. Built in Hunterdon County, NJ.">
+<meta property="og:url" content="https://acedigitalservicesco.com/">
+<meta property="og:image" content="https://acedigitalservicesco.com/assets/logo.png">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="assets/logo.png">
 <style>
   :root {
     --ink: #0e0e0c;
     --paper: #f3efe6;
     --paper-warm: #eae3d3;
-    --accent: #d8431f;
+    /* Unified amber accent across all three Ace sites (photo / 3d / digital).
+       Was brick red (#d8431f) — felt like a separate brand. */
+    --accent: #E8A33D;
+    --accent-deep: #c2872d;
     --mute: #6b6658;
     --rule: #1a1a17;
   }
@@ -47,15 +58,26 @@
 
   /* NAV */
   nav {
+    /* Switched from mix-blend-mode:difference (which inverted the logo
+       into ugly artifacts) to a solid paper-tinted nav with backdrop blur,
+       matching acephotographyco.com. */
     position: fixed;
     top: 0; left: 0; right: 0;
-    padding: 1.2rem 2.5rem;
+    padding: 0.9rem 2.5rem;
     display: flex; justify-content: space-between; align-items: center;
     z-index: 50;
-    mix-blend-mode: difference;
-    color: #f3efe6;
+    background: rgba(243, 239, 230, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(26, 26, 23, 0.08);
+    color: var(--ink);
   }
-  nav .brand { font-weight: 700; letter-spacing: 0.18em; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; }
+  nav .brand {
+    display: flex; align-items: center; gap: 0.7rem;
+    text-decoration: none; color: inherit;
+  }
+  nav .brand img { height: 56px; width: auto; display: block; }
+  nav .brand .brand-text { display: none; }
   nav ul { list-style: none; display: flex; gap: 1.6rem; align-items: center; }
   nav a {
     color: inherit; text-decoration: none;
@@ -325,7 +347,10 @@
 <body>
 
 <nav>
-  <div class="brand">ACE — DIGITAL</div>
+  <a href="/" class="brand">
+    <img src="assets/logo.png" alt="Ace Digital Services Co.">
+    <span class="brand-text">ACE DIGITAL SERVICES CO.</span>
+  </a>
   <ul>
     <li><a href="https://acedigitalservicesco.com" class="active">Ace Digital</a></li>
       <li><a href="https://ace3dprintingco.com">Ace 3D Printing <span class="ext">↗</span></a></li>
@@ -338,10 +363,10 @@
     <span class="mono reveal delay-1">Studio — Vol. 01 / 2026</span>
     <span class="tag reveal delay-1">Now accepting projects</span>
     <h1 class="display reveal delay-2">
-      Smart<br>sites. <em>Real<br>automation.</em>
+      Custom<br>sites. <em>Real<br>hosting.</em>
     </h1>
     <p class="mono reveal delay-3" style="color: var(--mute); max-width: 32ch; line-height: 1.8;">
-      Web design, private hosting, and AI-powered workflows for small businesses that want tech that quietly works.
+      Custom web design, private hosting, and quietly-working tools for small businesses.
     </p>
   </div>
 
@@ -356,7 +381,7 @@
 
 <div class="marquee">
   <div class="marquee-track">
-    <span>Web Design</span><span class="dot">✦</span><span>Private Hosting</span><span class="dot">✦</span><span>AI Automation</span><span class="dot">✦</span><span>Custom Tools</span><span class="dot">✦</span><span>Creative Tech</span><span class="dot">✦</span><span>Web Design</span><span class="dot">✦</span><span>Private Hosting</span><span class="dot">✦</span><span>AI Automation</span><span class="dot">✦</span><span>Custom Tools</span><span class="dot">✦</span><span>Creative Tech</span><span class="dot">✦</span>
+    <span>Web Design</span><span class="dot">✦</span><span>Private Hosting</span><span class="dot">✦</span><span>Branding</span><span class="dot">✦</span><span>Custom Tools</span><span class="dot">✦</span><span>Creative Tech</span><span class="dot">✦</span><span>Web Design</span><span class="dot">✦</span><span>Private Hosting</span><span class="dot">✦</span><span>Branding</span><span class="dot">✦</span><span>Custom Tools</span><span class="dot">✦</span><span>Creative Tech</span><span class="dot">✦</span>
   </div>
 </div>
 
@@ -390,13 +415,13 @@
 
       
       <p>
-        Ace Digital Services is a one-person studio out of Hunterdon County, NJ. We design and host websites for local businesses, and build custom automation and AI workflows for the stuff that keeps you up at night — the spreadsheets, the follow-ups, the admin work no one should be doing in 2026.
+        Ace Digital Services is a one-person studio out of Hunterdon County, NJ. We design and host websites for local businesses, and build custom tools for the busywork that keeps you up at night — spreadsheets, follow-ups, the admin nobody should be doing in 2026.
       </p>
       <p>
         Private hosting means your site lives on a real server we own and run — no shared GoDaddy plan, no monthly subscription to a builder that locks you in. You pay us once to build it. We keep it online. You own it.
       </p>
       <p>
-        Automation means we plug agents and scripts into your existing tools (Gmail, Stripe, your CRM, whatever) and let them handle the repetitive work. You talk to them in plain English. They do the job. That's it.
+        Custom tools means we wire up scripts and integrations across the apps you already use (Gmail, Stripe, your CRM, whatever) so the repetitive parts run themselves. You see the result. It just works.
       </p>
 
 
@@ -405,12 +430,12 @@
         <div class="skills">
           <span>Web Design</span>
           <span>Private Hosting</span>
-          <span>AI Automation</span>
           <span>Custom Tools</span>
           <span>Branding</span>
           <span>E-Commerce</span>
-          <span>Agent Workflows</span>
           <span>Integrations</span>
+          <span>Domain Setup</span>
+          <span>Maintenance</span>
         </div>
       </div>
     </div>
