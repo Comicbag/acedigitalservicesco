@@ -5,14 +5,17 @@
 :root{--pink:#ff3d8b;--pink-d:#d81b6a;--ink:#2b2330;--line:#ffd0e4;--violet:#7a3bd8;--green:#16a34a}
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
-body{font-family:'Nunito','Segoe UI',sans-serif;background:#1a1620;color:var(--ink);overflow:hidden}
+body{font-family:'Nunito','Segoe UI',sans-serif;background:#241f2a;color:var(--ink);overflow:hidden}
 #stage{position:fixed;inset:0}
 canvas{display:block;touch-action:none}
 .bar{position:fixed;z-index:6;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:14px;box-shadow:0 8px 24px rgba(0,0,0,.22)}
 #regions{top:14px;left:14px;display:flex;gap:4px;padding:5px}
-#regions button{font:600 14px Nunito;border:0;background:transparent;color:#7c6a78;padding:8px 16px;border-radius:10px;cursor:pointer}
+#regions button{font:600 14px Nunito;border:0;background:transparent;color:#7c6a78;padding:8px 15px;border-radius:10px;cursor:pointer}
 #regions button.on{background:var(--pink-d);color:#fff}
-#tools{top:14px;right:14px;display:flex;gap:4px;align-items:center;padding:5px;flex-wrap:wrap;max-width:62vw;justify-content:flex-end}
+#gender{top:60px;left:14px;display:flex;gap:4px;padding:5px}
+#gender button{font:600 13px Nunito;border:0;background:transparent;color:#7c6a78;padding:8px 14px;border-radius:10px;cursor:pointer}
+#gender button.on{background:var(--ink);color:#fff}
+#tools{top:14px;right:14px;display:flex;gap:4px;align-items:center;padding:5px;flex-wrap:wrap;max-width:50vw;justify-content:flex-end}
 #tools button{font:600 13px Nunito;border:0;background:#f3eef1;color:#7c6a78;padding:8px 11px;border-radius:10px;cursor:pointer}
 #tools .mode.on{background:var(--ink);color:#fff}
 #tools #seatBtn{background:#eafaf0;color:var(--green);border:1px solid #b9ebcc}
@@ -43,7 +46,7 @@ canvas{display:block;touch-action:none}
 #chips .nm.sel{background:var(--violet);color:#fff}
 #chips .done{font:700 12px Nunito;background:var(--ink);color:#fff;border:0;padding:6px 12px;border-radius:999px;cursor:pointer;margin-left:6px}
 #hint{position:fixed;bottom:108px;left:50%;transform:translateX(-50%);z-index:6;font:600 12.5px Nunito;color:#fff;background:rgba(43,35,48,.82);padding:7px 14px;border-radius:999px;max-width:78vw;text-align:center;pointer-events:none}
-.loading{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;z-index:9;background:#1a1620;color:#ffd0e4;font:600 15px Nunito}
+.loading{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;z-index:9;background:#241f2a;color:#ffd0e4;font:600 15px Nunito}
 .loading.gone{opacity:0;pointer-events:none;transition:opacity .5s}
 .spin{width:40px;height:40px;border-radius:50%;border:4px solid #3a2f3f;border-top-color:var(--pink);animation:sp 1s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
@@ -51,6 +54,10 @@ canvas{display:block;touch-action:none}
 <body>
 <div id="stage"></div>
 <div class="bar" id="regions"></div>
+<div class="bar" id="gender">
+  <button data-g="female" class="on">♀ Female</button>
+  <button data-g="male">♂ Male</button>
+</div>
 <div class="bar" id="tools">
   <button id="seatBtn" disabled title="Seat on skin (S)">📍 Seat on skin</button>
   <button class="mode on" data-mode="translate" title="Move (W)">✛ Move</button>
@@ -71,7 +78,7 @@ canvas{display:block;touch-action:none}
 <div class="bar" id="chips"></div>
 <div id="hint">Pick a piece → Size it → 📍 Seat on skin → click the spot. Rotate to finish.</div>
 <div class="bar" id="tray"></div>
-<div class="loading" id="loading"><div class="spin"></div><span>Loading the head &amp; jewelry…</span></div>
+<div class="loading" id="loading"><div class="spin"></div><span>Loading the model &amp; jewelry…</span></div>
 
 <script type="importmap">
 {"imports":{
@@ -102,78 +109,88 @@ const PIECES=[
   {id:'silver_ball',   name:'Silver ball', region:'lip',  glb:G+'silver_ball.glb',   disp:'silver'},
   {id:'silver_spike',  name:'Silver spike',region:'lip',  glb:G+'silver_spike.glb',  disp:'silver'},
   {id:'medusa_cz',     name:'Medusa',      region:'lip',  glb:G+'medusa_cz.glb',     disp:'tex'},
+  {id:'green_navel',   name:'Green navel', region:'navel',glb:G+'green_navel.glb',   disp:'tex'},
+  {id:'navel_heart',   name:'Pink hearts', region:'navel',glb:G+'navel_heart.glb',   disp:'tex'},
+  {id:'rosegold_heart',name:'Rose-gold',   region:'navel',glb:G+'rosegold_heart.glb',disp:'tex'},
+  {id:'silver_heart',  name:'Silver heart',region:'navel',glb:G+'silver_heart.glb',  disp:'tex'},
+  {id:'ball_disc_navel',name:'Ball navel', region:'navel',glb:G+'ball_disc_navel.glb',disp:'silver'},
 ];
-const REGIONS=['ear','nose','lip'];
+const REGIONS=['ear','nose','lip','navel'];
 const PRESETS={ear:['Lobe','Upper lobe','Helix','Forward helix','Conch','Tragus','Anti-tragus','Daith','Rook','Industrial'],
-  nose:['Nostril L','Nostril R','Septum','High nostril','Bridge'], lip:['Labret','Medusa','Monroe','Side lip L','Side lip R','Vertical labret']};
-let activeRegion='ear';
+  nose:['Nostril L','Nostril R','Septum','High nostril','Bridge'], lip:['Labret','Medusa','Monroe','Side lip L','Side lip R','Vertical labret'],
+  navel:['Navel','Lower navel']};
+let activeRegion='ear', gender='female';
 
 const stage=document.getElementById('stage');
 const renderer=new THREE.WebGLRenderer({antialias:true});
 renderer.setSize(innerWidth,innerHeight); renderer.setPixelRatio(Math.min(devicePixelRatio,2));
-renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1.15; renderer.outputColorSpace=THREE.SRGBColorSpace;
+renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1.0; renderer.outputColorSpace=THREE.SRGBColorSpace;
 stage.appendChild(renderer.domElement);
-const scene=new THREE.Scene(); scene.background=new THREE.Color(0x26212c);
+const scene=new THREE.Scene(); scene.background=new THREE.Color(0x241f2a);
 const camera=new THREE.PerspectiveCamera(40,innerWidth/innerHeight,0.001,100);
 const pmrem=new THREE.PMREMGenerator(renderer);
-scene.environment=pmrem.fromScene(new RoomEnvironment(),0.04).texture;
-scene.add(new THREE.HemisphereLight(0xffffff,0x99aabb,0.7));
-const klight=new THREE.DirectionalLight(0xffffff,1.8); klight.position.set(2,3,4); scene.add(klight);
-const rimL=new THREE.DirectionalLight(0xeaf0ff,0.8); rimL.position.set(-3,1,-2); scene.add(rimL);
+scene.environment=pmrem.fromScene(new RoomEnvironment(),0.5).texture;
+scene.add(new THREE.HemisphereLight(0xfff4ec,0x404048,0.7));
+const klight=new THREE.DirectionalLight(0xfff2e8,1.3); klight.position.set(2,3,4); scene.add(klight);
+const rimL=new THREE.DirectionalLight(0xdfe6ff,0.5); rimL.position.set(-3,1,-2); scene.add(rimL);
 const orbit=new OrbitControls(camera,renderer.domElement);
-orbit.enableDamping=true; orbit.dampingFactor=0.12; orbit.minDistance=0.05; orbit.maxDistance=8;
+orbit.enableDamping=true; orbit.dampingFactor=0.12; orbit.minDistance=0.02; orbit.maxDistance=10;
 const gizmo=new TransformControls(camera,renderer.domElement); gizmo.setSize(0.8); scene.add(gizmo);
 gizmo.addEventListener('dragging-changed',e=>{ orbit.enabled=!e.value; if(e.value) pushHistory(); });
 gizmo.addEventListener('objectChange',()=>{ dirty=true; });
 
-let HEAD=null, headCenter=new THREE.Vector3(), headR=1;
+let HEAD=null, headCenter=new THREE.Vector3(), headR=1, modelGroup=null, inited=false;
+let bMin=new THREE.Vector3(), bMax=new THREE.Vector3();
 const draco=new DRACOLoader(); draco.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/libs/draco/');
 const gltfLoader=new GLTFLoader(); gltfLoader.setDRACOLoader(draco);
 const texLoader=new THREE.TextureLoader();
-const pieceObj={};               // id -> root (every piece is spawned once)
-const positions=[];              // optional reference dots {id,region,name,pos,mesh}
-const posGroup=new THREE.Group(); scene.add(posGroup);
+const SKIN=new THREE.MeshStandardMaterial({color:0xc79a82,roughness:0.62,metalness:0.0});
+const pieceObj={}; const positions=[]; const posGroup=new THREE.Group(); scene.add(posGroup);
 let selected=null, dirty=false, seatArmed=false, dotMode=false, presetName=PRESETS.ear[0];
 const history=[];
 
-const colMap=texLoader.load('models/Map-COL.jpg'); colMap.colorSpace=THREE.SRGBColorSpace;
-const norMap=texLoader.load('models/Infinite-Level_02_Tangent_SmoothUV.jpg');
-gltfLoader.load('models/head.glb',(gltf)=>{
-  const mesh=gltf.scene.getObjectByProperty('isMesh',true)||gltf.scene.children[0];
-  mesh.material=new THREE.MeshStandardMaterial({map:colMap,normalMap:norMap,roughness:0.66,metalness:0.0});
-  const box=new THREE.Box3().setFromObject(mesh); const c=box.getCenter(new THREE.Vector3()); const s=box.getBoundingSphere(new THREE.Sphere()).radius;
-  mesh.position.sub(c); mesh.scale.multiplyScalar(1/s);
-  const wrap=new THREE.Group(); wrap.add(mesh); scene.add(wrap);
-  HEAD=mesh; scene.updateMatrixWorld(true);
-  const b2=new THREE.Box3().setFromObject(mesh); headCenter=b2.getCenter(new THREE.Vector3()); headR=b2.getBoundingSphere(new THREE.Sphere()).radius;
-  buildRegions(); buildTray();
+function loadModel(g){
+  gender=g; document.querySelectorAll('#gender button').forEach(b=>b.classList.toggle('on',b.dataset.g===g));
+  if(modelGroup){ scene.remove(modelGroup); modelGroup=null; }
+  gltfLoader.load('models/'+g+'.glb',(gltf)=>{
+    const root=gltf.scene; let body=null;
+    root.traverse(n=>{ if(n.isMesh){ n.material=SKIN; const c=n.geometry.attributes.position.count; if(!body||c>body.geometry.attributes.position.count) body=n; }});
+    scene.updateMatrixWorld(true);
+    const box=new THREE.Box3().setFromObject(root); const c=box.getCenter(new THREE.Vector3()); const s=box.getBoundingSphere(new THREE.Sphere()).radius;
+    root.position.sub(c); root.scale.multiplyScalar(1/s);
+    const wrap=new THREE.Group(); wrap.add(root); scene.add(wrap); modelGroup=wrap;
+    HEAD=body; scene.updateMatrixWorld(true);
+    const b2=new THREE.Box3().setFromObject(body); headCenter=b2.getCenter(new THREE.Vector3()); headR=b2.getBoundingSphere(new THREE.Sphere()).radius;
+    bMin.copy(b2.min); bMax.copy(b2.max);
+    if(inited){ setRegion(activeRegion); } else { afterFirstModel(); }
+  },undefined,e=>{ document.querySelector('.loading span').textContent='Could not load the model'; console.error(e); });
+}
+function afterFirstModel(){
+  inited=true; buildRegions(); buildGender(); buildTray();
   loadAll().finally(()=>{ setRegion('ear'); document.getElementById('loading').classList.add('gone'); });
-},undefined,e=>{ document.querySelector('.loading span').textContent='Could not load head model'; console.error(e); });
+}
+loadModel('female');
 
-function regionView(r){ const C=headCenter,R=headR;
-  if(r==='ear')  return {tgt:new THREE.Vector3(C.x+0.62*R,C.y+0.10*R,C.z+0.02*R), cam:new THREE.Vector3(C.x+2.4*R,C.y+0.35*R,C.z+0.5*R)};
-  if(r==='nose') return {tgt:new THREE.Vector3(C.x,C.y+0.06*R,C.z+0.70*R), cam:new THREE.Vector3(C.x,C.y+0.18*R,C.z+2.4*R)};
-  return                {tgt:new THREE.Vector3(C.x,C.y-0.10*R,C.z+0.66*R), cam:new THREE.Vector3(C.x,C.y-0.05*R,C.z+2.4*R)}; }
+// region framing on the torso (head near top, navel lower)
+function regionView(r){ const minY=bMin.y,maxY=bMax.y,H=Math.max(0.001,maxY-minY); const cx=(bMin.x+bMax.x)/2, midZ=(bMin.z+bMax.z)/2, fz=bMax.z;
+  if(r==='ear') { const y=maxY-0.10*H; return {tgt:new THREE.Vector3(cx,y,midZ), cam:new THREE.Vector3(cx+0.55*H,y+0.03*H,midZ+0.20*H)}; }
+  if(r==='nose'){ const y=maxY-0.13*H; return {tgt:new THREE.Vector3(cx,y,fz), cam:new THREE.Vector3(cx,y+0.01*H,fz+0.40*H)}; }
+  if(r==='lip') { const y=maxY-0.19*H; return {tgt:new THREE.Vector3(cx,y,fz), cam:new THREE.Vector3(cx,y,fz+0.36*H)}; }
+  const y=minY+0.10*H; return {tgt:new THREE.Vector3(cx,y,fz), cam:new THREE.Vector3(cx,y+0.05*H,fz+0.46*H)};   /* navel */
+}
 function setRegion(r){ activeRegion=r; presetName=PRESETS[r][0]; const v=regionView(r);
   camera.position.copy(v.cam); orbit.target.copy(v.tgt); orbit.update();
   document.querySelectorAll('#regions button').forEach(b=>b.classList.toggle('on',b.dataset.r===r));
   layoutShelf(r); updateVisibility(); if(dotMode) buildChips(); buildTray(); refreshPosMarkers(); }
 
-// every piece is spawned; unseated ones rest on a "shelf" in front of the model for the active region
-function layoutShelf(r){
-  const list=PIECES.filter(p=>p.region===r); const v=regionView(r);
+function layoutShelf(r){ const list=PIECES.filter(p=>p.region===r); const v=regionView(r); const H=Math.max(0.001,bMax.y-bMin.y);
   const dir=new THREE.Vector3().subVectors(v.tgt,v.cam).normalize();
   const right=new THREE.Vector3().crossVectors(dir,new THREE.Vector3(0,1,0)).normalize();
-  const downy=new THREE.Vector3(0,-1,0);
-  const base=v.tgt.clone().addScaledVector(dir,-0.5*headR).addScaledVector(downy,0.42*headR);
+  const base=v.tgt.clone().addScaledVector(dir,-0.28*H).addScaledVector(new THREE.Vector3(0,-1,0),0.17*H);
   let i=0; const n=list.length;
-  list.forEach(p=>{ const o=pieceObj[p.id]; if(!o||o.userData.seated) {i++;return;}
-    const off=(i-(n-1)/2)*0.34*headR; o.position.copy(base).addScaledVector(right,off); o.quaternion.identity(); o.userData.shelf=true; i++; });
-}
-function updateVisibility(){ for(const id in pieceObj){ const o=pieceObj[id]; const p=PIECES.find(x=>x.id===id);
-  o.visible = (p.region===activeRegion) || o.userData.seated; } }   // seated pieces always visible; unseated only for active region
+  list.forEach(p=>{ const o=pieceObj[p.id]; if(!o||o.userData.seated){i++;return;} const off=(i-(n-1)/2)*0.13*H; o.position.copy(base).addScaledVector(right,off); o.quaternion.identity(); i++; }); }
+function updateVisibility(){ for(const id in pieceObj){ const o=pieceObj[id]; const p=PIECES.find(x=>x.id===id); o.visible=(p.region===activeRegion)||o.userData.seated; } }
 
-// ---------- build a piece ----------
 function normScale(obj){ const b=new THREE.Box3().setFromObject(obj); const sz=b.getSize(new THREE.Vector3()); const m=Math.max(sz.x,sz.y,sz.z)||1; return (0.085*headR)/m; }
 function treat(obj,p){
   if(p.disp==='silver'||p.disp==='black'){ const col=p.disp==='black'?0x14110f:0xeceef2; const rough=p.disp==='black'?0.34:0.18;
@@ -191,65 +208,47 @@ function makePiece(p){ return new Promise(res=>{ gltfLoader.load(p.glb,(g)=>{
 
 function select(root){ selected=root; gizmo.attach(root); document.getElementById('seatBtn').disabled=false; syncSize(); buildTray(); }
 function deselect(){ selected=null; gizmo.detach(); document.getElementById('seatBtn').disabled=true; armSeat(false); document.getElementById('sizebar').classList.remove('on'); buildTray(); }
-
-// ---------- one-click SEAT ----------
 function armSeat(on){ seatArmed=(on!==undefined)?on:!seatArmed; document.getElementById('seatBtn').classList.toggle('on',seatArmed);
-  document.getElementById('hint').textContent = seatArmed? 'SEAT: click the spot on the skin where this piece goes' : 'Pick a piece → Size it → 📍 Seat on skin → click the spot. Rotate to finish.'; }
-function seatAt(root,point,normal){
-  pushHistory();
-  root.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0), normal);
-  const halfH=(root.userData.localY*root.scale.x)/2;
-  root.position.copy(point).addScaledVector(normal, halfH*0.6);   // base ~on the surface, slight sink
-  root.userData.seated=true; root.userData.shelf=false; root.userData.seatNormal=[normal.x,normal.y,normal.z];
-  dirty=true; updateVisibility(); buildTray();
-}
-function flip180(){ if(!selected)return; pushHistory(); const n=selected.userData.seatNormal? new THREE.Vector3(...selected.userData.seatNormal):new THREE.Vector3(0,1,0);
-  selected.rotateOnWorldAxis(n, Math.PI); dirty=true; }
+  document.getElementById('hint').textContent=seatArmed?'SEAT: click the spot on the skin where this piece goes':'Pick a piece → Size it → 📍 Seat on skin → click the spot. Rotate to finish.'; }
+function seatAt(root,point,normal){ pushHistory(); root.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),normal);
+  const halfH=(root.userData.localY*root.scale.x)/2; root.position.copy(point).addScaledVector(normal,halfH*0.6);
+  root.userData.seated=true; root.userData.seatNormal=[normal.x,normal.y,normal.z]; dirty=true; updateVisibility(); buildTray(); }
+function flip180(){ if(!selected)return; pushHistory(); const n=selected.userData.seatNormal?new THREE.Vector3(...selected.userData.seatNormal):new THREE.Vector3(0,1,0); selected.rotateOnWorldAxis(n,Math.PI); dirty=true; }
+function removeSelected(){ if(!selected)return; pushHistory(); const r=selected; gizmo.detach(); r.userData.seated=false; layoutShelf(activeRegion); updateVisibility(); document.getElementById('sizebar').classList.remove('on'); selected=null; dirty=true; buildTray(); }
 
-function removeSelected(){ if(!selected)return; pushHistory(); const r=selected; gizmo.detach(); r.userData.seated=false; r.userData.shelf=true; layoutShelf(activeRegion); updateVisibility(); document.getElementById('sizebar').classList.remove('on'); selected=null; dirty=true; buildTray(); }
-
-// ---------- positions (tiny, hidden unless dot mode) ----------
-function posMarker(d){ const m=new THREE.Mesh(new THREE.SphereGeometry(0.004,12,12), new THREE.MeshBasicMaterial({color:0xff2fa0})); m.position.set(...d.pos); m.renderOrder=999; m.material.depthTest=false; return m; }
+function posMarker(d){ const m=new THREE.Mesh(new THREE.SphereGeometry(0.004,12,12),new THREE.MeshBasicMaterial({color:0xff2fa0})); m.position.set(...d.pos); m.renderOrder=999; m.material.depthTest=false; return m; }
 function addPositionRaw(d){ const m=posMarker(d); d.mesh=m; posGroup.add(m); positions.push(d); }
 function refreshPosMarkers(){ posGroup.visible=dotMode; }
 function addPositionAt(point){ pushHistory(); const id=activeRegion+'-'+presetName.toLowerCase().replace(/[^a-z]+/g,'')+'-'+Math.floor(performance.now()%10000); addPositionRaw({id,region:activeRegion,name:presetName,pos:[+point.x.toFixed(4),+point.y.toFixed(4),+point.z.toFixed(4)]}); dirty=true; }
 function removePosition(d){ pushHistory(); const i=positions.indexOf(d); if(i>=0){ posGroup.remove(d.mesh); positions.splice(i,1); dirty=true; } }
 
-// ---------- size ----------
 const sizeSlider=document.getElementById('sizeSlider'), sizeVal=document.getElementById('sizeVal');
 function syncSize(){ const sb=document.getElementById('sizebar'); if(!selected){sb.classList.remove('on');return;} sb.classList.add('on'); const pct=Math.round(selected.scale.x/selected.userData.base*100); sizeSlider.value=Math.min(320,Math.max(15,pct)); sizeVal.textContent=sizeSlider.value+'%'; }
 sizeSlider.addEventListener('pointerdown',()=>{ if(selected) pushHistory(); });
 sizeSlider.addEventListener('input',()=>{ if(!selected)return; selected.scale.setScalar(selected.userData.base*(+sizeSlider.value/100)); sizeVal.textContent=sizeSlider.value+'%'; dirty=true; });
 
-// ---------- undo ----------
-function collectPieces(){ const o={}; for(const id in pieceObj){ const r=pieceObj[id]; if(!r.userData.seated) continue; o[id]={pos:r.position.toArray(),rot:[r.rotation.x,r.rotation.y,r.rotation.z],scale:r.scale.x,seatNormal:r.userData.seatNormal||null,region:(PIECES.find(p=>p.id===id)||{}).region}; } return o; }
-function collectPositions(){ return positions.map(d=>({id:d.id,region:d.region,name:d.name,pos:d.pos})); }
 function snapshot(){ const pieces={}; for(const id in pieceObj){ const r=pieceObj[id]; pieces[id]={pos:r.position.toArray(),rot:[r.rotation.x,r.rotation.y,r.rotation.z],scale:r.scale.x,seated:!!r.userData.seated,seatNormal:r.userData.seatNormal||null}; }
-  return JSON.parse(JSON.stringify({pieces,positions:collectPositions()})); }
+  return JSON.parse(JSON.stringify({pieces,positions:positions.map(d=>({id:d.id,region:d.region,name:d.name,pos:d.pos}))})); }
 function pushHistory(){ history.push(snapshot()); if(history.length>60) history.shift(); document.getElementById('undoBtn').disabled=false; }
-function applyState(s){
-  positions.splice(0).forEach(d=>{ if(d.mesh) posGroup.remove(d.mesh); }); (s.positions||[]).forEach(d=>addPositionRaw({id:d.id,region:d.region,name:d.name,pos:d.pos}));
-  for(const id in s.pieces){ const r=pieceObj[id]; if(!r)continue; const w=s.pieces[id];
-    r.position.fromArray(w.pos); r.rotation.fromArray(w.rot); r.scale.setScalar(w.scale); r.userData.seated=w.seated; r.userData.shelf=!w.seated; r.userData.seatNormal=w.seatNormal; }
+function applyState(s){ positions.splice(0).forEach(d=>{ if(d.mesh) posGroup.remove(d.mesh); }); (s.positions||[]).forEach(d=>addPositionRaw({id:d.id,region:d.region,name:d.name,pos:d.pos}));
+  for(const id in s.pieces){ const r=pieceObj[id]; if(!r)continue; const w=s.pieces[id]; r.position.fromArray(w.pos); r.rotation.fromArray(w.rot); r.scale.setScalar(w.scale); r.userData.seated=w.seated; r.userData.seatNormal=w.seatNormal; }
   layoutShelf(activeRegion); updateVisibility(); refreshPosMarkers(); buildTray(); syncSize(); }
 function undo(){ if(!history.length)return; applyState(history.pop()); dirty=true; if(!history.length) document.getElementById('undoBtn').disabled=true; }
 
-// ---------- UI ----------
 function buildRegions(){ const r=document.getElementById('regions'); r.innerHTML=''; REGIONS.forEach(rg=>{ const b=document.createElement('button'); b.dataset.r=rg; b.textContent=rg[0].toUpperCase()+rg.slice(1); b.onclick=()=>setRegion(rg); r.appendChild(b); }); }
-function buildChips(){ const c=document.getElementById('chips'); c.innerHTML=''; PRESETS[activeRegion].forEach(n=>{ const b=document.createElement('button'); b.className='nm'+(n===presetName?' sel':''); b.textContent=n; b.onclick=()=>{ presetName=n; buildChips(); }; c.appendChild(b); });
-  const d=document.createElement('button'); d.className='done'; d.textContent='Done'; d.onclick=()=>toggleDots(false); c.appendChild(d); }
-function buildTray(){ const t=document.getElementById('tray'); t.innerHTML='';
-  PIECES.filter(p=>p.region===activeRegion).forEach(p=>{ const o=pieceObj[p.id]; const d=document.createElement('div');
-    d.className='pc'+(o&&o.userData.seated?' seated':'')+(selected&&selected.userData.pid===p.id?' sel':'');
-    d.innerHTML='<span class="th" style="background-image:url(jewelry/web/thumbs/'+p.id+'.jpg)"></span><small>'+p.name+'</small>'+(o&&o.userData.seated?'<span class="st">● placed</span>':'');
-    d.onclick=()=>{ const ob=pieceObj[p.id]; if(ob) select(ob); }; t.appendChild(d); }); }
+function buildGender(){ document.querySelectorAll('#gender button').forEach(b=>b.onclick=()=>{ if(b.dataset.g!==gender) loadModel(b.dataset.g); }); }
+function buildChips(){ const c=document.getElementById('chips'); c.innerHTML=''; PRESETS[activeRegion].forEach(n=>{ const b=document.createElement('button'); b.className='nm'+(n===presetName?' sel':''); b.textContent=n; b.onclick=()=>{ presetName=n; buildChips(); }; c.appendChild(b); }); const d=document.createElement('button'); d.className='done'; d.textContent='Done'; d.onclick=()=>toggleDots(false); c.appendChild(d); }
+function buildTray(){ const t=document.getElementById('tray'); t.innerHTML=''; PIECES.filter(p=>p.region===activeRegion).forEach(p=>{ const o=pieceObj[p.id]; const d=document.createElement('div');
+  d.className='pc'+(o&&o.userData.seated?' seated':'')+(selected&&selected.userData.pid===p.id?' sel':'');
+  d.innerHTML='<span class="th" style="background-image:url(jewelry/web/thumbs/'+p.id+'.jpg)"></span><small>'+p.name+'</small>'+(o&&o.userData.seated?'<span class="st">● placed</span>':'');
+  d.onclick=()=>{ const ob=pieceObj[p.id]; if(ob) select(ob); }; t.appendChild(d); }); }
 function setGizmoMode(m){ gizmo.setMode(m); document.querySelectorAll('#tools .mode').forEach(x=>x.classList.toggle('on',x.dataset.mode===m)); }
 function toggleDots(on){ dotMode=(on!==undefined)?on:!dotMode; document.getElementById('dotBtn').classList.toggle('on',dotMode); document.getElementById('chips').classList.toggle('on',dotMode); refreshPosMarkers();
-  document.getElementById('hint').textContent= dotMode?'DOTS: pick a name → click the head to mark a spot · click a dot to remove':'Pick a piece → Size it → 📍 Seat on skin → click the spot. Rotate to finish.';
+  document.getElementById('hint').textContent=dotMode?'DOTS: pick a name → click the model to mark a spot · click a dot to remove':'Pick a piece → Size it → 📍 Seat on skin → click the spot. Rotate to finish.';
   if(dotMode){ deselect(); buildChips(); } }
 document.querySelectorAll('#tools .mode').forEach(b=>b.onclick=()=>setGizmoMode(b.dataset.mode));
 document.getElementById('seatBtn').onclick=()=>{ if(selected) armSeat(); };
-document.getElementById('seatNow').onclick=()=>{ if(selected){ armSeat(true); } };
+document.getElementById('seatNow').onclick=()=>{ if(selected) armSeat(true); };
 document.getElementById('flipBtn').onclick=flip180;
 document.getElementById('dotBtn').onclick=()=>toggleDots();
 document.getElementById('undoBtn').onclick=undo;
@@ -263,37 +262,33 @@ addEventListener('keydown',e=>{ if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==
 
 let downXY=null;
 renderer.domElement.addEventListener('pointerdown',e=>downXY=[e.clientX,e.clientY]);
-renderer.domElement.addEventListener('pointerup',e=>{
-  if(gizmo.dragging) return; if(!downXY||Math.hypot(e.clientX-downXY[0],e.clientY-downXY[1])>5) return;
+renderer.domElement.addEventListener('pointerup',e=>{ if(gizmo.dragging) return; if(!downXY||Math.hypot(e.clientX-downXY[0],e.clientY-downXY[1])>5) return;
   const rect=renderer.domElement.getBoundingClientRect(); const nx=((e.clientX-rect.left)/rect.width)*2-1, ny=-((e.clientY-rect.top)/rect.height)*2+1;
   const rc=new THREE.Raycaster(); rc.setFromCamera({x:nx,y:ny},camera);
-  if(seatArmed&&selected&&HEAD){ const h=rc.intersectObject(HEAD,true); if(h.length){ const n=h[0].face.normal.clone().transformDirection(HEAD.matrixWorld).normalize(); seatAt(selected,h[0].point.clone(),n); armSeat(false); } return; }
+  if(seatArmed&&selected&&HEAD){ const h=rc.intersectObject(HEAD,true); if(h.length){ const n=h[0].face.normal.clone().transformDirection(h[0].object.matrixWorld).normalize(); seatAt(selected,h[0].point.clone(),n); armSeat(false); } return; }
   if(dotMode){ const ph=rc.intersectObjects(positions.map(d=>d.mesh).filter(Boolean),false); if(ph.length){ const d=positions.find(x=>x.mesh===ph[0].object); if(d) removePosition(d); return; }
     if(HEAD){ const h=rc.intersectObject(HEAD,true); if(h.length) addPositionAt(h[0].point); } return; }
   const vis=Object.values(pieceObj).filter(o=>o.visible); const hits=rc.intersectObjects(vis,true);
-  if(hits.length){ let o=hits[0].object; while(o&&!o.userData.pid) o=o.parent; if(o) select(o); } else deselect();
-});
+  if(hits.length){ let o=hits[0].object; while(o&&!o.userData.pid) o=o.parent; if(o) select(o); } else deselect(); });
 
-// ---------- save / load ----------
-const LS='gp_placements_v4';
-function collect(){ return {pieces:collectPieces(),positions:collectPositions()}; }
+const LS='gp_placements_v5';
+function collect(){ const pieces={}; for(const id in pieceObj){ const r=pieceObj[id]; if(!r.userData.seated) continue; pieces[id]={pos:r.position.toArray(),rot:[r.rotation.x,r.rotation.y,r.rotation.z],scale:r.scale.x,seatNormal:r.userData.seatNormal||null,region:(PIECES.find(p=>p.id===id)||{}).region}; }
+  return {gender,pieces,positions:positions.map(d=>({id:d.id,region:d.region,name:d.name,pos:d.pos}))}; }
 async function save(){ const data=collect(); const json=JSON.stringify(data,null,2); localStorage.setItem(LS,JSON.stringify(data));
   const st=document.getElementById('status'); const n=Object.keys(data.pieces).length; let copied=false;
   try{ await navigator.clipboard.writeText(json); copied=true; }catch(e){}
   try{ await fetch('/api/save',{method:'POST',headers:{'Content-Type':'application/json'},body:json}); }catch(e){}
-  st.textContent=(copied?'✓ Saved + copied — paste to Claude to bake in':'✓ Saved in this browser')+' ('+n+' seated, '+data.positions.length+' dots)'; dirty=false; }
-async function loadAll(){
-  await Promise.all(PIECES.map(makePiece));   // spawn every piece up front
+  st.textContent=(copied?'✓ Saved + copied — paste to Claude':'✓ Saved in this browser')+' ('+n+' placed, '+data.positions.length+' dots)'; dirty=false; }
+async function loadAll(){ await Promise.all(PIECES.map(makePiece));
   let data=null; try{ const r=await fetch('jewelry/placements.json',{cache:'no-store'}); if(r.ok) data=await r.json(); }catch(e){}
   if(!data){ try{ data=JSON.parse(localStorage.getItem(LS)); }catch(e){} }
   if(data){ (data.positions||[]).forEach(d=>addPositionRaw({id:d.id,region:d.region,name:d.name,pos:d.pos}));
-    const pieces=data.pieces||{}; for(const id in pieces){ const r=pieceObj[id]; if(!r)continue; const w=pieces[id]; r.position.fromArray(w.pos); r.rotation.fromArray(w.rot); r.scale.setScalar(w.scale); r.userData.seated=true; r.userData.shelf=false; r.userData.seatNormal=w.seatNormal||null; } }
-  refreshPosMarkers();
-}
+    const pieces=data.pieces||{}; for(const id in pieces){ const r=pieceObj[id]; if(!r)continue; const w=pieces[id]; r.position.fromArray(w.pos); r.rotation.fromArray(w.rot); r.scale.setScalar(w.scale); r.userData.seated=true; r.userData.seatNormal=w.seatNormal||null; } }
+  refreshPosMarkers(); }
 
 addEventListener('resize',()=>{ camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth,innerHeight); });
 addEventListener('beforeunload',e=>{ if(dirty){ e.preventDefault(); e.returnValue=''; } });
 function loop(){ requestAnimationFrame(loop); orbit.update(); renderer.render(scene,camera); } loop();
-window.__place={scene,camera,pieceObj,positions,setRegion,save,undo,armSeat,select,get selected(){return selected},get seatArmed(){return seatArmed}};
+window.__place={scene,camera,pieceObj,positions,setRegion,save,undo,armSeat,select,loadModel,get selected(){return selected},get seatArmed(){return seatArmed},get gender(){return gender}};
 </script>
 </body></html>
