@@ -1,0 +1,372 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Try It On — 3D piercing preview (spike) · The Gay Penguin</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--pink:#ff3d8b;--pink-d:#d81b6a;--ink:#2b2330;--cream:#fff8fc}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:'Nunito',sans-serif;background:radial-gradient(120% 120% at 50% 0%,#fff8fc 0%,#ffe6f1 60%,#ffd7ea 100%);color:var(--ink);overflow:hidden}
+.rainbow{height:5px;background:linear-gradient(90deg,#ff5c5c,#ffb24c,#ffe14c,#5cd97a,#4cc4ff,#9b6cff,#ff6cd4);position:fixed;top:0;left:0;right:0;z-index:5}
+#stage{position:fixed;inset:0}
+canvas{display:block;touch-action:none}
+.hud{position:fixed;left:0;right:0;top:0;z-index:6;text-align:center;padding:16px 14px 6px;pointer-events:none}
+.hud h1{font-family:'Fredoka';font-weight:700;font-size:21px}
+.hud h1 b{color:var(--pink-d)}
+.hud p{font-size:13.5px;color:#7c6a78;margin-top:2px}
+.loading{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;z-index:7;background:#ffe6f1;transition:opacity .5s}
+.loading.gone{opacity:0;pointer-events:none}
+.spin{width:42px;height:42px;border-radius:50%;border:4px solid #ffd0e4;border-top-color:var(--pink-d);animation:sp 1s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.loading span{font-family:'Fredoka';color:var(--pink-d);font-weight:600}
+.tray{position:fixed;left:0;right:0;bottom:0;z-index:6;padding:12px 12px calc(12px + env(safe-area-inset-bottom));display:flex;flex-direction:column;align-items:center;gap:7px}
+.lbl{font-family:'Fredoka';font-weight:600;font-size:10.5px;color:#b08aa0;text-transform:uppercase;letter-spacing:.06em}
+.spots{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;max-width:560px}
+.sp{font-family:'Fredoka';font-weight:600;font-size:13px;color:var(--ink);background:rgba(255,255,255,.82);backdrop-filter:blur(8px);border:1.5px solid #ffd0e4;border-radius:999px;padding:7px 14px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:.15s}
+.sp.active{background:var(--pink-d);color:#fff;border-color:var(--pink-d);box-shadow:0 6px 16px rgba(216,27,106,.22)}
+.pieces{display:flex;gap:9px;justify-content:center;flex-wrap:wrap;max-width:560px}
+.pc{display:flex;flex-direction:column;align-items:center;gap:5px;background:rgba(255,255,255,.78);backdrop-filter:blur(8px);border:1.5px solid #ffd0e4;border-radius:16px;padding:8px 10px 7px;cursor:pointer;min-width:74px;transition:.15s;-webkit-tap-highlight-color:transparent}
+.pc.active{border-color:var(--pink-d);background:#fff;box-shadow:0 8px 22px rgba(216,27,106,.18)}
+.pc .sw{width:30px;height:30px;border-radius:50%;box-shadow:inset 0 -3px 6px rgba(0,0,0,.18),0 1px 3px rgba(0,0,0,.15)}
+.pc small{font-family:'Fredoka';font-weight:600;font-size:11.5px;color:var(--ink)}
+.replay{pointer-events:auto;border:0;background:var(--pink-d);color:#fff;font-family:'Fredoka';font-weight:600;font-size:13.5px;padding:9px 18px;border-radius:999px;cursor:pointer;box-shadow:0 8px 22px rgba(216,27,106,.28)}
+.tag{position:fixed;right:9px;bottom:calc(8px + env(safe-area-inset-bottom));z-index:6;font-size:10px;color:#b08aa0;opacity:.8}
+.editbtn{pointer-events:auto;border:1.5px solid var(--pink-d);background:#fff;color:var(--pink-d);font-family:'Fredoka';font-weight:600;font-size:12.5px;padding:7px 14px;border-radius:999px;cursor:pointer}
+.editpanel{position:fixed;left:0;right:0;top:0;z-index:8;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:11px 12px;display:none;flex-direction:column;gap:8px;align-items:center;box-shadow:0 10px 22px rgba(216,27,106,.14)}
+.editpanel.on{display:flex}
+.editpanel .ei{font-size:12.5px;color:#7c6a78;text-align:center;line-height:1.4}
+.editpanel .ei b{color:var(--pink-d)}
+.names{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;max-width:580px}
+.nm{font-family:'Fredoka';font-weight:600;font-size:12px;border:1.5px solid #ffd0e4;background:#fff;color:var(--ink);padding:5px 11px;border-radius:999px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.nm.sel{background:var(--pink-d);color:#fff;border-color:var(--pink-d)}
+.editrow{display:flex;gap:8px;margin-top:2px}
+.editrow button{font-family:'Fredoka';font-weight:600;font-size:12.5px;border-radius:999px;padding:7px 16px;cursor:pointer;border:0}
+.b-save{background:var(--pink-d);color:#fff}
+.b-reset{background:#fff;border:1.5px solid #ddd;color:#777}
+.orientpanel{position:fixed;left:0;right:0;top:0;z-index:8;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:10px 16px;display:none;flex-direction:column;gap:6px;box-shadow:0 10px 22px rgba(216,27,106,.14)}
+.orientpanel.on{display:flex}
+.orientpanel .ei{font-size:12.5px;color:#7c6a78;text-align:center}
+.orientpanel .ei b{color:var(--pink-d)}
+.orow{display:flex;align-items:center;gap:10px;font-family:'Fredoka';font-weight:600;font-size:12px;color:var(--ink)}
+.orow input[type=range]{flex:1;accent-color:var(--pink-d)}
+</style></head>
+<body>
+<div class="rainbow"></div>
+<div id="stage"></div>
+<div class="hud"><h1>Try It On <b>— in 3D</b> 🐧</h1><p>Tap a spot, then pick your jewelry.</p></div>
+<div class="tray">
+  <div class="lbl">Tap a spot</div>
+  <div class="spots" id="spots"></div>
+  <div class="lbl">Pick your jewelry</div>
+  <div class="pieces" id="pieces"></div>
+  <div style="display:flex;gap:8px">
+    <button class="replay" id="replay">↻ Watch again</button>
+    <button class="editbtn" id="editBtn">✎ Place spots myself</button>
+  </div>
+</div>
+<div class="editpanel" id="editPanel">
+  <div class="ei">Pick a name, then <b>tap the ear</b> to drop that spot. Tap an existing dot to remove it.</div>
+  <div class="names" id="names"></div>
+  <div class="editrow"><button class="b-reset" id="bClear">Clear all</button><button class="b-reset" id="bReset">Reset to default</button><button class="b-save" id="bSave">Save &amp; done</button></div>
+</div>
+<div class="orientpanel" id="orientPanel">
+  <div class="ei">Orient <b id="opName">piece</b> so it sits right on the ear</div>
+  <label class="orow">Turn <input type="range" id="oRY" min="-180" max="180" value="0"></label>
+  <label class="orow">Tilt <input type="range" id="oRX" min="-180" max="180" value="0"></label>
+  <label class="orow">Spin <input type="range" id="oRZ" min="-180" max="180" value="0"></label>
+  <label class="orow">Size <input type="range" id="oS" min="40" max="240" value="100"></label>
+  <label class="orow">Closer <input type="range" id="oDZ" min="-50" max="50" value="0"></label>
+  <label class="orow">Across <input type="range" id="oDX" min="-50" max="50" value="0"></label>
+  <label class="orow">Up/Dn <input type="range" id="oDY" min="-50" max="50" value="0"></label>
+  <div class="editrow"><button class="b-reset" id="oExport">Export config</button><button class="b-save" id="oSave">Save piece</button></div>
+</div>
+<div class="tag" id="tag">demo · stand-in head</div>
+<div class="loading" id="loading"><div class="spin"></div><span>Loading the 3D preview…</span></div>
+
+<script type="importmap">
+{"imports":{
+  "three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+const qs = new URLSearchParams(location.search);
+const DEBUG = qs.has('debug');
+const ADMIN = qs.has('admin');     // ?admin=1 → Corey's one-time setup tools (hidden from customers)
+const ROCK = !ADMIN;               // customers: gentle showcase rock; admin: static so orientation is clear
+
+// ---- tunables (ear placement found by raycast; nudged via screenshots) ----
+const TUNE = {
+  earY: parseFloat(qs.get('ey') ?? 0.10),   // height of ear ray (normalized head units)
+  earZ: parseFloat(qs.get('ez') ?? -0.02),  // front/back of ear ray
+  side: 1,                                   // +1 = head's +X ear
+  jewelScale: parseFloat(qs.get('js') ?? 0.024),
+  heroDist: parseFloat(qs.get('hd') ?? 0.5),
+  flyDur: 2600,
+};
+
+const stage = document.getElementById('stage');
+const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true });
+renderer.setSize(innerWidth, innerHeight);
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.05;
+stage.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(38, innerWidth/innerHeight, 0.01, 100);
+camera.position.set(0.15,0.25,3);
+
+// realistic reflections so metal/gem read as real
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+
+// lights
+const hemi = new THREE.HemisphereLight(0xffffff,0xffd9ea,0.55); scene.add(hemi);
+const key = new THREE.DirectionalLight(0xffffff,2.0); key.position.set(2,2.5,3); scene.add(key);
+const rim = new THREE.DirectionalLight(0xffe3f0,1.1); rim.position.set(-2,1,-2); scene.add(rim);
+
+let controls=null;
+if (DEBUG||ADMIN){ controls=new OrbitControls(camera,renderer.domElement); controls.target.set(0.217,0.213,0.045); controls.enableDamping=true; controls.dampingFactor=0.12; controls.minDistance=0.12; controls.maxDistance=2.5; controls.enablePan=true; controls.zoomSpeed=0.9; }
+
+// ---- jewelry = REAL product photos placed on the ear (photo-decal technique) ----
+const texLoader=new THREE.TextureLoader();
+const texCache={};
+function pieceTex(file){ if(!texCache[file]){ const t=texLoader.load('jewelry/'+file); t.colorSpace=THREE.SRGBColorSpace; t.anisotropy=8; texCache[file]=t; } return texCache[file]; }
+function shadowTex(){ const c=document.createElement('canvas'); c.width=c.height=128; const g=c.getContext('2d'); const rg=g.createRadialGradient(64,72,6,64,72,56); rg.addColorStop(0,'rgba(55,28,38,0.40)'); rg.addColorStop(1,'rgba(55,28,38,0)'); g.fillStyle=rg; g.fillRect(0,0,128,128); return new THREE.CanvasTexture(c); }
+const SHADOW=shadowTex();
+function makePhotoPiece(kind){
+  const grp=new THREE.Group();
+  const a=kind.aspect||1;
+  // soft contact shadow on the skin, just behind the piece, so it sits instead of floating
+  const sh=new THREE.Mesh(new THREE.PlaneGeometry(a*1.4,1.4), new THREE.MeshBasicMaterial({map:SHADOW,transparent:true,depthWrite:false}));
+  sh.position.z=0.012; grp.add(sh);
+  // the real earring photo, facing outward along the ear normal (unlit = keeps the real product lighting)
+  const pl=new THREE.Mesh(new THREE.PlaneGeometry(a,1), new THREE.MeshBasicMaterial({map:pieceTex(kind.file),transparent:true,alphaTest:0.4,side:THREE.DoubleSide}));
+  pl.position.z=0.05; grp.add(pl);
+  return grp;
+}
+
+const PIECES = [
+  // REAL pieces harvested from the shop's own gallery photos (Rose's piercings)
+  {id:'czgem',       name:'CZ stud',       spot:'philtrum', glb:'jewelry/real_czgem_3d.glb',       file:'real_czgem_clean.png',       aspect:1, sw:'url(jewelry/real_czgem_clean.png) center/contain no-repeat #fff'},
+  {id:'silverspike', name:'Silver spike',  spot:'lip_l',    glb:'jewelry/real_silverspike_3d.glb', file:'real_silverspike_clean.png', aspect:1, sw:'url(jewelry/real_silverspike_clean.png) center/contain no-repeat #fff'},
+  {id:'blackspike',  name:'Black spike',   spot:'lip_r',    glb:'jewelry/real_blackspike_3d.glb',  file:'real_blackspike_clean.png',  aspect:1, sw:'url(jewelry/real_blackspike_clean.png) center/contain no-repeat #fff'},
+  {id:'septum',      name:'Septum',        spot:'septum',   glb:'jewelry/rose_septum_3d.glb',      file:'rose_septum_clean.png',      aspect:1, sw:'url(jewelry/rose_septum_clean.png) center/contain no-repeat #fff'},
+];
+
+// ---- ear spots: each resolved to a surface point+normal by a seed ray after load ----
+// spot points authored by click-to-place (raycast through the pixel on the ear)
+// FACE view: these are face pieces (lip/nose/philtrum), so frame the front of the face
+const EAR_CENTER=new THREE.Vector3(-0.034,0.113,0.36);   // = "view center" (face)
+const FACE=new THREE.Vector3(0,0.12,1).normalize();      // = view/out direction (front of face)
+const SPOTS = [
+  {key:'septum',  label:'Septum',  pt:[-0.035,0.1579,0.391]},
+  {key:'philtrum',label:'Medusa',  pt:[-0.036,0.1262,0.3572]},
+  {key:'lip_l',   label:'Lip L',   pt:[-0.0803,0.0843,0.3392]},
+  {key:'lip_r',   label:'Lip R',   pt:[0.0173,0.0834,0.3542]},
+];
+let activeSpot=null, currentPiece=null, currentJewel=null;
+let jewelAnchor=new THREE.Group(); scene.add(jewelAnchor);
+const ray=new THREE.Raycaster();
+let headMesh=null, earPoint=new THREE.Vector3(), earNormal=new THREE.Vector3(1,0,0);
+
+function resolveSpot(sp){
+  if(sp.pt){ sp.point=new THREE.Vector3(sp.pt[0],sp.pt[1],sp.pt[2]); sp.normal=new THREE.Vector3(1,0,0.2).normalize(); return; }
+  if(!sp.from) return;
+  const o=new THREE.Vector3(sp.from[0],sp.from[1],sp.from[2]), d=new THREE.Vector3(sp.dir[0],sp.dir[1],sp.dir[2]).normalize();
+  ray.set(o,d); const h=ray.intersectObject(headMesh,true);
+  if(h.length){ sp.point=h[0].point.clone(); sp.normal=h[0].face.normal.clone().transformDirection(headMesh.matrixWorld).normalize(); }
+}
+function renderJewel(){ if(currentJewel){ jewelAnchor.remove(currentJewel); currentJewel=null; } if(!currentPiece) return;
+  if(currentPiece.glb){ loadGLBAtSpot(currentPiece.glb); return; }   // real 3D model (Rodin output)
+  currentJewel=makePhotoPiece(currentPiece); currentJewel.scale.setScalar(TUNE.jewelScale); jewelAnchor.add(currentJewel); }
+function selectSpot(sp,opts){ opts=opts||{}; if(!sp||!sp.point) return; activeSpot=sp;
+  // the ear's OUTER surface (where studs sit) faces laterally out the side, slightly forward.
+  // Use that fixed direction for both the jewelry facing AND the camera axis, instead of the
+  // bumpy per-point surface normal (which at the lobe points toward the cheek and framed skin).
+  earPoint.copy(sp.point); earNormal.set(1,0,0.2).normalize();
+  jewelAnchor.position.copy(sp.point).addScaledVector(earNormal,0.012);
+  jewelAnchor.quaternion.copy(new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0,0,1), earNormal));
+  renderJewel();
+  document.querySelectorAll('.sp').forEach(el=>el.classList.toggle('active',el.dataset.key===sp.key));
+  // camera stays framed on the whole ear; the earring just moves to the tapped spot
+}
+function setPiece(p){ currentPiece=p; const hs=p.spot&&SPOTS.find(s=>s.key===p.spot); if(hs&&hs.point){ selectSpot(hs,{}); } else { renderJewel(); } document.querySelectorAll('.pc').forEach(el=>el.classList.toggle('active',el.dataset.id===p.id)); if(ADMIN) syncOrientUI(); }
+
+// ---- build UI: spot pills + jewelry swatches ----
+function buildUI(){
+  const sr=document.getElementById('spots');
+  SPOTS.forEach(sp=>{ if(!sp.point) return; const b=document.createElement('button'); b.className='sp'; b.dataset.key=sp.key; b.textContent=sp.label; b.onclick=()=>selectSpot(sp); sr.appendChild(b); });
+  const pr=document.getElementById('pieces');
+  PIECES.forEach(p=>{ const b=document.createElement('div'); b.className='pc'; b.dataset.id=p.id; b.innerHTML='<span class="sw" style="background:'+p.sw+'"></span><small>'+p.name+'</small>'; b.onclick=()=>{ setPiece(p); flyTo(); }; pr.appendChild(b); });
+}
+
+// ---- load head ----
+const tl=new THREE.TextureLoader();
+const colMap=tl.load('models/Map-COL.jpg'); colMap.colorSpace=THREE.SRGBColorSpace;
+const norMap=tl.load('models/Infinite-Level_02_Tangent_SmoothUV.jpg');
+
+new GLTFLoader().load('models/head.glb', (gltf)=>{
+  const mesh = gltf.scene.getObjectByProperty('isMesh',true) || gltf.scene.children[0];
+  mesh.material = new THREE.MeshStandardMaterial({ map:colMap, normalMap:norMap, roughness:0.62, metalness:0.0 });
+  const box=new THREE.Box3().setFromObject(mesh); const c=box.getCenter(new THREE.Vector3()); const s=box.getBoundingSphere(new THREE.Sphere()).radius;
+  mesh.position.sub(c); mesh.scale.multiplyScalar(1/s);
+  const wrap=new THREE.Group(); wrap.add(mesh); scene.add(wrap);
+  headMesh=mesh; scene.updateMatrixWorld(true);   // CRITICAL: apply normalize transform before raycasting
+  loadSpots();   // use the user's saved spots if they've placed their own
+  SPOTS.forEach(resolveSpot);
+  buildUI();
+  currentPiece=PIECES[0];
+  selectSpot(SPOTS.find(s=>s.key===PIECES[0].spot)||SPOTS[0],{fly:false});
+  document.querySelectorAll('.pc').forEach(el=>el.classList.toggle('active',el.dataset.id===PIECES[0].id));
+  document.getElementById('loading').classList.add('gone');
+  if(ADMIN&&controls){ camera.position.set(0.95,0.33,0.42); controls.target.set(0.217,0.213,0.045); controls.update(); }
+  setTimeout(()=>flyTo(),350);
+}, undefined, (e)=>{ document.querySelector('.loading span').textContent='Could not load 3D model'; console.error(e); });
+
+// ---- cinematic fly-in (ends head-on to the ear) ----
+let fly=null;
+const easeIO=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+const startPos=new THREE.Vector3(0.15,0.25,3), startTgt=new THREE.Vector3(0,0.05,0);
+function flyTo(){
+  if(DEBUG||ADMIN) return;   // admin uses free orbit, not the cinematic fly
+  const endPos=EAR_CENTER.clone().addScaledVector(FACE,TUNE.heroDist);
+  fly={t0:performance.now(),from:{p:camera.position.clone(),g:curTarget.clone()},to:{p:endPos,g:EAR_CENTER.clone()}};
+}
+const curTarget=new THREE.Vector3(0,0.05,0);
+document.getElementById('replay').onclick=()=>{ camera.position.copy(startPos); curTarget.copy(startTgt); flyTo(); };
+
+// screenshot helper for verification: ?shot=hero|side|wide
+function applyShot(){
+  const s=qs.get('shot'); if(!s||!headMesh) return;
+  if(s==='wide'){camera.position.set(0.15,0.25,3);curTarget.set(0,0.05,0);}
+  if(s==='hero'){camera.position.copy(earPoint).addScaledVector(earNormal,TUNE.heroDist).add(new THREE.Vector3(0,0.02,0));curTarget.copy(earPoint);}
+  if(s==='side'){const off=earNormal.clone().applyAxisAngle(new THREE.Vector3(0,1,0),0.7);camera.position.copy(earPoint).addScaledVector(off,TUNE.heroDist+0.05).add(new THREE.Vector3(0,0.04,0));curTarget.copy(earPoint);}
+  if(s==='down'){const off=earNormal.clone().applyAxisAngle(new THREE.Vector3(1,0,0),-0.5);camera.position.copy(earPoint).addScaledVector(off,0.9);curTarget.copy(earPoint);}
+}
+
+addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);});
+
+function loop(now){
+  requestAnimationFrame(loop);
+  if(fly){
+    const t=Math.min(1,(now-fly.t0)/TUNE.flyDur); const e=easeIO(t);
+    camera.position.lerpVectors(fly.from.p,fly.to.p,e);
+    curTarget.lerpVectors(fly.from.g,fly.to.g,e);
+    if(t>=1) fly=null;
+  }
+  if(currentJewel&&currentJewel.userData&&currentJewel.userData.rock){ const br=currentJewel.userData.baseRot||{x:0,y:0,z:0}; currentJewel.rotation.set(br.x, br.y+Math.sin(now*0.0011)*0.30, br.z); }
+  if((DEBUG||ADMIN)&&controls){controls.update();} else {camera.lookAt(curTarget);}
+  renderer.render(scene,camera);
+}
+applyShot();
+requestAnimationFrame(loop);
+
+// debug marker
+const marker=new THREE.Mesh(new THREE.SphereGeometry(0.02,16,16), new THREE.MeshBasicMaterial({color:0x00ff66}));
+marker.visible=false; scene.add(marker);
+function castSide(y,z){ ray.set(new THREE.Vector3(TUNE.side*2.5,y,z), new THREE.Vector3(-TUNE.side,0,0)); const h=ray.intersectObject(headMesh,true); return h.length? h[0]:null; }
+function setEar(y,z){ const h=castSide(y,z); if(!h) return null; earPoint.copy(h.point); const n=h.face.normal.clone().transformDirection(headMesh.matrixWorld).normalize(); earNormal.copy(n);
+  jewelAnchor.position.copy(earPoint).addScaledVector(earNormal,0.004); jewelAnchor.quaternion.copy(new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0,0,1),earNormal));
+  marker.position.copy(earPoint).addScaledVector(earNormal,0.03); return [earPoint.x.toFixed(3),earPoint.y.toFixed(3),earPoint.z.toFixed(3)]; }
+
+// ---------- self-serve spot placement (user click-to-place) ----------
+const PRESET_NAMES=['Lobe','Upper lobe','Helix','Forward helix','Conch','Tragus','Daith','Rook','Snug','Industrial','Anti-tragus','Nostril'];
+let editMode=false, editName=PRESET_NAMES[0];
+const LS_KEY='gp_ear_spots_v1';
+const dotGroup=new THREE.Group(); scene.add(dotGroup);
+function pickNDC(nx,ny){ if(!headMesh)return null; const rc=new THREE.Raycaster(); rc.setFromCamera({x:nx,y:ny},camera); const h=rc.intersectObject(headMesh,true); return h.length?[+h[0].point.x.toFixed(4),+h[0].point.y.toFixed(4),+h[0].point.z.toFixed(4)]:null; }
+function projScreen(p){ const v=p.clone().project(camera); return {x:(v.x*0.5+0.5)*innerWidth,y:(-v.y*0.5+0.5)*innerHeight}; }
+function rebuildDots(){ dotGroup.clear(); if(!editMode)return; SPOTS.forEach(sp=>{ if(!sp.point)return; const m=new THREE.Mesh(new THREE.SphereGeometry(0.007,14,14),new THREE.MeshBasicMaterial({color:0xff1f6b})); m.position.copy(sp.point).addScaledVector(FACE,0.012); dotGroup.add(m); }); }
+function rebuildSpotUI(){ const sr=document.getElementById('spots'); sr.innerHTML=''; SPOTS.forEach(sp=>{ if(!sp.point)return; const b=document.createElement('button'); b.className='sp'; b.dataset.key=sp.key; b.textContent=sp.label; b.onclick=()=>selectSpot(sp); sr.appendChild(b); }); }
+function saveSpots(){ try{ localStorage.setItem(LS_KEY, JSON.stringify(SPOTS.filter(s=>s.point).map(s=>({key:s.key,label:s.label,pt:[+s.point.x.toFixed(4),+s.point.y.toFixed(4),+s.point.z.toFixed(4)]})))); }catch(e){} }
+function loadSpots(){ try{ const d=JSON.parse(localStorage.getItem(LS_KEY)); if(d&&d.length){ SPOTS.length=0; d.forEach(s=>SPOTS.push({key:s.key,label:s.label,pt:s.pt})); return true; } }catch(e){} return false; }
+function enterEdit(){ editMode=true; document.getElementById('editPanel').classList.add('on'); const t=document.querySelector('.tray'); t.style.opacity=0.18; t.style.pointerEvents='none'; rebuildDots(); }
+function exitEdit(save){ if(save) saveSpots(); editMode=false; document.getElementById('editPanel').classList.remove('on'); const t=document.querySelector('.tray'); t.style.opacity=1; t.style.pointerEvents='auto'; dotGroup.clear(); SPOTS.forEach(resolveSpot); rebuildSpotUI(); const f=SPOTS.find(s=>s.point); if(f) selectSpot(f,{}); }
+let _downXY=null;
+renderer.domElement.addEventListener('pointerdown',(e)=>{ _downXY=[e.clientX,e.clientY]; });
+renderer.domElement.addEventListener('click',(e)=>{
+  if(!editMode||!headMesh) return;
+  if(_downXY && Math.hypot(e.clientX-_downXY[0], e.clientY-_downXY[1])>6) return;   // it was a camera drag, not a tap
+  for(let i=0;i<SPOTS.length;i++){ const sp=SPOTS[i]; if(!sp.point)continue; const s=projScreen(sp.point); if(Math.hypot(s.x-e.clientX,s.y-e.clientY)<28){ SPOTS.splice(i,1); rebuildDots(); return; } }
+  const rect=renderer.domElement.getBoundingClientRect();
+  const nx=((e.clientX-rect.left)/rect.width)*2-1, ny=-((e.clientY-rect.top)/rect.height)*2+1;
+  const p=pickNDC(nx,ny); if(!p) return;
+  const key=editName.toLowerCase().replace(/[^a-z]+/g,'-')+'-'+Math.floor(performance.now()%100000);
+  SPOTS.push({key:key,label:editName,pt:p,point:new THREE.Vector3(p[0],p[1],p[2]),normal:FACE.clone()});
+  rebuildDots();
+});
+(function initEditUI(){
+  const c=document.getElementById('names');
+  PRESET_NAMES.forEach(n=>{ const b=document.createElement('button'); b.className='nm'+(n===editName?' sel':''); b.textContent=n; b.onclick=()=>{ editName=n; document.querySelectorAll('.nm').forEach(x=>x.classList.toggle('sel',x.textContent===n)); }; c.appendChild(b); });
+  document.getElementById('editBtn').onclick=enterEdit;
+  document.getElementById('bSave').onclick=()=>exitEdit(true);
+  document.getElementById('bReset').onclick=()=>{ try{localStorage.removeItem(LS_KEY);}catch(e){} location.reload(); };
+  document.getElementById('bClear').onclick=()=>{ SPOTS.length=0; rebuildDots(); };
+})();
+
+// ---- per-piece orientation/scale config (set once by Corey in ?admin; baked into the live site) ----
+const PCFG_KEY='gp_piece_cfg_v1';
+const _z={rx:0,ry:0,rz:0,s:1,dx:0,dy:0,dz:0};
+let PIECE_CFG = { czgem:{..._z}, silverspike:{..._z,rx:1.5708}, blackspike:{..._z,rx:1.5708}, septum:{..._z} };   // baked defaults; admin tuning overrides via localStorage
+(function(){ try{ const d=JSON.parse(localStorage.getItem(PCFG_KEY)); if(d) for(const k in d) PIECE_CFG[k]=d[k]; }catch(e){} })();
+
+// ---- load a real 3D model (GLB) onto the active spot — the exact path Rodin's output will use ----
+function loadGLBAtSpot(url){
+  const pid = currentPiece && currentPiece.id;
+  new GLTFLoader().load(url, (g)=>{
+    const obj=g.scene;
+    const box=new THREE.Box3().setFromObject(obj); const sz=box.getSize(new THREE.Vector3()); const c=box.getCenter(new THREE.Vector3());
+    obj.position.sub(c); obj.userData.baseG=obj.position.clone(); const maxd=Math.max(sz.x,sz.y,sz.z)||1;
+    const cfg = PIECE_CFG[pid] || {rx:0,ry:0,rz:0,s:1,dx:0,dy:0,dz:0};
+    const ns=(TUNE.jewelScale*1.8)/maxd; obj.userData.normScale=ns; obj.scale.setScalar(ns*(cfg.s||1));
+    obj.userData.baseRot={x:cfg.rx||0,y:cfg.ry||0,z:cfg.rz||0}; obj.rotation.set(cfg.rx||0,cfg.ry||0,cfg.rz||0);
+    obj.position.copy(obj.userData.baseG).add(new THREE.Vector3(cfg.dx||0,cfg.dy||0,cfg.dz||0));
+    obj.userData.rock=ROCK; obj.userData.pid=pid;
+    if(currentJewel) jewelAnchor.remove(currentJewel); currentJewel=obj; jewelAnchor.add(obj);
+    window.__glbLoaded=true;
+    if(ADMIN) syncOrientUI();
+  }, undefined, (e)=>{ window.__glbErr=String(e); });
+}
+
+// ---- admin: per-piece orientation/scale (?admin) ----
+function syncOrientUI(){
+  if(!ADMIN) return; const op=document.getElementById('orientPanel'); const pid=currentPiece&&currentPiece.id;
+  if(!pid || !currentPiece.glb){ if(op) op.classList.remove('on'); return; }
+  op.classList.add('on'); document.getElementById('opName').textContent=currentPiece.name;
+  const cfg=PIECE_CFG[pid]||{rx:0,ry:0,rz:0,s:1,dx:0,dy:0,dz:0}; PIECE_CFG[pid]=cfg; const d=x=>Math.round((x||0)*180/Math.PI);
+  document.getElementById('oRX').value=d(cfg.rx); document.getElementById('oRY').value=d(cfg.ry);
+  document.getElementById('oRZ').value=d(cfg.rz); document.getElementById('oS').value=Math.round((cfg.s||1)*100);
+  document.getElementById('oDZ').value=Math.round(-(cfg.dz||0)*1000); document.getElementById('oDX').value=Math.round((cfg.dx||0)*1000); document.getElementById('oDY').value=Math.round((cfg.dy||0)*1000);
+}
+function orientChanged(){
+  const pid=currentPiece&&currentPiece.id; if(!pid) return; const cfg=PIECE_CFG[pid]||{}; PIECE_CFG[pid]=cfg; const r=v=>(+v)*Math.PI/180;
+  cfg.rx=r(document.getElementById('oRX').value); cfg.ry=r(document.getElementById('oRY').value);
+  cfg.rz=r(document.getElementById('oRZ').value); cfg.s=(+document.getElementById('oS').value)/100;
+  cfg.dz=-(+document.getElementById('oDZ').value)/1000; cfg.dx=(+document.getElementById('oDX').value)/1000; cfg.dy=(+document.getElementById('oDY').value)/1000;
+  const o=currentJewel; if(o&&o.userData){ o.userData.baseRot={x:cfg.rx,y:cfg.ry,z:cfg.rz}; o.rotation.set(cfg.rx,cfg.ry,cfg.rz); if(o.userData.normScale) o.scale.setScalar(o.userData.normScale*cfg.s);
+    if(o.userData.baseG) o.position.copy(o.userData.baseG).add(new THREE.Vector3(cfg.dx,cfg.dy,cfg.dz)); }
+}
+if(ADMIN){
+  ['oRX','oRY','oRZ','oS','oDZ','oDX','oDY'].forEach(id=>{ const el=document.getElementById(id); if(el) el.addEventListener('input',orientChanged); });
+  const sv=document.getElementById('oSave'); if(sv) sv.onclick=()=>{ try{localStorage.setItem(PCFG_KEY,JSON.stringify(PIECE_CFG));}catch(e){} sv.textContent='Saved ✓'; setTimeout(()=>sv.textContent='Save piece',1200); };
+  const ex=document.getElementById('oExport'); if(ex) ex.onclick=()=>{ const j=JSON.stringify(PIECE_CFG,null,0); window.__pieceCfgExport=j; try{navigator.clipboard.writeText(j);}catch(e){} alert('Config copied — paste it to me:\n\n'+j); };
+} else {
+  const eb=document.getElementById('editBtn'); if(eb) eb.style.display='none';   // customers never see the setup tools
+}
+
+// expose for verification/tuning
+window.__spike={camera,scene,renderer,marker,jewelAnchor,loadGLBAtSpot,syncOrientUI,get PIECE_CFG(){return PIECE_CFG},get earPoint(){return earPoint},get earNormal(){return earNormal},setEar,TUNE,setPiece,PIECES,SPOTS,selectSpot,get activeSpot(){return activeSpot},
+  view(name){qs.set('shot',name);applyShot();}, ready(){return !!headMesh}, stop(){fly=null;}, setTarget(x,y,z){curTarget.set(x,y,z);},
+  setCam(px,py,pz,tx,ty,tz){fly=null;camera.position.set(px,py,pz);curTarget.set(tx,ty,tz);},
+  pickAt(nx,ny){ const rc=new THREE.Raycaster(); rc.setFromCamera({x:nx,y:ny},camera); const h=rc.intersectObject(headMesh,true); if(!h.length) return null; return {p:[+h[0].point.x.toFixed(4),+h[0].point.y.toFixed(4),+h[0].point.z.toFixed(4)]}; },
+  previewPoints(map){ SPOTS.forEach(sp=>{ if(map[sp.key]){ sp.pt=map[sp.key]; sp.point=new THREE.Vector3(...map[sp.key]); sp.normal=new THREE.Vector3(1,0,0.2).normalize(); }}); if(activeSpot) selectSpot(activeSpot,{fly:false}); },
+  silhouette(z){ const out=[]; for(let y=-0.15;y<=0.42;y+=0.02){ const h=castSide(y,z); out.push([+y.toFixed(2), h? +(h.point.x*TUNE.side).toFixed(3): null]); } return out; }};
+</script>
+</body></html>

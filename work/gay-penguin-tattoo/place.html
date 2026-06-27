@@ -1,0 +1,301 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Placement Editor · The Gay Penguin piercings</title>
+<style>
+:root{--pink:#ff3d8b;--pink-d:#d81b6a;--ink:#2b2330;--line:#ffd0e4}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:'Nunito','Segoe UI',sans-serif;background:#1a1620;color:var(--ink);overflow:hidden}
+#stage{position:fixed;inset:0}
+canvas{display:block;touch-action:none}
+.bar{position:fixed;z-index:6;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:14px;box-shadow:0 8px 24px rgba(0,0,0,.22)}
+#regions{top:14px;left:14px;display:flex;gap:4px;padding:5px}
+#regions button{font:600 14px Nunito;border:0;background:transparent;color:#7c6a78;padding:8px 16px;border-radius:10px;cursor:pointer}
+#regions button.on{background:var(--pink-d);color:#fff}
+#tools{top:14px;right:14px;display:flex;gap:4px;align-items:center;padding:5px}
+#tools button{font:600 13px Nunito;border:0;background:#f3eef1;color:#7c6a78;padding:8px 12px;border-radius:10px;cursor:pointer}
+#tools .mode.on{background:var(--ink);color:#fff}
+#tools #dotBtn.on{background:#7a3bd8;color:#fff}
+#tools .save{background:var(--pink-d);color:#fff}
+#tools .rm{background:#fff;color:#c0392b;border:1px solid #f0c0bb}
+#tools button:disabled{opacity:.4;cursor:default}
+#status{position:fixed;top:60px;right:14px;z-index:6;font:600 12px Nunito;color:#ffd0e4;text-align:right;text-shadow:0 1px 3px #000;max-width:340px}
+/* size panel (uniform — keeps shape) */
+#sizebar{bottom:120px;left:14px;display:none;flex-direction:column;gap:6px;padding:10px 12px;width:210px}
+#sizebar.on{display:flex}
+#sizebar .t{font:700 12px Nunito;color:var(--ink)}
+#sizebar .row{display:flex;align-items:center;gap:8px}
+#sizebar input[type=range]{flex:1;accent-color:var(--pink-d)}
+#sizebar .sm{font:600 11px Nunito;color:#b08aa0}
+#tray{bottom:14px;left:50%;transform:translateX(-50%);display:flex;gap:8px;padding:10px;max-width:94vw;overflow-x:auto;align-items:center}
+.pc{display:flex;flex-direction:column;align-items:center;gap:5px;border:1.5px solid var(--line);border-radius:14px;padding:7px 9px;cursor:pointer;min-width:78px;background:#fff;transition:.12s}
+.pc.placed{border-color:#7bd88f;background:#f3fff6}
+.pc.sel{border-color:var(--pink-d);box-shadow:0 6px 16px rgba(216,27,106,.25)}
+.pc .th{width:46px;height:46px;border-radius:10px;background:#f3eef1 center/contain no-repeat;border:1px solid #eee}
+.pc small{font:600 11px Nunito;color:var(--ink);text-align:center;line-height:1.1}
+.pc .dot{font-size:9px;color:#7bd88f}
+#hint{position:fixed;bottom:112px;left:50%;transform:translateX(-50%);z-index:6;font:600 12.5px Nunito;color:#fff;background:rgba(43,35,48,.82);padding:7px 14px;border-radius:999px}
+.loading{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;z-index:9;background:#1a1620;color:#ffd0e4;font:600 15px Nunito}
+.loading.gone{opacity:0;pointer-events:none;transition:opacity .5s}
+.spin{width:40px;height:40px;border-radius:50%;border:4px solid #3a2f3f;border-top-color:var(--pink);animation:sp 1s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+</style></head>
+<body>
+<div id="stage"></div>
+<div class="bar" id="regions"></div>
+<div class="bar" id="tools">
+  <button class="mode on" data-mode="translate" title="Move (W)">✛ Move</button>
+  <button class="mode" data-mode="rotate" title="Rotate (E)">⟳ Rotate</button>
+  <button id="dotBtn" title="Place piercing dots (D)">● Dots</button>
+  <button id="undoBtn" title="Undo (Ctrl/Cmd+Z)" disabled>↶ Undo</button>
+  <button class="rm" id="rmBtn" title="Remove selected (Delete)">🗑 Remove</button>
+  <button class="save" id="saveBtn">💾 Save</button>
+</div>
+<div id="status"></div>
+<div class="bar" id="sizebar">
+  <div class="t">Size <span class="sm" id="sizeVal">100%</span></div>
+  <div class="row"><span class="sm">small</span><input type="range" id="sizeSlider" min="25" max="320" value="100"><span class="sm">big</span></div>
+  <div class="sm">Uniform — keeps the exact shape.</div>
+</div>
+<div id="hint">Drop dots on a spot → click a piece → it jumps to the nearest dot → nudge with the arrows.</div>
+<div class="bar" id="tray"></div>
+<div class="loading" id="loading"><div class="spin"></div><span>Loading the head &amp; jewelry…</span></div>
+
+<script type="importmap">
+{"imports":{
+  "three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { TransformControls } from 'three/addons/controls/TransformControls.js';
+
+const G='jewelry/web/';
+const PIECES=[
+  {id:'ear_cz',        name:'CZ stud',     region:'ear',  glb:G+'ear_cz.glb',        disp:'tex'},
+  {id:'star_stud',     name:'Star',        region:'ear',  glb:G+'star_stud.glb',     disp:'silver'},
+  {id:'sparkle_star',  name:'Sparkle',     region:'ear',  glb:G+'sparkle_star.glb',  disp:'tex'},
+  {id:'black_hoop',    name:'Black hoop',  region:'ear',  glb:G+'black_hoop.glb',    disp:'black'},
+  {id:'industrial',    name:'Industrial',  region:'ear',  glb:G+'industrial.glb',    disp:'silver'},
+  {id:'nostril_cz',    name:'Nostril CZ',  region:'nose', glb:G+'nostril_cz.glb',    disp:'tex', tex:'jewelry/web/nostril_tex.jpg'},
+  {id:'teal_opal',     name:'Teal opal',   region:'nose', glb:G+'teal_opal.glb',     disp:'tex'},
+  {id:'horseshoe',     name:'Horseshoe',   region:'nose', glb:G+'horseshoe.glb',     disp:'silver'},
+  {id:'clicker',       name:'Bunny',       region:'nose', glb:G+'clicker.glb',       disp:'tex'},
+  {id:'black_spike',   name:'Black spike', region:'lip',  glb:G+'black_spike.glb',   disp:'black'},
+  {id:'silver_ball',   name:'Silver ball', region:'lip',  glb:G+'silver_ball.glb',   disp:'silver'},
+  {id:'silver_spike',  name:'Silver spike',region:'lip',  glb:G+'silver_spike.glb',  disp:'silver'},
+  {id:'medusa_cz',     name:'Medusa',      region:'lip',  glb:G+'medusa_cz.glb',     disp:'tex'},
+];
+const REGIONS=['ear','nose','lip'];
+let activeRegion='ear';
+
+const stage=document.getElementById('stage');
+const renderer=new THREE.WebGLRenderer({antialias:true});
+renderer.setSize(innerWidth,innerHeight); renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1.15;
+renderer.outputColorSpace=THREE.SRGBColorSpace;
+stage.appendChild(renderer.domElement);
+
+const scene=new THREE.Scene(); scene.background=new THREE.Color(0x26212c);
+const camera=new THREE.PerspectiveCamera(40,innerWidth/innerHeight,0.001,100);
+const pmrem=new THREE.PMREMGenerator(renderer);
+scene.environment=pmrem.fromScene(new RoomEnvironment(),0.04).texture;
+scene.add(new THREE.HemisphereLight(0xffffff,0x99aabb,0.7));
+const klight=new THREE.DirectionalLight(0xffffff,1.8); klight.position.set(2,3,4); scene.add(klight);
+const rim=new THREE.DirectionalLight(0xeaf0ff,0.8); rim.position.set(-3,1,-2); scene.add(rim);
+
+const orbit=new OrbitControls(camera,renderer.domElement);
+orbit.enableDamping=true; orbit.dampingFactor=0.12; orbit.minDistance=0.05; orbit.maxDistance=8;
+
+const gizmo=new TransformControls(camera,renderer.domElement);
+gizmo.setSize(0.8); scene.add(gizmo);
+gizmo.addEventListener('dragging-changed',e=>{ orbit.enabled=!e.value; if(e.value) pushHistory(); });
+gizmo.addEventListener('objectChange',()=>{ dirty=true; });
+
+let HEAD=null, headCenter=new THREE.Vector3(), headR=1;
+const draco=new DRACOLoader(); draco.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/libs/draco/');
+const gltfLoader=new GLTFLoader(); gltfLoader.setDRACOLoader(draco);
+const texLoader=new THREE.TextureLoader();
+const placed={};            // id -> root group
+const dots=[];              // {id,region,pos:[x,y,z],mesh}
+const dotGroup=new THREE.Group(); scene.add(dotGroup);
+let selected=null, dirty=false, dotMode=false;
+const history=[];           // snapshots taken BEFORE each mutation
+
+// ---------- head ----------
+const colMap=texLoader.load('models/Map-COL.jpg'); colMap.colorSpace=THREE.SRGBColorSpace;
+const norMap=texLoader.load('models/Infinite-Level_02_Tangent_SmoothUV.jpg');
+gltfLoader.load('models/head.glb',(gltf)=>{
+  const mesh=gltf.scene.getObjectByProperty('isMesh',true)||gltf.scene.children[0];
+  mesh.material=new THREE.MeshStandardMaterial({map:colMap,normalMap:norMap,roughness:0.66,metalness:0.0});
+  const box=new THREE.Box3().setFromObject(mesh); const c=box.getCenter(new THREE.Vector3()); const s=box.getBoundingSphere(new THREE.Sphere()).radius;
+  mesh.position.sub(c); mesh.scale.multiplyScalar(1/s);
+  const wrap=new THREE.Group(); wrap.add(mesh); scene.add(wrap);
+  HEAD=mesh; scene.updateMatrixWorld(true);
+  const b2=new THREE.Box3().setFromObject(mesh); headCenter=b2.getCenter(new THREE.Vector3()); headR=b2.getBoundingSphere(new THREE.Sphere()).radius;
+  buildTray(); buildRegions();
+  loadPlacements().finally(()=>{ setRegion('ear'); document.getElementById('loading').classList.add('gone'); });
+},undefined,e=>{ document.querySelector('.loading span').textContent='Could not load head model'; console.error(e); });
+
+function regionView(r){
+  const C=headCenter, R=headR;
+  if(r==='ear')  return {tgt:new THREE.Vector3(C.x+0.62*R,C.y+0.10*R,C.z+0.02*R), cam:new THREE.Vector3(C.x+2.4*R,C.y+0.35*R,C.z+0.5*R)};
+  if(r==='nose') return {tgt:new THREE.Vector3(C.x,C.y+0.06*R,C.z+0.70*R), cam:new THREE.Vector3(C.x,C.y+0.18*R,C.z+2.4*R)};
+  return                {tgt:new THREE.Vector3(C.x,C.y-0.10*R,C.z+0.66*R), cam:new THREE.Vector3(C.x,C.y-0.05*R,C.z+2.4*R)};
+}
+function setRegion(r){
+  activeRegion=r; const v=regionView(r);
+  camera.position.copy(v.cam); orbit.target.copy(v.tgt); orbit.update();
+  document.querySelectorAll('#regions button').forEach(b=>b.classList.toggle('on',b.dataset.r===r));
+  buildTray(); refreshDotColors();
+}
+
+// ---------- pieces ----------
+function normScale(obj){ const b=new THREE.Box3().setFromObject(obj); const sz=b.getSize(new THREE.Vector3()); const m=Math.max(sz.x,sz.y,sz.z)||1; return (0.10*headR)/m; }
+function treat(obj,p){
+  if(p.disp==='silver'||p.disp==='black'){
+    const col=p.disp==='black'?0x14110f:0xeceef2; const rough=p.disp==='black'?0.34:0.18;
+    const mat=new THREE.MeshStandardMaterial({color:col,metalness:1.0,roughness:rough,envMapIntensity:1.6});
+    obj.traverse(n=>{if(n.isMesh)n.material=mat;});
+  } else if(p.tex){
+    const t=texLoader.load(p.tex); t.flipY=false; t.colorSpace=THREE.SRGBColorSpace;
+    obj.traverse(n=>{if(n.isMesh&&n.material){n.material.map=t;n.material.needsUpdate=true;}});
+  }
+}
+function nearestDot(region,vec){ let best=null,bd=1e9; dots.forEach(d=>{ if(d.region!==region)return; const dd=vec.distanceToSquared(new THREE.Vector3(...d.pos)); if(dd<bd){bd=dd;best=d;} }); return best; }
+function addPiece(p,xform){
+  if(placed[p.id]){ select(placed[p.id]); return; }
+  if(!xform) pushHistory();
+  gltfLoader.load(p.glb,(g)=>{
+    const obj=g.scene;
+    const b=new THREE.Box3().setFromObject(obj); const c=b.getCenter(new THREE.Vector3());
+    const inner=new THREE.Group(); inner.add(obj); obj.position.sub(c);
+    treat(inner,p);
+    const root=new THREE.Group(); root.add(inner); root.userData.pid=p.id; root.userData.base=normScale(inner);
+    if(xform){ root.position.fromArray(xform.pos); root.rotation.fromArray(xform.rot); root.scale.setScalar(xform.scale); }
+    else {
+      const d=nearestDot(p.region, orbit.target);                 // jump to nearest dot in this region
+      root.position.copy(d? new THREE.Vector3(...d.pos) : regionView(p.region).tgt);
+      root.scale.setScalar(root.userData.base);
+    }
+    root.traverse(n=>{if(n.isMesh)n.userData.pieceRoot=root;});
+    scene.add(root); placed[p.id]=root;
+    if(!xform){ select(root); dirty=true; }
+    buildTray();
+  },undefined,e=>console.error('piece load',p.id,e));
+}
+function select(root){ selected=root; gizmo.attach(root); syncSize(); buildTray(); }
+function deselect(){ selected=null; gizmo.detach(); document.getElementById('sizebar').classList.remove('on'); buildTray(); }
+function removeSelected(){ if(!selected)return; pushHistory(); const pid=selected.userData.pid; gizmo.detach(); scene.remove(selected); delete placed[pid]; selected=null; document.getElementById('sizebar').classList.remove('on'); dirty=true; buildTray(); }
+
+// ---------- dots ----------
+function dotMeshAt(pos,region){ const m=new THREE.Mesh(new THREE.SphereGeometry(0.012,16,16), new THREE.MeshBasicMaterial({color:region===activeRegion?0xff2fa0:0x8a6bd8})); m.position.set(pos[0],pos[1],pos[2]); m.renderOrder=999; m.material.depthTest=false; return m; }
+function addDotRaw(d){ const m=dotMeshAt(d.pos,d.region); d.mesh=m; dotGroup.add(m); dots.push(d); }
+function refreshDotColors(){ dots.forEach(d=>{ if(d.mesh) d.mesh.material.color.set(d.region===activeRegion?0xff2fa0:0x8a6bd8); }); }
+function clearDots(){ dots.splice(0).forEach(d=>{ if(d.mesh) dotGroup.remove(d.mesh); }); }
+function addDotAt(point){ pushHistory(); const id=activeRegion+'-'+(dots.filter(d=>d.region===activeRegion).length+1)+'-'+Math.floor(performance.now()%10000); addDotRaw({id,region:activeRegion,pos:[+point.x.toFixed(4),+point.y.toFixed(4),+point.z.toFixed(4)]}); dirty=true; }
+function removeDot(d){ pushHistory(); const i=dots.indexOf(d); if(i>=0){ dotGroup.remove(d.mesh); dots.splice(i,1); dirty=true; } }
+
+// ---------- size (uniform) ----------
+const sizeSlider=document.getElementById('sizeSlider'), sizeVal=document.getElementById('sizeVal');
+function syncSize(){ const sb=document.getElementById('sizebar'); if(!selected){sb.classList.remove('on');return;} sb.classList.add('on'); const pct=Math.round(selected.scale.x/selected.userData.base*100); sizeSlider.value=Math.min(320,Math.max(25,pct)); sizeVal.textContent=sizeSlider.value+'%'; }
+sizeSlider.addEventListener('pointerdown',()=>{ if(selected) pushHistory(); });
+sizeSlider.addEventListener('input',()=>{ if(!selected)return; selected.scale.setScalar(selected.userData.base*(+sizeSlider.value/100)); sizeVal.textContent=sizeSlider.value+'%'; dirty=true; });
+
+// ---------- undo ----------
+function collectPieces(){ const o={}; for(const id in placed){ const r=placed[id]; o[id]={pos:r.position.toArray(),rot:[r.rotation.x,r.rotation.y,r.rotation.z],scale:r.scale.x,region:(PIECES.find(p=>p.id===id)||{}).region}; } return o; }
+function collectDots(){ return dots.map(d=>({id:d.id,region:d.region,pos:d.pos})); }
+function snapshot(){ return JSON.parse(JSON.stringify({pieces:collectPieces(),dots:collectDots()})); }
+function pushHistory(){ history.push(snapshot()); if(history.length>50) history.shift(); document.getElementById('undoBtn').disabled=false; }
+function applyState(s){
+  clearDots(); (s.dots||[]).forEach(d=>addDotRaw({id:d.id,region:d.region,pos:d.pos}));
+  const want=s.pieces||{};
+  for(const id in placed){ if(!want[id]){ const r=placed[id]; if(selected===r) deselect(); scene.remove(r); delete placed[id]; } }
+  for(const id in want){ const p=PIECES.find(x=>x.id===id); if(!p) continue;
+    if(placed[id]){ const r=placed[id]; r.position.fromArray(want[id].pos); r.rotation.fromArray(want[id].rot); r.scale.setScalar(want[id].scale); }
+    else addPiece(p,want[id]); }
+  refreshDotColors(); buildTray(); syncSize();
+}
+function undo(){ if(!history.length)return; const s=history.pop(); applyState(s); dirty=true; if(!history.length) document.getElementById('undoBtn').disabled=true; }
+
+// ---------- UI ----------
+function buildRegions(){ const r=document.getElementById('regions'); r.innerHTML='';
+  REGIONS.forEach(rg=>{ const b=document.createElement('button'); b.dataset.r=rg; b.textContent=rg[0].toUpperCase()+rg.slice(1); b.onclick=()=>setRegion(rg); r.appendChild(b); }); }
+function buildTray(){ const t=document.getElementById('tray'); t.innerHTML='';
+  PIECES.filter(p=>p.region===activeRegion).forEach(p=>{
+    const d=document.createElement('div'); d.className='pc'+(placed[p.id]?' placed':'')+(selected&&selected.userData.pid===p.id?' sel':'');
+    d.innerHTML='<span class="th" style="background-image:url(jewelry/web/thumbs/'+p.id+'.jpg)"></span><small>'+p.name+'</small>'+(placed[p.id]?'<span class="dot">● placed</span>':'');
+    d.onclick=()=>{ if(placed[p.id]) select(placed[p.id]); else addPiece(p); };
+    t.appendChild(d);
+  });
+}
+function setGizmoMode(m){ gizmo.setMode(m); document.querySelectorAll('#tools .mode').forEach(x=>x.classList.toggle('on',x.dataset.mode===m)); }
+document.querySelectorAll('#tools .mode').forEach(b=>b.onclick=()=>setGizmoMode(b.dataset.mode));
+document.getElementById('dotBtn').onclick=()=>{ dotMode=!dotMode; document.getElementById('dotBtn').classList.toggle('on',dotMode); document.getElementById('hint').textContent = dotMode? 'DOT MODE: click the head to drop a spot · click a dot to remove it' : 'Drop dots on a spot → click a piece → it jumps to the nearest dot → nudge with the arrows'; if(dotMode) deselect(); };
+document.getElementById('undoBtn').onclick=undo;
+document.getElementById('rmBtn').onclick=removeSelected;
+document.getElementById('saveBtn').onclick=save;
+addEventListener('keydown',e=>{
+  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){ e.preventDefault(); undo(); return; }
+  if(e.target.tagName==='INPUT') return;
+  if(e.key==='w') setGizmoMode('translate'); if(e.key==='e') setGizmoMode('rotate');
+  if(e.key==='d') document.getElementById('dotBtn').click();
+  if(e.key==='Delete'||e.key==='Backspace') removeSelected();
+  if(e.key==='Escape') deselect();
+});
+
+// click: dot mode = place/remove dots · select mode = select pieces
+let downXY=null;
+renderer.domElement.addEventListener('pointerdown',e=>downXY=[e.clientX,e.clientY]);
+renderer.domElement.addEventListener('pointerup',e=>{
+  if(gizmo.dragging) return;
+  if(!downXY||Math.hypot(e.clientX-downXY[0],e.clientY-downXY[1])>5) return;
+  const rect=renderer.domElement.getBoundingClientRect();
+  const nx=((e.clientX-rect.left)/rect.width)*2-1, ny=-((e.clientY-rect.top)/rect.height)*2+1;
+  const rc=new THREE.Raycaster(); rc.setFromCamera({x:nx,y:ny},camera);
+  if(dotMode){
+    // remove if clicking an existing dot
+    const dh=rc.intersectObjects(dots.map(d=>d.mesh).filter(Boolean),false);
+    if(dh.length){ const d=dots.find(x=>x.mesh===dh[0].object); if(d) removeDot(d); return; }
+    if(HEAD){ const h=rc.intersectObject(HEAD,true); if(h.length) addDotAt(h[0].point); }
+    return;
+  }
+  const hits=rc.intersectObjects(Object.values(placed),true);
+  if(hits.length){ let o=hits[0].object; while(o&&!o.userData.pid) o=o.parent; if(o) select(o); }
+  else deselect();
+});
+
+// ---------- save / load ----------
+const LS='gp_placements_v2';
+function collect(){ return {pieces:collectPieces(),dots:collectDots()}; }
+async function save(){
+  const data=collect(); const json=JSON.stringify(data,null,2);
+  localStorage.setItem(LS,JSON.stringify(data));
+  const st=document.getElementById('status'); const n=Object.keys(data.pieces).length;
+  let copied=false; try{ await navigator.clipboard.writeText(json); copied=true; }catch(e){}
+  try{ await fetch('/api/save',{method:'POST',headers:{'Content-Type':'application/json'},body:json}); }catch(e){}
+  st.textContent=(copied?'✓ Saved + copied — paste to Claude to bake in':'✓ Saved in this browser')+' ('+n+' pieces, '+data.dots.length+' dots)';
+  dirty=false;
+}
+async function loadPlacements(){
+  let data=null;
+  try{ const r=await fetch('jewelry/placements.json',{cache:'no-store'}); if(r.ok) data=await r.json(); }catch(e){}
+  if(!data){ try{ data=JSON.parse(localStorage.getItem(LS)); }catch(e){} }
+  if(!data) return;
+  const pieces = data.pieces || (data.dots?{}:data);   // tolerate old flat format
+  (data.dots||[]).forEach(d=>addDotRaw({id:d.id,region:d.region,pos:d.pos}));
+  for(const id in pieces){ const p=PIECES.find(x=>x.id===id); if(p) addPiece(p,pieces[id]); }
+}
+
+addEventListener('resize',()=>{ camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth,innerHeight); });
+addEventListener('beforeunload',e=>{ if(dirty){ e.preventDefault(); e.returnValue=''; } });
+function loop(){ requestAnimationFrame(loop); orbit.update(); renderer.render(scene,camera); }
+loop();
+window.__place={scene,camera,placed,dots,setRegion,addPiece,save,undo,get selected(){return selected}};
+</script>
+</body></html>

@@ -1,0 +1,22 @@
+<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;height:100%;background:#eee}#s{position:fixed;inset:0}</style></head>
+<body><div id="s"></div>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+const qs=new URLSearchParams(location.search), URL=qs.get('m');
+const r=new THREE.WebGLRenderer({antialias:true}); r.setSize(innerWidth,innerHeight); r.setPixelRatio(Math.min(devicePixelRatio,2));
+r.toneMapping=THREE.ACESFilmicToneMapping; r.toneMappingExposure=1.05; document.getElementById('s').appendChild(r.domElement);
+const scene=new THREE.Scene(); scene.background=new THREE.Color(0xeeeeee);
+const cam=new THREE.PerspectiveCamera(35,innerWidth/innerHeight,0.01,100);
+const pm=new THREE.PMREMGenerator(r); scene.environment=pm.fromScene(new RoomEnvironment(),0.04).texture;
+scene.add(new THREE.HemisphereLight(0xffffff,0xcccccc,0.6));
+const k=new THREE.DirectionalLight(0xffffff,2.2); k.position.set(2,2,3); scene.add(k);
+let center=new THREE.Vector3(), radius=1;
+new GLTFLoader().load(URL,(g)=>{ const o=g.scene; const box=new THREE.Box3().setFromObject(o); center=box.getCenter(new THREE.Vector3()); radius=box.getBoundingSphere(new THREE.Sphere()).radius; scene.add(o); window.__ready=true; },undefined,e=>{window.__err=String(e)});
+window.view=(ax,ay,az)=>{ cam.position.set(center.x+ax*radius, center.y+ay*radius, center.z+az*radius); cam.lookAt(center); };
+window.viewAt=(ax,ay,az, ty)=>{ const t=new THREE.Vector3(center.x, center.y+(ty||0)*radius, center.z); cam.position.set(t.x+ax*radius, t.y+ay*radius, t.z+az*radius); cam.lookAt(t); };
+window.bbox=()=>({radius, c:[center.x,center.y,center.z]});
+function loop(){ requestAnimationFrame(loop); r.render(scene,cam); } loop();
+</script></body></html>

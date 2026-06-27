@@ -1,0 +1,42 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>3D head preview · The Gay Penguin</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>:root{--pink-d:#d81b6a;--line:#f3d9e8}
+*{box-sizing:border-box;margin:0;padding:0}html,body{height:100%}
+body{font-family:'Nunito',sans-serif;background:radial-gradient(120% 120% at 50% 0%,#fff8fc,#ffe6f1 70%,#ffd7ea);overflow:hidden;color:#2b2330}
+#s{position:fixed;inset:0}
+.hud{position:fixed;top:0;left:0;right:0;z-index:5;text-align:center;padding:14px;pointer-events:none}
+.hud h1{font-family:'Fredoka';font-weight:700;font-size:19px}.hud p{font-size:12.5px;color:#7c6a78;margin-top:2px}
+.toggle{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom));left:0;right:0;z-index:5;display:flex;gap:10px;justify-content:center}
+.toggle button{font-family:'Fredoka';font-weight:600;font-size:14px;border:1.5px solid #ffd0e4;background:rgba(255,255,255,.85);color:#2b2330;border-radius:999px;padding:9px 20px;cursor:pointer}
+.toggle button.on{background:var(--pink-d);color:#fff;border-color:var(--pink-d)}
+.hint{position:fixed;bottom:calc(64px + env(safe-area-inset-bottom));left:0;right:0;text-align:center;font-size:11.5px;color:#a78ea0;z-index:5}
+</style></head><body>
+<div id="s"></div>
+<div class="hud"><h1>Your 3D heads 🐧</h1><p>Drag to spin · pinch/scroll to zoom · check the ears</p></div>
+<div class="hint">honest preview — ears are good; hair is rough (AI limit)</div>
+<div class="toggle"><button id="bF" class="on">Female</button><button id="bM">Male</button></div>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+const r=new THREE.WebGLRenderer({antialias:true,alpha:true}); r.setSize(innerWidth,innerHeight); r.setPixelRatio(Math.min(devicePixelRatio,2));
+r.toneMapping=THREE.ACESFilmicToneMapping; r.toneMappingExposure=1.06; document.getElementById('s').appendChild(r.domElement);
+const scene=new THREE.Scene();
+const cam=new THREE.PerspectiveCamera(35,innerWidth/innerHeight,0.01,100); cam.position.set(0.3,0.1,2.4);
+const pm=new THREE.PMREMGenerator(r); scene.environment=pm.fromScene(new RoomEnvironment(),0.04).texture;
+scene.add(new THREE.HemisphereLight(0xffffff,0xffd9ea,0.6));
+const k=new THREE.DirectionalLight(0xffffff,2.2); k.position.set(2,2,3); scene.add(k);
+const oc=new OrbitControls(cam,r.domElement); oc.enableDamping=true; oc.minDistance=0.6; oc.maxDistance=6;
+const loader=new GLTFLoader(); let cur=null;
+function load(url){ loader.load(url,(g)=>{ if(cur) scene.remove(cur); const o=g.scene;
+  const box=new THREE.Box3().setFromObject(o); const c=box.getCenter(new THREE.Vector3()); const rad=box.getBoundingSphere(new THREE.Sphere()).radius;
+  o.position.sub(c); const s=1/rad; o.scale.setScalar(s); scene.add(o); cur=o; oc.target.set(0,0,0); cam.position.set(0.4,0.1,2.4); oc.update(); }); }
+load('models/female_head.glb');
+document.getElementById('bF').onclick=()=>{load('models/female_head.glb');document.getElementById('bF').classList.add('on');document.getElementById('bM').classList.remove('on');};
+document.getElementById('bM').onclick=()=>{load('models/male_head.glb');document.getElementById('bM').classList.add('on');document.getElementById('bF').classList.remove('on');};
+addEventListener('resize',()=>{cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();r.setSize(innerWidth,innerHeight);});
+function loop(){requestAnimationFrame(loop);oc.update();r.render(scene,cam);} loop();
+</script></body></html>

@@ -1,0 +1,430 @@
+{
+  "inventory": [
+    {
+      "distinct_id": "earlobe_clear_cz_stud_05",
+      "piece_type": "CZ stud",
+      "description": "single silver prong-set round clear CZ stud in the earlobe",
+      "locations": [
+        "earlobe"
+      ],
+      "photos": [
+        "/Users/coreysmithagents/ace-sites-v3/digital/work/gay-penguin-tattoo/img/gal_rose_05.jpg"
+      ],
+      "in_catalog": true
+    },
+    {
+      "distinct_id": "rose08_right_earlobe_cz_stud",
+      "piece_type": "CZ stud",
+      "description": "silver-tone earlobe stud with a single clear CZ/diamond-look gem (wearer's right earlobe)",
+      "locations": [
+        "earlobe (wearer's right)"
+      ],
+      "photos": [
+        "/Users/coreysmithagents/ace-sites-v3/digital/work/gay-penguin-tattoo/img/gal_rose_08.jpg"
+      ],
+      "in_catalog": false
+    },
+    {
+      "distinct_id": "rose09_left_earlobe_cz_stud",
+      "piece_type": "CZ stud",
+      "description": "silver-tone earlobe stud with a single clear CZ/diamond-look gem (wearer's left earlobe)",
+      "locations": [
+        "earlobe (wearer's left)"
+      ],
+      "photos": [
+        "/Users/coreysmithagents/ace-sites-v3/digital/work/gay-penguin-tattoo/img/gal_rose_09.jpg"
+      ],
+      "in_catalog": false
+    },
+    {
+      "distinct_id": "ear_star_stud_18",
+      "piece_type": "star stud",
+      "description": "silver-tone puffy/star-shaped stud earring, slight darker outline giving a chrome look",
+      "locations": [
+        "earlobe (upper lobe position)"
+      ],
+      "photos": [
+        "/Users/coreysmithagents/ace-sites-v3/digital/work/gay-penguin-tattoo/img/gal_rose_18.jpg"
+      ],
+      "in_catalog": false
+    },
+    {
+      "distinct_id": "ear_sparkle_cz_stud_18",
+      "piece_type": "sparkle/4-point star CZ stud",
+      "description": "small silver four-point sparkle/star stud set with clear CZ stones",
+      "locations": [
+        "earlobe (mid lobe position)"
+      ],
+      "photos": [
+        "/Users/coreysmithagents/ace-sites-v3/digital/work/gay-penguin-tattoo/img/gal_rose_18.jpg"
+      ],
+      "in_catalog": false
+    },
+    {
+      "distinct_id": "ear_black_hoop_18",
+      "piece_type": "hoop",
+      "description": "black open hoop earring (C-shaped/open-ended), glossy black finish, in the lower lobe",
+      "locations": [
+        "earlobe (lower lobe position)"
+      ],
+      "photos": [
+        "/Users/coreysmithagents/ace-sites-v3/digital/work/gay-penguin-tattoo/img/gal_rose_18.jpg"
+      ],
+      "in_catalog": false
+    },
+    {
+      "distinct_id": "ear_industrial_barbell_18",
+      "piece_type": "industrial barbell (straight barbell with ball ends)",
+      "description": "long silver/steel industrial barbell running diagonally across the upper ear cartilage, plain threaded ball on each end",
+      "locations": [
+        "helix / upper ear (industrial bar spanning two cartilage holes)"
+      ],
+      "photos": [
+        "/Users/coreysmithagents/ace-sites-v3/digital/work/gay-penguin-tattoo/img/gal_rose_18.jpg"
+      ],
+      "in_catalog": true
+    },
+    {
+      "distinct_id": "rose07_lowerlip_left_black_spike",
+      "piece_type": "spike labret stud",
+      "description": "black spike/cone-top labret below lower lip on wearer's left",
+      "locations": [
+        "lower lip / labret (wearer's left)"
+      ],
+      "photos": [
+        "/Users/coreysmithagents/ace-sites-v3/digital/work/gay-penguin-tattoo/img/gal_rose_07.jpg"
+      ],
+      "in_catalog": true
+    },
+    {
+      "distinct_id": "rose07_lowerlip_right_black_spike",
+      "piece_type": "spike labret stud",
+      "description": "black spike/cone-top labret below lower lip on wearer's right",
+      "locations": [
+        "lower lip / labret (wearer's right)"
+      ],
+      "photos": [
+        "/Users/coreysmithagents/ace-sites-v3/digital/work/gay-penguin-tattoo/img/gal_rose_07.jpg"
+      ],
+      "in_catalog": true
+    },
+    {
+      "distinct_id": "personA_lowerlip_ball_labret",
+      "piece_type": "ball labret stud",
+      "description": "silver/steel labret stud centered below the lower lip with a plain round ball end",
+      "locations": [
+        "lower lip / labret"
+      ],
+      "photos": [
+        "/Users/coreysmithagents/ace-sites-v3/digital/work/gay-penguin-tattoo/img/gal_rose_11.jpg",
+        "/Users/coreysmithagents/ace-sites-v3/digital/work/gay-penguin-tattoo/img/gal_rose_12.jpg"
+      ],
+      "in_catalog": false
+    },
+    {
+      "distinct_id": "personC_lip_cluster_stud_top",
+      "piece_type": "CZ stud",
+      "description": "small clear CZ stud in prong setting, top stud of a triangular three-stud lower-lip cluster (silver/steel)",
+      "locations": [
+        "lower lip (cluster, upper-left stud)"
+      ],
+      "photos": [
+        "/Users/coreysmithagents/ace-sites-v3/digital/work/gay-penguin-tattoo/img/gal_rose_15.jpg"
+      ],
+      "in_catalog": false
+    },
+    {
+      "distinct_id": "personC_lip_cluster_stud_bottomleft",
+      "piece_type": "CZ stud",
+      "description": "small clear CZ stud in prong setting, bottom-left stud of the triangular three-stud lower-lip cluster (silver/steel)",
+      "locations": [
+        "lower lip (cluster, lower-left stud)"
+      ],
+      "photos": [
+        "/Users/coreysmithagents/ace-sites-v3/digital/work/gay-penguin-tattoo/img/gal_rose_15.jpg"
+      ],
+      "in_catalog": false
+    },
+    {
+      "distinct_id": "personC_lip_cluster_stud_bottomright",
+      "piece_type": "CZ stud",
+      "description": "small clear CZ stud in prong setting, bottom-right stud of the triangular three-stud lower-lip cluster (silver/steel)",
+      "locations": [
+        "lower lip (cluster, lower-right stud)"
+      ],
+      "photos": [
+        "/Users/coreysmithagents/ace-sites-v3/digital/work/gay-penguin-tattoo/img/gal_rose_15.jpg"
+      ],
+      "in_catalog": false
+    },
+    {
+      "distinct_id": "personC_lip_single_large_cz_stud",
+      "piece_type": "CZ stud",
+      "description": "larger single clear CZ stud in prong setting, set apart to the right of the three-stud cluster on the lower lip (silver/steel)",
+      "locations": [
+        "lower lip (separate right-side stud)"
+      ],
+      "photos": [
+        "/Users/coreysmithagents/ace-sites-v3/digital/work/gay-penguin-tattoo/img/gal_rose_15.jpg"
+      ],
+      "in_catalog": false
+    },
+    {
+      "distinct_id": "navel_silver_heart_cz_01",
+      "piece_type": "navel barbell",
+      "description": "silver curved navel barbell, small round clear CZ on top, heart-shaped clear CZ gem on bottom dangle",
+      "locations": [
+        "navel"
+      ],
+      "photos": [
+        "/Users/coreysmithagents/ace-sites-v3/digital/work/gay-penguin-tattoo/img/gal_rose_01.jpg"
+      ],
+      "in_catalog": true
+    },
+    {
+      "distinct_id": "navel_green_cz_02",
+      "piece_type": "navel barbell",
+      "description": "silver/steel curved navel barbell with two green gems - smaller round green CZ on top, larger green CZ on bottom",
+      "locations": [
+        "navel"
+      ],
+      "photos": [
+        "/Users/coreysmithagents/ace-sites-v3/digital/work/gay-penguin-tattoo/img/gal_rose_02.jpg"
+      ],
+      "in_catalog": true
+    },
+    {
+      "distinct_id": "navel_rosegold_double_heart_cz_03",
+      "piece_type": "navel barbell",
+      "description": "rose-gold curved navel barbell, small heart-shaped clear CZ on top, larger heart-shaped clear CZ on bottom",
+      "locations": [
+        "navel"
+      ],
+      "photos": [
+        "/Users/coreysmithagents/ace-sites-v3/digital/work/gay-penguin-tattoo/img/gal_rose_03.jpg"
+      ],
+      "in_catalog": true
+    },
+    {
+      "distinct_id": "navel_heart_pink_barbell_16",
+      "piece_type": "navel barbell",
+      "description": "silver-tone navel barbell with a small pink/lilac heart-cut CZ on the upper ball and a larger clear/pink heart-cut CZ seated in the navel (single barbell, both gems)",
+      "locations": [
+        "navel (top gem)",
+        "navel (bottom/dangle gem)"
+      ],
+      "photos": [
+        "/Users/coreysmithagents/ace-sites-v3/digital/work/gay-penguin-tattoo/img/gal_rose_16.jpg"
+      ],
+      "in_catalog": false
+    },
+    {
+      "distinct_id": "navel_steel_plain_ball_barbell_17",
+      "piece_type": "navel barbell (curved barbell, plain balls)",
+      "description": "silver/steel curved navel barbell with a small plain ball on top and a larger plain ball seated in the navel; no stones",
+      "locations": [
+        "navel"
+      ],
+      "photos": [
+        "/Users/coreysmithagents/ace-sites-v3/digital/work/gay-penguin-tattoo/img/gal_rose_17.jpg"
+      ],
+      "in_catalog": false
+    },
+    {
+      "distinct_id": "nostril_silver_hoop_04",
+      "piece_type": "hoop",
+      "description": "small silver/steel nostril hoop ring on the wearer's right nostril",
+      "locations": [
+        "nostril"
+      ],
+      "photos": [
+        "/Users/coreysmithagents/ace-sites-v3/digital/work/gay-penguin-tattoo/img/gal_rose_04.jpg"
+      ],
+      "in_catalog": false
+    },
+    {
+      "distinct_id": "rose06_left_nostril_cz_stud",
+      "piece_type": "CZ stud / nostril screw",
+      "description": "small silver/steel-tone nostril stud with a single clear CZ gem",
+      "locations": [
+        "nostril (left)"
+      ],
+      "photos": [
+        "/Users/coreysmithagents/ace-sites-v3/digital/work/gay-penguin-tattoo/img/gal_rose_06.jpg"
+      ],
+      "in_catalog": false
+    },
+    {
+      "distinct_id": "rose08_left_nostril_ball_stud",
+      "piece_type": "ball stud / nostril screw",
+      "description": "small silver/steel-tone nostril stud with a plain rounded silver ball top",
+      "locations": [
+        "nostril (wearer's left)"
+      ],
+      "photos": [
+        "/Users/coreysmithagents/ace-sites-v3/digital/work/gay-penguin-tattoo/img/gal_rose_08.jpg"
+      ],
+      "in_catalog": false
+    },
+    {
+      "distinct_id": "rose09_right_nostril_cz_stud",
+      "piece_type": "CZ stud / nostril screw",
+      "description": "small silver-tone nostril stud with a clear CZ gem",
+      "locations": [
+        "nostril (wearer's right)"
+      ],
+      "photos": [
+        "/Users/coreysmithagents/ace-sites-v3/digital/work/gay-penguin-tattoo/img/gal_rose_09.jpg"
+      ],
+      "in_catalog": false
+    },
+    {
+      "distinct_id": "rose10_left_nostril_teal_opal_stud",
+      "piece_type": "opal/CZ stud / nostril screw",
+      "description": "small nostril stud with a teal/turquoise iridescent (opal-look) gem in a dark/steel setting",
+      "locations": [
+        "nostril (wearer's left)"
+      ],
+      "photos": [
+        "/Users/coreysmithagents/ace-sites-v3/digital/work/gay-penguin-tattoo/img/gal_rose_10.jpg"
+      ],
+      "in_catalog": false
+    },
+    {
+      "distinct_id": "personA_left_nostril_cz_stud",
+      "piece_type": "CZ nostril stud",
+      "description": "small silver/steel nostril stud set with a single clear CZ gem (wearer's left nostril)",
+      "locations": [
+        "left nostril"
+      ],
+      "photos": [
+        "/Users/coreysmithagents/ace-sites-v3/digital/work/gay-penguin-tattoo/img/gal_rose_11.jpg"
+      ],
+      "in_catalog": false
+    },
+    {
+      "distinct_id": "personA_right_nostril_cz_stud",
+      "piece_type": "CZ nostril stud",
+      "description": "small silver/steel nostril stud set with a single clear CZ gem (wearer's right nostril)",
+      "locations": [
+        "right nostril"
+      ],
+      "photos": [
+        "/Users/coreysmithagents/ace-sites-v3/digital/work/gay-penguin-tattoo/img/gal_rose_11.jpg"
+      ],
+      "in_catalog": false
+    },
+    {
+      "distinct_id": "personB_nostril_moon_stud",
+      "piece_type": "crescent-moon nostril stud",
+      "description": "small silver/steel nostril stud shaped like a crescent moon (black-and-white photo, wearer's left nostril)",
+      "locations": [
+        "left nostril"
+      ],
+      "photos": [
+        "/Users/coreysmithagents/ace-sites-v3/digital/work/gay-penguin-tattoo/img/gal_rose_13.jpg",
+        "/Users/coreysmithagents/ace-sites-v3/digital/work/gay-penguin-tattoo/img/gal_rose_14.jpg"
+      ],
+      "in_catalog": false
+    },
+    {
+      "distinct_id": "nostril_cz_stud_19",
+      "piece_type": "nostril stud (CZ stud)",
+      "description": "small silver-tone nostril stud with a single clear/white prong-set CZ",
+      "locations": [
+        "nostril (left nostril)"
+      ],
+      "photos": [
+        "/Users/coreysmithagents/ace-sites-v3/digital/work/gay-penguin-tattoo/img/gal_rose_19.jpg"
+      ],
+      "in_catalog": true
+    },
+    {
+      "distinct_id": "medusa_clear_cz_stud_04",
+      "piece_type": "CZ stud",
+      "description": "Medusa/philtrum stud with a clear round prong-set CZ gem above the center of the upper lip",
+      "locations": [
+        "philtrum"
+      ],
+      "photos": [
+        "/Users/coreysmithagents/ace-sites-v3/digital/work/gay-penguin-tattoo/img/gal_rose_04.jpg"
+      ],
+      "in_catalog": true
+    },
+    {
+      "distinct_id": "septum_silver_horseshoe_04",
+      "piece_type": "horseshoe/circular barbell",
+      "description": "silver/steel septum horseshoe (circular barbell) with two ball ends",
+      "locations": [
+        "septum"
+      ],
+      "photos": [
+        "/Users/coreysmithagents/ace-sites-v3/digital/work/gay-penguin-tattoo/img/gal_rose_04.jpg"
+      ],
+      "in_catalog": true
+    },
+    {
+      "distinct_id": "personA_septum_clicker_3cz",
+      "piece_type": "septum clicker (gemmed)",
+      "description": "silver/steel septum clicker (horseshoe-shaped) with a decorative front cluster of three clear CZ gems flanking a central dark/black bead",
+      "locations": [
+        "septum"
+      ],
+      "photos": [
+        "/Users/coreysmithagents/ace-sites-v3/digital/work/gay-penguin-tattoo/img/gal_rose_11.jpg",
+        "/Users/coreysmithagents/ace-sites-v3/digital/work/gay-penguin-tattoo/img/gal_rose_12.jpg"
+      ],
+      "in_catalog": false
+    },
+    {
+      "distinct_id": "rose07_upper_left_ball_labret",
+      "piece_type": "ball-end labret stud",
+      "description": "silver/steel labret with a plain silver ball top, above upper lip on wearer's left",
+      "locations": [
+        "upper lip / philtrum (wearer's left, medusa-area)"
+      ],
+      "photos": [
+        "/Users/coreysmithagents/ace-sites-v3/digital/work/gay-penguin-tattoo/img/gal_rose_07.jpg"
+      ],
+      "in_catalog": false
+    },
+    {
+      "distinct_id": "rose07_upper_right_ball_labret",
+      "piece_type": "ball-end labret stud",
+      "description": "silver/steel labret with a plain silver ball top, above upper lip on wearer's right",
+      "locations": [
+        "upper lip / philtrum (wearer's right)"
+      ],
+      "photos": [
+        "/Users/coreysmithagents/ace-sites-v3/digital/work/gay-penguin-tattoo/img/gal_rose_07.jpg"
+      ],
+      "in_catalog": false
+    },
+    {
+      "distinct_id": "rose07_upperlip_left_silver_spike",
+      "piece_type": "spike labret stud",
+      "description": "silver/steel labret with a cone/spike top, sitting on the upper lip edge on wearer's left",
+      "locations": [
+        "upper lip border (wearer's left, on the lip line)"
+      ],
+      "photos": [
+        "/Users/coreysmithagents/ace-sites-v3/digital/work/gay-penguin-tattoo/img/gal_rose_07.jpg"
+      ],
+      "in_catalog": false
+    },
+    {
+      "distinct_id": "rose07_upperlip_right_silver_spike",
+      "piece_type": "spike labret stud",
+      "description": "silver/steel labret with a cone/spike top, sitting on the upper lip edge on wearer's right",
+      "locations": [
+        "upper lip border (wearer's right, on the lip line)"
+      ],
+      "photos": [
+        "/Users/coreysmithagents/ace-sites-v3/digital/work/gay-penguin-tattoo/img/gal_rose_07.jpg"
+      ],
+      "in_catalog": false
+    }
+  ],
+  "total_distinct": 34,
+  "summary": "Merged 39 raw sightings into 34 distinct pieces. Two merge cases collapsed split/duplicate rows: the rose_16 navel barbell (logged twice for its top and bottom heart gems = one piece) and three cross-photo same-piece IDs (personA_septum_clicker_3cz in rose_11+12, personA_lowerlip_ball_labret in rose_11+12, personB_nostril_moon_stud in rose_13+14). Of the 34 distinct pieces, 7 match the already-catalogued 13 (in_catalog=true): the industrial barbell (rose_18), heart-navel (silver_heart_cz_01), the two black spike labrets (rose_07 lower-lip pair), the steel circular/horseshoe barbell (septum rose_04), the medusa CZ stud (rose_04), the round CZ nostril stud (rose_19), plus the green-CZ navel (rose_02) and rose-gold heart navel (rose_03) which also map to queued catalog entries. That leaves 27 NEW pieces not yet catalogued, dominated by nostril studs (8 distinct), lip/labret studs, ear studs/hoops, and additional navel barbells. Ordered by body location: earlobe/ear, lip/labret, navel, nostril, philtrum/septum/upper-lip. NOTE: catalog-match confidence is approximate where the queued-catalog descriptions overlap multiple sightings (e.g., several near-identical clear-CZ nostril studs) \u2014 flagged but none dropped, per the complete-census rule."
+}

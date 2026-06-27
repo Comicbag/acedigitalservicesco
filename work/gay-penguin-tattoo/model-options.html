@@ -1,0 +1,50 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pick the 3D model look · The Gay Penguin</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--pink:#ff3d8b;--pink-d:#d81b6a;--ink:#2b2330;--line:#f3d9e8}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:linear-gradient(180deg,#fff8fc,#ffeef6);color:var(--ink);min-height:100vh}
+.rainbow{height:5px;background:linear-gradient(90deg,#ff5c5c,#ffb24c,#ffe14c,#5cd97a,#4cc4ff,#9b6cff,#ff6cd4)}
+.wrap{max-width:760px;margin:0 auto;padding:22px 16px 60px}
+header{text-align:center;padding:10px 0 16px}
+h1{font-family:'Fredoka';font-weight:700;font-size:26px}h1 b{color:var(--pink-d)}
+header p{color:#7c6a78;font-size:15px;margin-top:6px;line-height:1.5}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.card{background:#fff;border:1.5px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 12px 30px rgba(216,27,106,.10)}
+.card img{width:100%;display:block;aspect-ratio:3/4;object-fit:cover}
+.card .cap{display:flex;align-items:center;justify-content:space-between;padding:11px 14px}
+.card .cap b{font-family:'Fredoka';font-weight:600;font-size:15px}
+.card .pick{font-family:'Fredoka';font-weight:600;font-size:12.5px;color:#fff;background:var(--pink-d);border:0;border-radius:999px;padding:7px 14px;cursor:pointer}
+.note{margin-top:20px;font-size:13px;color:#8a7785;background:#fff7fb;border:1px solid var(--line);border-radius:14px;padding:13px 15px;line-height:1.55}
+.note b{color:var(--pink-d)}
+@media(max-width:520px){.grid{grid-template-columns:1fr}}
+</style></head>
+<body>
+<div class="rainbow"></div>
+<div class="wrap">
+  <header>
+    <h1>Pick your <b>3D model</b> 🐧</h1>
+    <p>These are candidate people we'd build the 3D try-on model from. Pick the look that feels right for the shop — I'll turn that one into the 3D model (and we can have both a male and female option).</p>
+  </header>
+  <div class="grid">
+    <div class="card" id="c_f1"><img src="models/options/female_1.png" alt="Female option 1"><div class="cap"><b>Female 1</b><button class="pick" onclick="pick('Female 1','c_f1')">Pick this</button></div></div>
+    <div class="card" id="c_f2"><img src="models/options/female_2.png" alt="Female option 2"><div class="cap"><b>Female 2</b><button class="pick" onclick="pick('Female 2','c_f2')">Pick this</button></div></div>
+    <div class="card" id="c_m1"><img src="models/options/male_1.png" alt="Male option 1"><div class="cap"><b>Male 1</b><button class="pick" onclick="pick('Male 1','c_m1')">Pick this</button></div></div>
+    <div class="card" id="c_m2"><img src="models/options/male_2.png" alt="Male option 2"><div class="cap"><b>Male 2</b><button class="pick" onclick="pick('Male 2','c_m2')">Pick this</button></div></div>
+  </div>
+  <div class="note">
+    <b>How this works:</b> pick a female + a male you like (or tell me to tweak the look). I turn the chosen photos into 3D models with ears/nose for the try-on, wire the male/female toggle, and we add spots region by region. <br><br>
+    <b>Heads first:</b> these cover ears, nose, eyebrow, lip — most piercings. <b>Navel / nipple</b> need a torso, which is the next foundational piece after we lock the face look.
+  </div>
+</div>
+<script>
+function pick(name,id){
+  document.querySelectorAll('.card').forEach(c=>c.style.outline='');
+  document.getElementById(id).style.outline='3px solid var(--pink-d)';
+  document.getElementById(id).scrollIntoView({behavior:'smooth',block:'center'});
+  alert('Nice — '+name+' selected.\n\nNow just tell Claude in chat: "'+name+'" and I\'ll build that one.');
+}
+</script>
+</body></html>

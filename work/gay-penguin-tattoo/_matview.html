@@ -1,0 +1,30 @@
+<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;height:100%;background:#eee}#s{position:fixed;inset:0}</style></head>
+<body><div id="s"></div>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+const qs=new URLSearchParams(location.search), URL=qs.get('m'), MAT=qs.get('mat');
+const r=new THREE.WebGLRenderer({antialias:true}); r.setSize(innerWidth,innerHeight); r.setPixelRatio(Math.min(devicePixelRatio,2));
+r.toneMapping=THREE.ACESFilmicToneMapping; r.toneMappingExposure=1.05; document.getElementById('s').appendChild(r.domElement);
+const scene=new THREE.Scene(); scene.background=new THREE.Color(0xeeeeee);
+const cam=new THREE.PerspectiveCamera(35,innerWidth/innerHeight,0.01,100);
+const pm=new THREE.PMREMGenerator(r); scene.environment=pm.fromScene(new RoomEnvironment(),0.04).texture;
+scene.add(new THREE.HemisphereLight(0xffffff,0xcccccc,0.6));
+const k=new THREE.DirectionalLight(0xffffff,2.2); k.position.set(2,2,3); scene.add(k);
+function makeMat(name){
+  if(name==='steel') return new THREE.MeshStandardMaterial({color:0xdcdfe3,metalness:1.0,roughness:0.20});
+  if(name==='black') return new THREE.MeshStandardMaterial({color:0x121214,metalness:0.30,roughness:0.50});
+  if(name==='gold')  return new THREE.MeshStandardMaterial({color:0xe8c477,metalness:1.0,roughness:0.25});
+  if(name==='glass') return new THREE.MeshPhysicalMaterial({color:0xffffff,metalness:0,roughness:0.02,transmission:1.0,ior:2.2,thickness:0.4,specularIntensity:1.0,clearcoat:1});
+  return null;
+}
+let center=new THREE.Vector3(), radius=1;
+new GLTFLoader().load(URL,(g)=>{ const o=g.scene;
+  const mat=makeMat(MAT); if(mat) o.traverse(n=>{ if(n.isMesh) n.material=mat; });
+  const box=new THREE.Box3().setFromObject(o); center=box.getCenter(new THREE.Vector3()); radius=box.getBoundingSphere(new THREE.Sphere()).radius; scene.add(o); window.__ready=true; },undefined,e=>{window.__err=String(e)});
+window.view=(ax,ay,az)=>{ cam.position.set(center.x+ax*radius, center.y+ay*radius, center.z+az*radius); cam.lookAt(center); };
+window.bbox=()=>({radius, c:[center.x,center.y,center.z]});
+function loop(){ requestAnimationFrame(loop); r.render(scene,cam); } loop();
+</script></body></html>

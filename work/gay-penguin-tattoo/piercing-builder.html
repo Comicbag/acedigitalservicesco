@@ -1,0 +1,113 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Build Your Piercing — The Gay Penguin</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--pink:#ff3d8b;--pink-d:#d81b6a;--pink-soft:#ffd0e4;--ink:#2b2330;--cream:#fff8fc;--line:#f3d9e8;--gold:#e8b04b}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:linear-gradient(180deg,#fff8fc,#ffeef6);color:var(--ink);min-height:100vh}
+.rainbow{height:5px;background:linear-gradient(90deg,#ff5c5c,#ffb24c,#ffe14c,#5cd97a,#4cc4ff,#9b6cff,#ff6cd4)}
+.wrap{max-width:1000px;margin:0 auto;padding:22px}
+header{text-align:center;padding:14px 0 6px}
+header h1{font-family:'Fredoka';font-weight:700;font-size:30px}
+header h1 b{color:var(--pink-d)}
+header p{color:#7c6a78;font-size:16px;margin-top:4px}
+.stage{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:start;margin-top:18px}
+.earcard{background:#fff;border:1px solid var(--line);border-radius:22px;padding:12px;box-shadow:0 18px 40px rgba(216,27,106,.10)}
+.earframe{position:relative;width:100%;aspect-ratio:896/1080;border-radius:16px;overflow:hidden;background:#f7e6ef}
+.earframe img{position:absolute;inset:0;width:100%;height:118%;object-fit:cover;object-position:50% 22%;transform-origin:34% 44%;animation:zoomin 1.6s cubic-bezier(.2,.7,.2,1) both}
+@keyframes zoomin{0%{transform:scale(1.35)}100%{transform:scale(1)}}
+/* hotspots overlaid on the real ear */
+.spot{position:absolute;width:34px;height:34px;margin:-17px 0 0 -17px;border:0;background:none;cursor:pointer;padding:0;opacity:0;animation:fadein .5s ease forwards;animation-delay:1.5s}
+.spot .dot{position:absolute;inset:11px;border-radius:50%;background:var(--pink);box-shadow:0 0 0 2.5px #fff, 0 2px 6px rgba(0,0,0,.25);transition:.15s}
+.spot .ring{position:absolute;inset:11px;border-radius:50%;border:2px solid var(--pink);animation:pulse 2.4s ease-out infinite}
+.spot .lab{position:absolute;left:50%;top:-8px;transform:translate(-50%,-100%);white-space:nowrap;font-family:'Fredoka';font-weight:600;font-size:12px;color:#fff;background:rgba(43,35,48,.86);padding:3px 9px;border-radius:999px;opacity:0;transition:.15s;pointer-events:none}
+.spot:hover .dot,.spot.active .dot{background:var(--pink-d);inset:8px}
+.spot:hover .lab,.spot.active .lab,.spot:focus .lab{opacity:1}
+.spot.active .ring{border-color:#fff}
+@keyframes pulse{0%{inset:11px;opacity:.7}100%{inset:-2px;opacity:0}}
+@keyframes fadein{to{opacity:1}}
+.cap{font-size:12px;color:#a78ea0;text-align:center;margin-top:8px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:22px;padding:22px;min-height:360px;box-shadow:0 18px 40px rgba(216,27,106,.08)}
+.panel .empty{color:#a78ea0;text-align:center;padding:60px 10px;font-size:15.5px}
+.panel .empty .big{font-size:40px;margin-bottom:10px}
+.sel-name{font-family:'Fredoka';font-weight:700;font-size:24px;color:var(--pink-d)}
+.sel-blurb{color:#7c6a78;font-size:14.5px;margin:6px 0 16px;line-height:1.5}
+.jchip{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.jchip span{font-size:12px;font-weight:700;background:#fff0f7;color:var(--pink-d);border:1px solid var(--pink-soft);padding:5px 11px;border-radius:999px}
+.placeholder-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.jph{border:1px dashed var(--pink-soft);border-radius:14px;padding:14px;text-align:center;color:#bda5b6;font-size:12.5px}
+.jph .sw{width:44px;height:44px;border-radius:50%;margin:0 auto 8px;background:linear-gradient(135deg,#ffe8f2,#ffd0e4)}
+.note{margin-top:16px;font-size:12.5px;color:#a78ea0;background:#fff7fb;border-radius:12px;padding:10px 12px}
+@media(max-width:780px){.stage{grid-template-columns:1fr;gap:18px}header h1{font-size:25px}.earframe{max-width:380px;margin:0 auto}}
+</style></head>
+<body>
+<div class="rainbow"></div>
+<div class="wrap">
+  <header>
+    <h1>Build Your <b>Piercing</b> 🐧</h1>
+    <p>Tap a glowing spot on the ear to see what we can do there.</p>
+  </header>
+
+  <div class="stage">
+    <div class="earcard">
+      <div class="earframe" id="frame">
+        <img src="img/ear-real.jpg" alt="Ear — tap a piercing spot">
+        <!-- hotspots: left%/top% over the real ear. data-key + data-name -->
+        <button class="spot" style="left:27%;top:41%" data-key="helix" data-name="Helix"><span class="ring"></span><span class="dot"></span><span class="lab">Helix</span></button>
+        <button class="spot" style="left:40%;top:37%" data-key="forward-helix" data-name="Forward Helix"><span class="ring"></span><span class="dot"></span><span class="lab">Forward helix</span></button>
+        <button class="spot" style="left:33%;top:35%" data-key="industrial" data-name="Industrial"><span class="ring"></span><span class="dot"></span><span class="lab">Industrial</span></button>
+        <button class="spot" style="left:37%;top:46%" data-key="rook" data-name="Rook"><span class="ring"></span><span class="dot"></span><span class="lab">Rook</span></button>
+        <button class="spot" style="left:42%;top:51%" data-key="daith" data-name="Daith"><span class="ring"></span><span class="dot"></span><span class="lab">Daith</span></button>
+        <button class="spot" style="left:37%;top:57%" data-key="snug" data-name="Snug"><span class="ring"></span><span class="dot"></span><span class="lab">Snug</span></button>
+        <button class="spot" style="left:44%;top:56%" data-key="conch" data-name="Conch"><span class="ring"></span><span class="dot"></span><span class="lab">Conch</span></button>
+        <button class="spot" style="left:50%;top:56%" data-key="tragus" data-name="Tragus"><span class="ring"></span><span class="dot"></span><span class="lab">Tragus</span></button>
+        <button class="spot" style="left:45%;top:63%" data-key="anti-tragus" data-name="Anti-Tragus"><span class="ring"></span><span class="dot"></span><span class="lab">Anti-tragus</span></button>
+        <button class="spot" style="left:43%;top:68%" data-key="upper-lobe" data-name="Upper Lobe"><span class="ring"></span><span class="dot"></span><span class="lab">Upper lobe</span></button>
+        <button class="spot" style="left:42%;top:73%" data-key="lobe" data-name="Lobe"><span class="ring"></span><span class="dot"></span><span class="lab">Lobe</span></button>
+      </div>
+      <div class="cap">11 spots · tap any glowing dot</div>
+    </div>
+
+    <div class="panel" id="panel">
+      <div class="empty"><div class="big">👂</div>Pick a spot on the ear to see the jewelry we have for it.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+var BLURB={
+ 'lobe':'The classic. Easiest heal, endless jewelry options.',
+ 'upper-lobe':'A second (or third) lobe spot to stack with your first.',
+ 'helix':'Upper cartilage along the outer rim. Hoops or studs.',
+ 'forward-helix':'Front upper cartilage, close to the face. Great for tiny gems.',
+ 'tragus':'The little flap in front of the ear canal. Subtle and cute.',
+ 'anti-tragus':'The bump just above the lobe. A bolder cartilage look.',
+ 'conch':'The inner bowl. Studs sit flat, big hoops wrap the ear.',
+ 'daith':'The innermost fold above the tragus. Hoop heaven.',
+ 'rook':'The upper inner ridge fold. Curved barbells shine here.',
+ 'snug':'The mid inner ridge. One of the snuggest cartilage spots.',
+ 'industrial':'Two helix points joined by one straight barbell. A statement.'
+};
+var panel=document.getElementById('panel');
+function selectSpot(g){
+  document.querySelectorAll('.spot').forEach(function(s){s.classList.remove('active');});
+  g.classList.add('active');
+  var key=g.getAttribute('data-key'), name=g.getAttribute('data-name');
+  panel.innerHTML='<div class="sel-name">'+name+'</div>'+
+    '<div class="sel-blurb">'+(BLURB[key]||'')+'</div>'+
+    '<div class="jchip"><span>Titanium</span><span>14k Gold</span><span>Gems</span><span>Hoops</span></div>'+
+    '<div class="placeholder-grid">'+
+      '<div class="jph"><div class="sw"></div>Jewelry option</div>'+
+      '<div class="jph"><div class="sw"></div>Jewelry option</div>'+
+      '<div class="jph"><div class="sw"></div>Jewelry option</div>'+
+      '<div class="jph"><div class="sw"></div>Jewelry option</div>'+
+    '</div>'+
+    '<div class="note">Brian’s real jewelry for the <b>'+name+'</b> will load here — tap to add it to your order, then send it to the shop.</div>';
+}
+document.querySelectorAll('.spot').forEach(function(g){
+  g.setAttribute('aria-label',g.getAttribute('data-name'));
+  g.addEventListener('click',function(){selectSpot(g);});
+});
+</script>
+</body></html>
