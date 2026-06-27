@@ -1,0 +1,64 @@
+<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;height:100%;background:#241f2a}#s{position:fixed;inset:0}</style></head><body><div id="s"></div>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+<script type="module">
+import * as THREE from 'three';
+import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+import {DRACOLoader} from 'three/addons/loaders/DRACOLoader.js';
+import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
+const qs=new URLSearchParams(location.search), GEN=qs.get('g')||'female';
+const G='jewelry/web/';
+const PIECES=[
+ {id:'ear_cz',region:'ear',glb:G+'ear_cz.glb',disp:'tex'},{id:'star_stud',region:'ear',glb:G+'star_stud.glb',disp:'silver'},
+ {id:'sparkle_star',region:'ear',glb:G+'sparkle_star.glb',disp:'tex'},{id:'black_hoop',region:'ear',glb:G+'black_hoop.glb',disp:'black'},
+ {id:'industrial',region:'ear',glb:G+'industrial.glb',disp:'silver'},
+ {id:'nostril_cz',region:'nose',glb:G+'nostril_cz.glb',disp:'tex',tex:'jewelry/web/nostril_tex.jpg'},{id:'teal_opal',region:'nose',glb:G+'teal_opal.glb',disp:'tex'},
+ {id:'horseshoe',region:'nose',glb:G+'horseshoe.glb',disp:'silver'},{id:'clicker',region:'nose',glb:G+'clicker.glb',disp:'tex'},
+ {id:'black_spike',region:'lip',glb:G+'black_spike.glb',disp:'black'},{id:'silver_ball',region:'lip',glb:G+'silver_ball.glb',disp:'silver'},
+ {id:'silver_spike',region:'lip',glb:G+'silver_spike.glb',disp:'silver'},{id:'medusa_cz',region:'lip',glb:G+'medusa_cz.glb',disp:'tex'},
+ {id:'green_navel',region:'navel',glb:G+'green_navel.glb',disp:'tex'},{id:'navel_heart',region:'navel',glb:G+'navel_heart.glb',disp:'tex'},
+ {id:'rosegold_heart',region:'navel',glb:G+'rosegold_heart.glb',disp:'tex'},{id:'silver_heart',region:'navel',glb:G+'silver_heart.glb',disp:'tex'},
+ {id:'ball_disc_navel',region:'navel',glb:G+'ball_disc_navel.glb',disp:'silver'}];
+// ftop=fraction below crown; fbot=fraction above bottom; x/z=lateral offsets (frac of H); mm=real-world max size
+const SPOTS={
+ ear_cz:{ray:'side',ftop:0.205,z:-0.02,mm:6}, star_stud:{ray:'side',ftop:0.185,z:-0.02,mm:8},
+ sparkle_star:{ray:'side',ftop:0.165,z:-0.03,mm:9}, black_hoop:{ray:'side',ftop:0.15,z:-0.05,mm:12},
+ industrial:{ray:'side',ftop:0.135,z:-0.04,mm:34},
+ nostril_cz:{ray:'front',ftop:0.178,x:0.022,mm:5}, teal_opal:{ray:'front',ftop:0.178,x:-0.022,mm:5},
+ horseshoe:{ray:'front',ftop:0.195,x:0.0,mm:12}, clicker:{ray:'front',ftop:0.195,x:0.0,mm:12},
+ black_spike:{ray:'front',ftop:0.238,x:0.0,mm:7}, silver_ball:{ray:'front',ftop:0.238,x:0.022,mm:5},
+ silver_spike:{ray:'front',ftop:0.238,x:-0.022,mm:8}, medusa_cz:{ray:'front',ftop:0.208,x:0.0,mm:5},
+ green_navel:{ray:'front',fbot:0.095,x:0.0,mm:14}, navel_heart:{ray:'front',fbot:0.095,x:0.0,mm:14},
+ rosegold_heart:{ray:'front',fbot:0.095,x:0.0,mm:14}, silver_heart:{ray:'front',fbot:0.095,x:0.0,mm:14},
+ ball_disc_navel:{ray:'front',fbot:0.095,x:0.0,mm:13}};
+const BODY_MM=800; // approx crown->hip height the model represents
+
+const r=new THREE.WebGLRenderer({antialias:true});r.setSize(innerWidth,innerHeight);r.setPixelRatio(2);r.toneMapping=THREE.ACESFilmicToneMapping;r.toneMappingExposure=1.0;r.outputColorSpace=THREE.SRGBColorSpace;document.getElementById('s').appendChild(r.domElement);
+const scene=new THREE.Scene();scene.background=new THREE.Color(0x241f2a);const camera=new THREE.PerspectiveCamera(40,innerWidth/innerHeight,0.001,100);
+const pm=new THREE.PMREMGenerator(r);scene.environment=pm.fromScene(new RoomEnvironment(),0.5).texture;
+scene.add(new THREE.HemisphereLight(0xfff4ec,0x404048,0.7));const k=new THREE.DirectionalLight(0xfff2e8,1.3);k.position.set(2,3,4);scene.add(k);const k2=new THREE.DirectionalLight(0xdfe6ff,0.5);k2.position.set(-3,1,-2);scene.add(k2);
+const draco=new DRACOLoader();draco.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/libs/draco/');const gl=new GLTFLoader();gl.setDRACOLoader(draco);
+const SKIN=new THREE.MeshStandardMaterial({color:0xc79a82,roughness:0.62,metalness:0.0});
+let HEAD=null,bMin=new THREE.Vector3(),bMax=new THREE.Vector3();
+const tl=new THREE.TextureLoader();
+function treat(o,p){ if(p.disp==='silver'||p.disp==='black'){const c=p.disp==='black'?0x14110f:0xeceef2,rg=p.disp==='black'?0.34:0.18;const m=new THREE.MeshStandardMaterial({color:c,metalness:1,roughness:rg,envMapIntensity:1.6});o.traverse(n=>{if(n.isMesh)n.material=m;});}else if(p.tex){const t=tl.load(p.tex);t.flipY=false;t.colorSpace=THREE.SRGBColorSpace;o.traverse(n=>{if(n.isMesh&&n.material){n.material.map=t;n.material.needsUpdate=true;}});}}
+const placements={gender:GEN,pieces:{},positions:[]};
+async function loadModel(){return new Promise(res=>{gl.load('models/'+GEN+'.glb',(g)=>{const root=g.scene;let body=null;root.traverse(n=>{if(n.isMesh){n.material=SKIN;const c=n.geometry.attributes.position.count;if(!body||c>body.geometry.attributes.position.count)body=n;}});scene.updateMatrixWorld(true);const bx=new THREE.Box3().setFromObject(root);const c=bx.getCenter(new THREE.Vector3());const s=bx.getBoundingSphere(new THREE.Sphere()).radius;root.position.sub(c);root.scale.multiplyScalar(1/s);const w=new THREE.Group();w.add(root);scene.add(w);HEAD=body;scene.updateMatrixWorld(true);const b2=new THREE.Box3().setFromObject(body);bMin.copy(b2.min);bMax.copy(b2.max);res();});});}
+function piece(p){return new Promise(res=>{gl.load(p.glb,(g)=>{const obj=g.scene;const b=new THREE.Box3().setFromObject(obj);const c=b.getCenter(new THREE.Vector3());const inner=new THREE.Group();inner.add(obj);obj.position.sub(c);treat(inner,p);const root=new THREE.Group();root.add(inner);const sz=new THREE.Box3().setFromObject(inner).getSize(new THREE.Vector3());root.userData.maxDim=Math.max(sz.x,sz.y,sz.z)||1;root.userData.localY=sz.y||0.1;scene.add(root);res(root);});});}
+function raycastSpot(sp){const H=bMax.y-bMin.y,cx=(bMin.x+bMax.x)/2,midZ=(bMin.z+bMax.z)/2;const rc=new THREE.Raycaster();let y;
+ if(sp.fbot!=null)y=bMin.y+sp.fbot*H;else y=bMax.y-sp.ftop*H;
+ if(sp.ray==='side'){rc.set(new THREE.Vector3(bMax.x+0.3,y,midZ+(sp.z||0)*H),new THREE.Vector3(-1,0,0));}
+ else{rc.set(new THREE.Vector3(cx+(sp.x||0)*H,y,bMax.z+0.3),new THREE.Vector3(0,0,-1));}
+ const h=rc.intersectObject(HEAD,true);if(!h.length)return null;return{point:h[0].point.clone(),normal:h[0].face.normal.clone().transformDirection(h[0].object.matrixWorld).normalize()};}
+async function run(){await loadModel();const H=bMax.y-bMin.y;for(const p of PIECES){const root=await piece(p);const sp=SPOTS[p.id];const hit=raycastSpot(sp);if(!hit){console.log('MISS',p.id);continue;}
+ const scale=(sp.mm/BODY_MM)*H/root.userData.maxDim;root.scale.setScalar(scale);
+ root.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),hit.normal);const halfH=(root.userData.localY*scale)/2;root.position.copy(hit.point).addScaledVector(hit.normal,halfH*0.6);
+ placements.pieces[p.id]={pos:root.position.toArray(),rot:[root.rotation.x,root.rotation.y,root.rotation.z],scale,seatNormal:[hit.normal.x,hit.normal.y,hit.normal.z],region:p.region};}
+ window.__placements=placements;window.__ready=true;}
+const HH=()=>bMax.y-bMin.y,CX=()=>(bMin.x+bMax.x)/2;
+window.view=(name)=>{const H=HH(),cx=CX(),fz=bMax.z,midZ=(bMin.z+bMax.z)/2;
+ if(name==='ear'){const y=bMax.y-0.13*H;camera.position.set(cx+0.42*H,y,midZ+0.12*H);camera.lookAt(cx,y,midZ-0.04*H);}
+ else if(name==='face'){const y=bMax.y-0.20*H;camera.position.set(cx,y,fz+0.34*H);camera.lookAt(cx,y,fz);}
+ else if(name==='navel'){const y=bMin.y+0.10*H;camera.position.set(cx,y+0.05*H,fz+0.42*H);camera.lookAt(cx,y,fz);}
+ else{camera.position.set(cx,(bMin.y+bMax.y)/2,fz+1.3*H);camera.lookAt(cx,(bMin.y+bMax.y)/2,0);}};
+function loop(){requestAnimationFrame(loop);r.render(scene,camera);}loop();run();
+</script></body></html>
