@@ -293,7 +293,7 @@ async function save(){
 }
 async function loadAll(){ await Promise.all(PIECES.map(makePiece));
   let data=null;
-  try{ const r=await fetch(PB+'/api/collections/'+COL+'/records?perPage=1&sort=-updated',{cache:'no-store'});
+  try{ const r=await fetch(PB+'/api/collections/'+COL+'/records?perPage=1',{cache:'no-store'});
     if(r.ok){ const j=await r.json(); remoteLoaded=true; if(j.items&&j.items[0]){ recId=j.items[0].id; data=j.items[0].data; } } }catch(e){}
   if(!remoteLoaded){ // server unreachable — show the bundled seed but block Save so we can't clobber the server
     try{ const r=await fetch('jewelry/placements.json',{cache:'no-store'}); if(r.ok) data=await r.json(); }catch(e){}

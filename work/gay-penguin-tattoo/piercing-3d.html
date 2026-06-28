@@ -126,7 +126,7 @@ function flyTo(p){ fly={t0:performance.now(),from:camera.position.clone(),to:p.c
 
 async function loadPlacements(){
   let d=null;
-  try{ const r=await fetch('pb/api/collections/tryon/records?perPage=1&sort=-updated',{cache:'no-store'}); if(r.ok){ const j=await r.json(); if(j.items&&j.items[0]) d=j.items[0].data; } }catch(e){}
+  try{ const r=await fetch('pb/api/collections/tryon/records?perPage=1',{cache:'no-store'}); if(r.ok){ const j=await r.json(); if(j.items&&j.items[0]) d=j.items[0].data; } }catch(e){}
   if(!d){ try{ const r=await fetch('jewelry/placements.json',{cache:'no-store'}); if(r.ok) d=await r.json(); }catch(e){} }
   if(d){ placements=d.pieces||{}; camcfg=d.cameras||{}; }
   const okNum=v=>typeof v==='number'&&isFinite(v), okArr=a=>Array.isArray(a)&&a.length===3&&a.every(okNum);
