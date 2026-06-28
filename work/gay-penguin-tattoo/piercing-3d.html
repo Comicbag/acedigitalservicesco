@@ -35,9 +35,9 @@ canvas{display:block;touch-action:none}
 <body>
 <div class="rainbow"></div>
 <div id="stage"></div>
-<div class="hud"><h1>Try It On <b>— in 3D</b> 🐧</h1><p>Drag to spin · tap a piece to try it on</p></div>
+<div class="hud"><h1>Try It On <b>— in 3D</b> 🐧</h1><p>Tap a body part to zoom in · tap a piece to try it on · drag to spin</p></div>
 <div class="regions" id="regions"></div>
-<div class="controls"><button id="resetBtn">↺ Reset view</button><button id="clearBtn">Clear all</button></div>
+<div class="controls"><button id="resetBtn">⤢ Full view</button><button id="clearBtn">Clear all</button></div>
 <div class="tray" id="tray"></div>
 <div class="tag">3D preview · real shop jewelry</div>
 <div class="loading" id="loading"><div class="spin"></div><span>Loading the 3D try-on…</span></div>
@@ -123,6 +123,10 @@ function setRegion(r,animate){ activeRegion=r; const v=regionView(r);
 }
 let fly=null;
 function flyTo(p){ fly={t0:performance.now(),from:camera.position.clone(),to:p.clone()}; }
+function wideView(){ const minY=bMin.y,maxY=bMax.y,H=Math.max(0.001,maxY-minY); const cx=(bMin.x+bMax.x)/2,midZ=(bMin.z+bMax.z)/2,cy=(minY+maxY)/2;
+  return {tgt:new THREE.Vector3(cx,cy,midZ), cam:new THREE.Vector3(cx,cy+0.04*H,bMax.z+1.45*H)}; }
+function goWide(animate){ const w=wideView(); orbit.target.copy(w.tgt); if(animate===false){ camera.position.copy(w.cam); } else { flyTo(w.cam); }
+  document.querySelectorAll('#regions button').forEach(b=>b.classList.remove('on')); }
 
 async function loadPlacements(){
   let d=null;
@@ -144,7 +148,7 @@ async function loadPlacements(){
   // start by showing one piece (single-piece try-on)
   const first=Object.keys(pieceObj).find(id=>CATALOG[id].region==='ear')||Object.keys(pieceObj)[0];
   if(first){ pieceObj[first].visible=true; selected=first; }
-  setRegion('ear',false);
+  activeRegion='ear'; buildTray(); goWide(false);   // start on a wide shot of the whole figure
   document.getElementById('loading').classList.add('gone');
 }
 function buildRegions(){ const c=document.getElementById('regions'); c.innerHTML='';
@@ -163,7 +167,7 @@ function buildTray(){ const t=document.getElementById('tray'); t.innerHTML='';
   });
 }
 document.getElementById('clearBtn').onclick=()=>{ if(selected&&pieceObj[selected])pieceObj[selected].visible=false; selected=null; buildTray(); };
-document.getElementById('resetBtn').onclick=()=>setRegion(activeRegion);
+document.getElementById('resetBtn').onclick=()=>goWide(true);
 addEventListener('resize',()=>{ camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth,innerHeight); });
 function loop(now){ requestAnimationFrame(loop);
   if(fly){ const t=Math.min(1,(now-fly.t0)/700); const e=t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2; camera.position.lerpVectors(fly.from,fly.to,e); camera.lookAt(orbit.target); if(t>=1)fly=null; }
