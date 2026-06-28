@@ -35,7 +35,7 @@ canvas{display:block;touch-action:none}
 <body>
 <div class="rainbow"></div>
 <div id="stage"></div>
-<div class="hud"><h1>Try It On <b>— in 3D</b> 🐧</h1><p>Drag to spin · tap a piece to add or remove it</p></div>
+<div class="hud"><h1>Try It On <b>— in 3D</b> 🐧</h1><p>Drag to spin · tap a piece to try it on</p></div>
 <div class="regions" id="regions"></div>
 <div class="controls"><button id="resetBtn">↺ Reset view</button><button id="clearBtn">Clear all</button></div>
 <div class="tray" id="tray"></div>
@@ -90,8 +90,9 @@ let HEAD=null,bMin=new THREE.Vector3(),bMax=new THREE.Vector3();
 const draco=new DRACOLoader(); draco.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/libs/draco/');
 const gltf=new GLTFLoader(); gltf.setDRACOLoader(draco);
 const tex=new THREE.TextureLoader();
-const pieceObj={};   // id -> root (placed, toggled visible)
+const pieceObj={};   // id -> root (placed)
 let placements={};
+let selected=null;   // only one piece shows at a time
 
 function treat(o,p){ if(p.disp==='silver'||p.disp==='black'){const c=p.disp==='black'?0x14110f:0xeceef2,rg=p.disp==='black'?0.34:0.18;const m=new THREE.MeshStandardMaterial({color:c,metalness:1,roughness:rg,envMapIntensity:1.6});o.traverse(n=>{if(n.isMesh)n.material=m;});}else if(p.tex){const t=tex.load(p.tex);t.flipY=false;t.colorSpace=THREE.SRGBColorSpace;o.traverse(n=>{if(n.isMesh&&n.material){n.material.map=t;n.material.needsUpdate=true;}});}}
 
@@ -130,23 +131,32 @@ async function loadPlacements(){
       const inner=new THREE.Group(); inner.add(obj); obj.position.sub(cc); treat(inner,p);
       const root=new THREE.Group(); root.add(inner);
       const w=placements[id]; root.position.fromArray(w.pos); root.rotation.fromArray(w.rot); root.scale.setScalar(w.scale);
-      root.visible=true; scene.add(root); pieceObj[id]=root; res();
+      root.visible=false; scene.add(root); pieceObj[id]=root; res();
     },undefined,()=>res());
   })));
-  buildRegions(); setRegion('ear',false);
+  buildRegions();
+  // start by showing one piece (single-piece try-on)
+  const first=Object.keys(pieceObj).find(id=>CATALOG[id].region==='ear')||Object.keys(pieceObj)[0];
+  if(first){ pieceObj[first].visible=true; selected=first; }
+  setRegion('ear',false);
   document.getElementById('loading').classList.add('gone');
 }
 function buildRegions(){ const c=document.getElementById('regions'); c.innerHTML='';
   REGIONS.filter(r=>Object.keys(pieceObj).some(id=>CATALOG[id].region===r)).forEach(r=>{ const b=document.createElement('button'); b.dataset.r=r; b.textContent=r[0].toUpperCase()+r.slice(1); b.onclick=()=>setRegion(r); c.appendChild(b); }); }
 function thumb(id){ return G+'thumbs/'+id+'.jpg'; }
+function selectOnly(id){
+  if(selected===id){ pieceObj[id].visible=false; selected=null; }
+  else { if(selected&&pieceObj[selected]) pieceObj[selected].visible=false; pieceObj[id].visible=true; selected=id; }
+  buildTray();
+}
 function buildTray(){ const t=document.getElementById('tray'); t.innerHTML='';
-  Object.keys(pieceObj).filter(id=>CATALOG[id].region===activeRegion).forEach(id=>{ const o=pieceObj[id]; const p=CATALOG[id];
-    const d=document.createElement('div'); d.className='pc'+(o.visible?' on':'');
-    d.innerHTML='<span class="th" style="background-image:url('+thumb(id)+')"></span><small>'+p.name+'</small><span class="chk">'+(o.visible?'✓ on':'')+'</span>';
-    d.onclick=()=>{ o.visible=!o.visible; buildTray(); }; t.appendChild(d);
+  Object.keys(pieceObj).filter(id=>CATALOG[id].region===activeRegion).forEach(id=>{ const p=CATALOG[id]; const on=(id===selected);
+    const d=document.createElement('div'); d.className='pc'+(on?' on':'');
+    d.innerHTML='<span class="th" style="background-image:url('+thumb(id)+')"></span><small>'+p.name+'</small><span class="chk">'+(on?'✓ on':'')+'</span>';
+    d.onclick=()=>{ selectOnly(id); }; t.appendChild(d);
   });
 }
-document.getElementById('clearBtn').onclick=()=>{ Object.values(pieceObj).forEach(o=>o.visible=false); buildTray(); };
+document.getElementById('clearBtn').onclick=()=>{ if(selected&&pieceObj[selected])pieceObj[selected].visible=false; selected=null; buildTray(); };
 document.getElementById('resetBtn').onclick=()=>setRegion(activeRegion);
 addEventListener('resize',()=>{ camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth,innerHeight); });
 function loop(now){ requestAnimationFrame(loop);
