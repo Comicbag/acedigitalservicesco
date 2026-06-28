@@ -51,6 +51,16 @@ canvas{display:block;touch-action:none}
 .loading.gone{opacity:0;pointer-events:none;transition:opacity .5s}
 .spin{width:40px;height:40px;border-radius:50%;border:4px solid #3a2f3f;border-top-color:var(--pink);animation:sp 1s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
+/* phone: stack the admin controls so nothing overlaps */
+@media (max-width:560px){
+  #regions{top:8px;left:50%;right:auto;transform:translateX(-50%);flex-wrap:nowrap;justify-content:center;max-width:96vw;padding:4px;gap:3px}
+  #regions button{padding:7px 12px;font-size:13px}
+  #tools{top:50px;left:8px;right:8px;max-width:none;justify-content:center;flex-wrap:wrap;gap:5px;padding:6px}
+  #tools button{font-size:11px;padding:7px 9px}
+  #status{top:144px;bottom:auto;right:auto;left:50%;transform:translateX(-50%);text-align:center;max-width:92vw}
+  #hint{display:none}
+  #sizebar{left:50%;right:auto;transform:translateX(-50%);width:auto;max-width:92vw;bottom:calc(150px + env(safe-area-inset-bottom))}
+}
 </style></head>
 <body>
 <div id="stage"></div>
