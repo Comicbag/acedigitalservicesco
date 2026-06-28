@@ -152,16 +152,15 @@ function regionView(r){ if(camcfg[r]&&camcfg[r].cam&&camcfg[r].tgt){ return {tgt
   const y=minY+0.10*H; return {tgt:new THREE.Vector3(cx,y,fz), cam:new THREE.Vector3(cx,y+0.05*H,fz+0.46*H)};
 }
 function setRegion(r,animate){ activeRegion=r; const v=regionView(r);
-  if(animate===false){ camera.position.copy(v.cam); } else { flyTo(v.cam); }
-  orbit.target.copy(v.tgt);
+  if(animate===false){ camera.position.copy(v.cam); orbit.target.copy(v.tgt); orbit.update(); } else { flyTo(v.cam, v.tgt); }
   document.querySelectorAll('#regions button').forEach(b=>b.classList.toggle('on',b.dataset.r===r));
   buildTray();
 }
 let fly=null;
-function flyTo(p){ fly={t0:performance.now(),from:camera.position.clone(),to:p.clone()}; }
+function flyTo(p,tgt){ fly={t0:performance.now(),from:camera.position.clone(),to:p.clone(),tf:orbit.target.clone(),tt:(tgt||orbit.target).clone()}; }
 function wideView(){ const minY=bMin.y,maxY=bMax.y,H=Math.max(0.001,maxY-minY); const cx=(bMin.x+bMax.x)/2,midZ=(bMin.z+bMax.z)/2,cy=(minY+maxY)/2;
   return {tgt:new THREE.Vector3(cx,cy,midZ), cam:new THREE.Vector3(cx,cy+0.04*H,bMax.z+1.45*H)}; }
-function goWide(animate){ const w=wideView(); orbit.target.copy(w.tgt); if(animate===false){ camera.position.copy(w.cam); } else { flyTo(w.cam); }
+function goWide(animate){ const w=wideView(); if(animate===false){ camera.position.copy(w.cam); orbit.target.copy(w.tgt); orbit.update(); } else { flyTo(w.cam, w.tgt); }
   document.querySelectorAll('#regions button').forEach(b=>b.classList.remove('on')); }
 
 async function loadPlacements(){
@@ -204,7 +203,7 @@ document.getElementById('clearBtn').onclick=()=>{ if(selected&&pieceObj[selected
 document.getElementById('resetBtn').onclick=()=>goWide(true);
 addEventListener('resize',()=>{ camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth,innerHeight); });
 function loop(now){ requestAnimationFrame(loop);
-  if(fly){ const t=Math.min(1,(now-fly.t0)/700); const e=t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2; camera.position.lerpVectors(fly.from,fly.to,e); camera.lookAt(orbit.target); if(t>=1)fly=null; }
+  if(fly){ const t=Math.min(1,(now-fly.t0)/750); const e=t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2; camera.position.lerpVectors(fly.from,fly.to,e); orbit.target.lerpVectors(fly.tf,fly.tt,e); camera.lookAt(orbit.target); if(t>=1){ camera.position.copy(fly.to); orbit.target.copy(fly.tt); fly=null; } }
   else { orbit.update(); }
   renderer.render(scene,camera);
 }
