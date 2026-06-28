@@ -52,6 +52,19 @@ canvas{display:block;touch-action:none}
   .regions{gap:3px;padding:4px}
   .regions button{padding:7px 12px;font-size:12.5px}
 }
+/* LANDING: before a body part is picked — bare model, bigger body-part BOXES, no tray/controls */
+body:not(.started) .topbar{top:14vh}
+body:not(.started) .hud h1{font-size:30px}
+body:not(.started) .hud p{font-size:15px;margin-top:6px}
+body:not(.started) .regions{background:transparent;border:0;backdrop-filter:none;gap:12px;padding:0;margin-top:12px}
+body:not(.started) .regions button{background:rgba(255,255,255,.94);border:2px solid #ffd0e4;border-radius:18px;box-shadow:0 10px 24px rgba(216,27,106,.14);font-size:19px;padding:18px 30px;color:var(--ink)}
+body:not(.started) .controls{display:none}
+body:not(.started) #tray{display:none}
+@media (max-width:560px){
+  body:not(.started) .topbar{top:10vh}
+  body:not(.started) .hud h1{font-size:24px}
+  body:not(.started) .regions button{font-size:16px;padding:15px 22px}
+}
 </style></head>
 <body>
 <div class="rainbow"></div>
@@ -168,14 +181,12 @@ async function loadPlacements(){
     },undefined,()=>res());
   })));
   buildRegions();
-  // start by showing one piece (single-piece try-on)
-  const first=Object.keys(pieceObj).find(id=>CATALOG[id].region==='ear')||Object.keys(pieceObj)[0];
-  if(first){ pieceObj[first].visible=true; selected=first; }
-  activeRegion='ear'; buildTray(); goWide(false);   // start on a wide shot of the whole figure
+  // landing: bare model (no piercings shown yet), wide view, big body-part picker
+  activeRegion='ear'; buildTray(); goWide(false);
   document.getElementById('loading').classList.add('gone');
 }
 function buildRegions(){ const c=document.getElementById('regions'); c.innerHTML='';
-  REGIONS.filter(r=>Object.keys(pieceObj).some(id=>CATALOG[id].region===r)).forEach(r=>{ const b=document.createElement('button'); b.dataset.r=r; b.textContent=r[0].toUpperCase()+r.slice(1); b.onclick=()=>setRegion(r); c.appendChild(b); }); }
+  REGIONS.filter(r=>Object.keys(pieceObj).some(id=>CATALOG[id].region===r)).forEach(r=>{ const b=document.createElement('button'); b.dataset.r=r; b.textContent=r[0].toUpperCase()+r.slice(1); b.onclick=()=>{ document.body.classList.add('started'); setRegion(r); }; c.appendChild(b); }); }
 function thumb(id){ return G+'thumbs/'+id+'.jpg'; }
 function selectOnly(id){
   if(selected===id){ pieceObj[id].visible=false; selected=null; }
