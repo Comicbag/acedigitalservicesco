@@ -20,6 +20,7 @@ canvas{display:block;touch-action:none}
 #tools .mode.on{background:var(--ink);color:#fff}
 #tools #seatBtn{background:#eafaf0;color:var(--green);border:1px solid #b9ebcc}
 #tools #seatBtn.on{background:var(--green);color:#fff}
+#tools #camBtn{background:#eef2ff;color:#3b5bd8;border:1px solid #c3cdf5}
 #tools #dotBtn.on{background:var(--violet);color:#fff}
 #tools .save{background:var(--pink-d);color:#fff}
 #tools .rm{background:#fff;color:#c0392b;border:1px solid #f0c0bb}
@@ -60,6 +61,7 @@ canvas{display:block;touch-action:none}
   <button class="mode" data-mode="rotate" title="Rotate (E)">⟳ Rotate</button>
   <button id="dotBtn" title="Mark positions (P)">● Dots</button>
   <button id="undoBtn" title="Undo (Ctrl/Cmd+Z)" disabled>↶ Undo</button>
+  <button id="camBtn" title="Set the customer camera angle for this body part">📷 Set camera</button>
   <button class="rm" id="rmBtn" title="Remove selected (Delete)">🗑 Remove</button>
   <button class="save" id="saveBtn">💾 Save</button>
 </div>
@@ -115,7 +117,7 @@ const REGIONS=['ear','nose','lip','navel'];
 const PRESETS={ear:['Lobe','Upper lobe','Helix','Forward helix','Conch','Tragus','Anti-tragus','Daith','Rook','Industrial'],
   nose:['Nostril L','Nostril R','Septum','High nostril','Bridge'], lip:['Labret','Medusa','Monroe','Side lip L','Side lip R','Vertical labret'],
   navel:['Navel','Lower navel']};
-let activeRegion='ear', gender='female';
+let activeRegion='ear', gender='neutral';
 
 const stage=document.getElementById('stage');
 const renderer=new THREE.WebGLRenderer({antialias:true});
@@ -142,6 +144,7 @@ const gltfLoader=new GLTFLoader(); gltfLoader.setDRACOLoader(draco);
 const texLoader=new THREE.TextureLoader();
 const SKIN=new THREE.MeshStandardMaterial({color:0xc79a82,roughness:0.62,metalness:0.0});
 const pieceObj={}; const positions=[]; const posGroup=new THREE.Group(); scene.add(posGroup);
+const cameras={};   // per-region customer camera angles {region:{cam:[x,y,z],tgt:[x,y,z]}}
 let selected=null, dirty=false, seatArmed=false, dotMode=false, presetName=PRESETS.ear[0];
 const history=[];
 
@@ -167,7 +170,8 @@ function afterFirstModel(){
 loadModel();
 
 // region framing on the torso (head near top, navel lower)
-function regionView(r){ const minY=bMin.y,maxY=bMax.y,H=Math.max(0.001,maxY-minY); const cx=(bMin.x+bMax.x)/2, midZ=(bMin.z+bMax.z)/2, fz=bMax.z;
+function regionView(r){ if(cameras[r]&&cameras[r].cam&&cameras[r].tgt){ return {tgt:new THREE.Vector3(...cameras[r].tgt), cam:new THREE.Vector3(...cameras[r].cam)}; }
+  const minY=bMin.y,maxY=bMax.y,H=Math.max(0.001,maxY-minY); const cx=(bMin.x+bMax.x)/2, midZ=(bMin.z+bMax.z)/2, fz=bMax.z;
   if(r==='ear') { const y=maxY-0.10*H; return {tgt:new THREE.Vector3(cx,y,midZ), cam:new THREE.Vector3(cx+0.55*H,y+0.03*H,midZ+0.20*H)}; }
   if(r==='nose'){ const y=maxY-0.13*H; return {tgt:new THREE.Vector3(cx,y,fz), cam:new THREE.Vector3(cx,y+0.01*H,fz+0.40*H)}; }
   if(r==='lip') { const y=maxY-0.19*H; return {tgt:new THREE.Vector3(cx,y,fz), cam:new THREE.Vector3(cx,y,fz+0.36*H)}; }
@@ -180,7 +184,7 @@ function setRegion(r){ activeRegion=r; presetName=PRESETS[r][0]; const v=regionV
 
 function layoutShelf(r){ const list=PIECES.filter(p=>p.region===r); const v=regionView(r); const H=Math.max(0.001,bMax.y-bMin.y);
   const dir=new THREE.Vector3().subVectors(v.tgt,v.cam).normalize();
-  const right=new THREE.Vector3().crossVectors(dir,new THREE.Vector3(0,1,0)).normalize();
+  let right=new THREE.Vector3().crossVectors(dir,new THREE.Vector3(0,1,0)); if(right.lengthSq()<1e-6) right.set(1,0,0); right.normalize();
   const base=v.tgt.clone().addScaledVector(dir,-0.28*H).addScaledVector(new THREE.Vector3(0,-1,0),0.17*H);
   let i=0; const n=list.length;
   list.forEach(p=>{ const o=pieceObj[p.id]; if(!o||o.userData.seated){i++;return;} const off=(i-(n-1)/2)*0.13*H; o.position.copy(base).addScaledVector(right,off); o.quaternion.identity(); i++; }); }
@@ -249,6 +253,8 @@ document.getElementById('dotBtn').onclick=()=>toggleDots();
 document.getElementById('undoBtn').onclick=undo;
 document.getElementById('rmBtn').onclick=removeSelected;
 document.getElementById('saveBtn').onclick=save;
+document.getElementById('camBtn').onclick=()=>{ cameras[activeRegion]={cam:camera.position.toArray().map(v=>+v.toFixed(5)),tgt:orbit.target.toArray().map(v=>+v.toFixed(5))}; dirty=true;
+  document.getElementById('status').textContent='📷 Camera set for '+activeRegion[0].toUpperCase()+activeRegion.slice(1)+' — hit Save to publish it'; };
 addEventListener('keydown',e=>{ if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){ e.preventDefault(); undo(); return; }
   if(e.target.tagName==='INPUT') return;
   if(e.key==='s'&&selected) armSeat(); if(e.key==='w') setGizmoMode('translate'); if(e.key==='e') setGizmoMode('rotate'); if(e.key==='p') toggleDots();
@@ -268,22 +274,39 @@ renderer.domElement.addEventListener('pointerup',e=>{ if(gizmo.dragging) return;
 
 const LS='gp_placements_v5';
 function collect(){ const pieces={}; for(const id in pieceObj){ const r=pieceObj[id]; if(!r.userData.seated) continue; pieces[id]={pos:r.position.toArray(),rot:[r.rotation.x,r.rotation.y,r.rotation.z],scale:r.scale.x,seatNormal:r.userData.seatNormal||null,region:(PIECES.find(p=>p.id===id)||{}).region}; }
-  return {gender,pieces,positions:positions.map(d=>({id:d.id,region:d.region,name:d.name,pos:d.pos}))}; }
-async function save(){ const data=collect(); const json=JSON.stringify(data,null,2); localStorage.setItem(LS,JSON.stringify(data));
-  const st=document.getElementById('status'); const n=Object.keys(data.pieces).length; let copied=false;
-  try{ await navigator.clipboard.writeText(json); copied=true; }catch(e){}
-  try{ await fetch('/api/save',{method:'POST',headers:{'Content-Type':'application/json'},body:json}); }catch(e){}
-  st.textContent=(copied?'✓ Saved + copied — paste to Claude':'✓ Saved in this browser')+' ('+n+' placed, '+data.positions.length+' dots)'; dirty=false; }
+  return {gender,pieces,cameras,positions:positions.map(d=>({id:d.id,region:d.region,name:d.name,pos:d.pos}))}; }
+const PB='pb';            // same-origin reverse proxy -> dedicated PocketBase container
+const COL='tryon';
+let recId=null;           // the single config record
+let remoteLoaded=false;   // guard: don't let Save clobber the server if the initial load failed
+async function save(){
+  const st=document.getElementById('status');
+  if(!remoteLoaded){ st.textContent='⚠ Still connecting to the save server — reload the page, then Save'; return; }
+  const data=collect(); localStorage.setItem(LS,JSON.stringify(data));
+  const n=Object.keys(data.pieces).length; st.textContent='Saving…';
+  try{
+    const url=PB+'/api/collections/'+COL+'/records'+(recId?('/'+recId):'');
+    const res=await fetch(url,{method:recId?'PATCH':'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({data})});
+    if(res.ok){ const j=await res.json(); recId=j.id||recId; st.textContent='✓ Saved — the live try-on now shows this ('+n+' placed, '+data.positions.length+' dots)'; dirty=false; }
+    else { let m=res.status; try{ m=(await res.json()).message||m; }catch(e){} st.textContent='⚠ Save failed: '+m; }
+  }catch(e){ st.textContent='⚠ Could not reach the save server'; }
+}
 async function loadAll(){ await Promise.all(PIECES.map(makePiece));
-  let data=null; try{ const r=await fetch('jewelry/placements.json',{cache:'no-store'}); if(r.ok) data=await r.json(); }catch(e){}
-  if(!data){ try{ data=JSON.parse(localStorage.getItem(LS)); }catch(e){} }
-  if(data){ (data.positions||[]).forEach(d=>addPositionRaw({id:d.id,region:d.region,name:d.name,pos:d.pos}));
+  let data=null;
+  try{ const r=await fetch(PB+'/api/collections/'+COL+'/records?perPage=1&sort=-updated',{cache:'no-store'});
+    if(r.ok){ const j=await r.json(); remoteLoaded=true; if(j.items&&j.items[0]){ recId=j.items[0].id; data=j.items[0].data; } } }catch(e){}
+  if(!remoteLoaded){ // server unreachable — show the bundled seed but block Save so we can't clobber the server
+    try{ const r=await fetch('jewelry/placements.json',{cache:'no-store'}); if(r.ok) data=await r.json(); }catch(e){}
+    if(!data){ try{ data=JSON.parse(localStorage.getItem(LS)); }catch(e){} } }
+  if(data){ if(data.cameras) Object.assign(cameras,data.cameras);
+    (data.positions||[]).forEach(d=>addPositionRaw({id:d.id,region:d.region,name:d.name,pos:d.pos}));
     const pieces=data.pieces||{}; for(const id in pieces){ const r=pieceObj[id]; if(!r)continue; const w=pieces[id]; r.position.fromArray(w.pos); r.rotation.fromArray(w.rot); r.scale.setScalar(w.scale); r.userData.seated=true; r.userData.seatNormal=w.seatNormal||null; } }
-  refreshPosMarkers(); }
+  refreshPosMarkers();
+  if(!remoteLoaded){ document.getElementById('status').textContent='⚠ Couldn’t reach the save server — reload before editing'; } }
 
 addEventListener('resize',()=>{ camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth,innerHeight); });
 addEventListener('beforeunload',e=>{ if(dirty){ e.preventDefault(); e.returnValue=''; } });
 function loop(){ requestAnimationFrame(loop); orbit.update(); renderer.render(scene,camera); } loop();
-window.__place={scene,camera,pieceObj,positions,setRegion,save,undo,armSeat,select,loadModel,get selected(){return selected},get seatArmed(){return seatArmed},get gender(){return gender}};
+window.__place={scene,camera,orbit,cameras,collect,pieceObj,positions,setRegion,save,undo,armSeat,select,loadModel,get selected(){return selected},get seatArmed(){return seatArmed},get gender(){return gender}};
 </script>
 </body></html>
