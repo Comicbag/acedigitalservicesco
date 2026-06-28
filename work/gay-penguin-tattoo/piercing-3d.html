@@ -31,6 +31,15 @@ canvas{display:block;touch-action:none}
 .spin{width:42px;height:42px;border-radius:50%;border:4px solid #ffd0e4;border-top-color:var(--pink-d);animation:sp 1s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
 .loading span{font-family:'Fredoka';color:var(--pink-d);font-weight:600}
+/* narrow screens: stack controls BELOW the tabs so they don't collide */
+@media (max-width:560px){
+  .hud{padding:12px 12px 4px}
+  .hud h1{font-size:18px}
+  .hud p{font-size:11px}
+  .regions{top:54px;padding:4px;gap:3px}
+  .regions button{padding:7px 12px;font-size:12.5px}
+  .controls{top:100px;right:auto;left:50%;transform:translateX(-50%);flex-direction:row;gap:8px}
+}
 </style></head>
 <body>
 <div class="rainbow"></div>
