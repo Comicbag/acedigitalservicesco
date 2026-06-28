@@ -1,0 +1,34 @@
+<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;height:100%;background:#9aa}#s{position:fixed;inset:0}</style></head><body><div id="s"></div>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+<script type="module">
+import * as THREE from 'three';
+import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+import {DRACOLoader} from 'three/addons/loaders/DRACOLoader.js';
+import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
+const r=new THREE.WebGLRenderer({antialias:true});r.setSize(innerWidth,innerHeight);r.setPixelRatio(2);r.toneMapping=THREE.ACESFilmicToneMapping;r.toneMappingExposure=1.05;r.outputColorSpace=THREE.SRGBColorSpace;document.getElementById('s').appendChild(r.domElement);
+const scene=new THREE.Scene();scene.background=new THREE.Color(0x9aa3aa);
+const cam=new THREE.PerspectiveCamera(32,innerWidth/innerHeight,0.001,100);
+const pm=new THREE.PMREMGenerator(r);scene.environment=pm.fromScene(new RoomEnvironment(),0.5).texture;
+scene.add(new THREE.HemisphereLight(0xfff4ec,0x404048,0.8));const k=new THREE.DirectionalLight(0xfff2e8,1.3);k.position.set(2,3,4);scene.add(k);
+const draco=new DRACOLoader();draco.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/libs/draco/');const gl=new GLTFLoader();gl.setDRACOLoader(draco);
+let body=null,bMin,bMax;
+gl.load('models/model.glb',(g)=>{
+ const root=g.scene;root.traverse(n=>{if(n.isMesh){if(!body||n.geometry.attributes.position.count>body.geometry.attributes.position.count)body=n;}});
+ scene.add(root);scene.updateMatrixWorld(true);
+ const bb=new THREE.Box3().setFromObject(body);bMin=bb.min.clone();bMax=bb.max.clone();
+ const H=bMax.y-bMin.y,cx=(bMin.x+bMax.x)/2,fz=bMax.z;
+ const rc=new THREE.Raycaster();
+ const cast=(x,y)=>{rc.set(new THREE.Vector3(x,y,fz+0.6),new THREE.Vector3(0,0,-1));const h=rc.intersectObject(body,true);return h.length?h[0].point.clone():null;};
+ const navel=cast(cx,bMin.y+0.10*H);
+ const eyeL=cast(cx-0.045*H,bMax.y-0.150*H);
+ const eyeR=cast(cx+0.045*H,bMax.y-0.150*H);
+ [[navel,0xff2222],[eyeL,0x22aaff],[eyeR,0x22ff66]].forEach(([p,c])=>{if(p){const m=new THREE.Mesh(new THREE.SphereGeometry(0.015,16,16),new THREE.MeshBasicMaterial({color:c}));m.position.copy(p);m.renderOrder=999;m.material.depthTest=false;scene.add(m);}});
+ window.__pts={navel:navel&&navel.toArray(),eyeL:eyeL&&eyeL.toArray(),eyeR:eyeR&&eyeR.toArray(),H,cx,fz,bMinY:bMin.y,bMaxY:bMax.y};
+ window.__ready=true;
+});
+window.view=(n)=>{const H=bMax.y-bMin.y,cx=(bMin.x+bMax.x)/2,fz=bMax.z;
+ if(n==='face'){const y=bMax.y-0.13*H;cam.position.set(cx,y,fz+0.42*H);cam.lookAt(cx,y,fz);}
+ else if(n==='belly'){const y=bMin.y+0.10*H;cam.position.set(cx,y+0.04*H,fz+0.5*H);cam.lookAt(cx,y,fz);}
+ else{cam.position.set(cx,(bMin.y+bMax.y)/2,fz+1.4*H);cam.lookAt(cx,(bMin.y+bMax.y)/2,0);}};
+function loop(){requestAnimationFrame(loop);r.render(scene,cam);}loop();
+</script></body></html>

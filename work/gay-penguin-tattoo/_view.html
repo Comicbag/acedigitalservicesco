@@ -1,0 +1,32 @@
+<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;height:100%;background:#9aa3aa}#s{position:fixed;inset:0}</style></head><body><div id="s"></div>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+<script type="module">
+import * as THREE from 'three';
+import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+import {DRACOLoader} from 'three/addons/loaders/DRACOLoader.js';
+import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
+const M=new URLSearchParams(location.search).get('m')||'models/model.glb';
+const r=new THREE.WebGLRenderer({antialias:true});r.setSize(innerWidth,innerHeight);r.setPixelRatio(2);r.toneMapping=THREE.ACESFilmicToneMapping;r.toneMappingExposure=1.05;r.outputColorSpace=THREE.SRGBColorSpace;document.getElementById('s').appendChild(r.domElement);
+const scene=new THREE.Scene();scene.background=new THREE.Color(0x9aa3aa);
+const cam=new THREE.PerspectiveCamera(32,innerWidth/innerHeight,0.001,100);
+const pm=new THREE.PMREMGenerator(r);scene.environment=pm.fromScene(new RoomEnvironment(),0.5).texture;
+scene.add(new THREE.HemisphereLight(0xfff4ec,0x404048,0.8));const k=new THREE.DirectionalLight(0xfff2e8,1.3);k.position.set(2,3,4);scene.add(k);const k2=new THREE.DirectionalLight(0xdfe6ff,0.5);k2.position.set(-3,1,-2);scene.add(k2);
+const draco=new DRACOLoader();draco.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/libs/draco/');const gl=new GLTFLoader();gl.setDRACOLoader(draco);
+let bMin,bMax;
+gl.load(M,(g)=>{const root=g.scene;let body=null;root.traverse(n=>{if(n.isMesh){if(!body||n.geometry.attributes.position.count>body.geometry.attributes.position.count)body=n;}});scene.add(root);scene.updateMatrixWorld(true);const bb=new THREE.Box3().setFromObject(body);bMin=bb.min.clone();bMax=bb.max.clone();window.__ready=true;});
+window.view=(n)=>{const H=bMax.y-bMin.y,cx=(bMin.x+bMax.x)/2,fz=bMax.z;
+ if(n==='face'){const y=bMax.y-0.13*H;cam.position.set(cx,y,fz+0.40*H);cam.lookAt(cx,y,fz);}
+ else if(n==='belly'){const y=bMin.y+0.10*H;cam.position.set(cx,y+0.04*H,fz+0.46*H);cam.lookAt(cx,y,fz);}
+ else if(n==='belly3q'){const y=bMin.y+0.10*H;cam.position.set(cx+0.3*H,y+0.06*H,fz+0.4*H);cam.lookAt(cx,y,fz);}
+ else if(n==='eyes'){const y=bMax.y-0.15*H;cam.position.set(cx,y,fz+0.16*H);cam.lookAt(cx,y,fz);}
+ else if(n==='eyeL'){const y=bMax.y-0.15*H;cam.position.set(cx-0.05*H,y,fz+0.085*H);cam.lookAt(cx-0.05*H,y,fz);}
+ else if(n==='ear'){const y=bMax.y-0.12*H;const midZ=(bMin.z+bMax.z)/2;cam.position.set(cx+0.5*H,y+0.02*H,midZ+0.16*H);cam.lookAt(cx,y,midZ-0.02*H);}
+ else if(n==='nose'){const y=bMax.y-0.18*H;cam.position.set(cx,y,fz+0.30*H);cam.lookAt(cx,y,fz);}
+ else if(n==='fbnavel'){const y=bMin.y+0.62*H;cam.position.set(cx,y,fz+0.42*H);cam.lookAt(cx,y,fz);}
+ else if(n==='torsofront'){const y=bMin.y+0.30*H;cam.position.set(cx,y,fz+0.62*H);cam.lookAt(cx,y,fz);}
+ else if(n==='torso3q'){const y=bMin.y+0.30*H;cam.position.set(cx+0.32*H,y+0.04*H,fz+0.5*H);cam.lookAt(cx,y,fz);}
+ else if(n==='exnavel'){const y=bMin.y+0.11*H;cam.position.set(cx,y,fz+0.18*H);cam.lookAt(cx,y,fz);}
+ else if(n==='exnavel3q'){const y=bMin.y+0.11*H;cam.position.set(cx+0.10*H,y+0.03*H,fz+0.15*H);cam.lookAt(cx,y,fz);}
+ else{cam.position.set(cx,(bMin.y+bMax.y)/2,fz+1.4*H);cam.lookAt(cx,(bMin.y+bMax.y)/2,0);}};
+function loop(){requestAnimationFrame(loop);r.render(scene,cam);}loop();
+</script></body></html>
