@@ -206,14 +206,14 @@ function treat(obj,p){
     const mat=new THREE.MeshStandardMaterial({color:col,metalness:1.0,roughness:rough,envMapIntensity:1.6}); obj.traverse(n=>{if(n.isMesh)n.material=mat;}); }
   else if(p.tex){ const t=texLoader.load(p.tex); t.flipY=false; t.colorSpace=THREE.SRGBColorSpace; obj.traverse(n=>{if(n.isMesh&&n.material){n.material.map=t;n.material.needsUpdate=true;}}); }
 }
-function makePiece(p){ return new Promise(res=>{ gltfLoader.load(p.glb,(g)=>{
+function makePiece(p,attempt){ attempt=attempt||0; return new Promise(res=>{ gltfLoader.load(p.glb,(g)=>{
   const obj=g.scene; const b=new THREE.Box3().setFromObject(obj); const c=b.getCenter(new THREE.Vector3());
   const inner=new THREE.Group(); inner.add(obj); obj.position.sub(c); treat(inner,p);
   const root=new THREE.Group(); root.add(inner); root.userData.pid=p.id; root.userData.base=normScale(inner);
   const lb=new THREE.Box3().setFromObject(inner); root.userData.localY=lb.getSize(new THREE.Vector3()).y||0.1;
   root.scale.setScalar(root.userData.base); root.traverse(n=>{if(n.isMesh)n.userData.pieceRoot=root;});
   scene.add(root); pieceObj[p.id]=root; res(root);
-},undefined,e=>{console.error('load',p.id,e);res(null);}); }); }
+},undefined,e=>{ if(attempt<2){ setTimeout(()=>makePiece(p,attempt+1).then(res),500); return; } console.error('load',p.id,e); res(null); }); }); }
 
 function select(root){ selected=root; gizmo.attach(root); document.getElementById('seatBtn').disabled=false; syncSize(); buildTray(); }
 function deselect(){ selected=null; gizmo.detach(); document.getElementById('seatBtn').disabled=true; armSeat(false); document.getElementById('sizebar').classList.remove('on'); buildTray(); }
@@ -284,11 +284,16 @@ renderer.domElement.addEventListener('pointerup',e=>{ if(gizmo.dragging) return;
 
 const LS='gp_placements_v5';
 function collect(){ const pieces={}; for(const id in pieceObj){ const r=pieceObj[id]; if(!r.userData.seated) continue; pieces[id]={pos:r.position.toArray(),rot:[r.rotation.x,r.rotation.y,r.rotation.z],scale:r.scale.x,seatNormal:r.userData.seatNormal||null,region:(PIECES.find(p=>p.id===id)||{}).region}; }
+  // SAFETY: never drop a previously-saved placement just because its 3D file failed to load this session.
+  // A piece the user intentionally removed stays in pieceObj (unseated) and is correctly excluded above;
+  // only pieces entirely absent from pieceObj (failed to load) are carried forward from the last server save.
+  for(const id in savedPieces){ if(!(id in pieceObj)) pieces[id]=savedPieces[id]; }
   return {gender,pieces,cameras,positions:positions.map(d=>({id:d.id,region:d.region,name:d.name,pos:d.pos}))}; }
 const PB='pb';            // same-origin reverse proxy -> dedicated PocketBase container
 const COL='tryon';
 let recId=null;           // the single config record
 let remoteLoaded=false;   // guard: don't let Save clobber the server if the initial load failed
+let savedPieces={};       // last-known-good placements from the server, carried forward so a failed piece load can never drop one
 async function save(){
   const st=document.getElementById('status');
   if(!remoteLoaded){ st.textContent='⚠ Still connecting to the save server — reload the page, then Save'; return; }
@@ -301,10 +306,10 @@ async function save(){
     else { let m=res.status; try{ m=(await res.json()).message||m; }catch(e){} st.textContent='⚠ Save failed: '+m; }
   }catch(e){ st.textContent='⚠ Could not reach the save server'; }
 }
-async function loadAll(){ await Promise.all(PIECES.map(makePiece));
+async function loadAll(){ await Promise.all(PIECES.map(p=>makePiece(p)));
   let data=null;
   try{ const r=await fetch(PB+'/api/collections/'+COL+'/records?perPage=1',{cache:'no-store'});
-    if(r.ok){ const j=await r.json(); remoteLoaded=true; if(j.items&&j.items[0]){ recId=j.items[0].id; data=j.items[0].data; } } }catch(e){}
+    if(r.ok){ const j=await r.json(); remoteLoaded=true; if(j.items&&j.items[0]){ recId=j.items[0].id; data=j.items[0].data; savedPieces=JSON.parse(JSON.stringify((data&&data.pieces)||{})); } } }catch(e){}
   if(!remoteLoaded){ // server unreachable — show the bundled seed but block Save so we can't clobber the server
     try{ const r=await fetch('jewelry/placements.json',{cache:'no-store'}); if(r.ok) data=await r.json(); }catch(e){}
     if(!data){ try{ data=JSON.parse(localStorage.getItem(LS)); }catch(e){} } }
