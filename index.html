@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Ace Digital Services — Websites & Hosting</title>
+<title>Ace Digital Services · Websites & Hosting</title>
 <meta name="description" content="Custom websites, private hosting, and tools for small businesses. Built in Hunterdon County, NJ.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Ace Digital Services">
-<meta property="og:title" content="Ace Digital Services — Websites & Hosting">
+<meta property="og:title" content="Ace Digital Services · Websites & Hosting">
 <meta property="og:description" content="Custom websites, private hosting, and tools for small businesses. Built in Hunterdon County, NJ.">
 <meta property="og:url" content="https://acedigitalservicesco.com/">
 <meta property="og:image" content="https://acedigitalservicesco.com/assets/logo.png">
@@ -22,7 +22,7 @@
     --paper: #f3efe6;
     --paper-warm: #eae3d3;
     /* Unified amber accent across all three Ace sites (photo / 3d / digital).
-       Was brick red (#d8431f) — felt like a separate brand. */
+       Was brick red (#d8431f); felt like a separate brand. */
     --accent: #E8A33D;
     --accent-deep: #c2872d;
     --mute: #6b6658;
@@ -149,7 +149,7 @@
       repeating-linear-gradient(90deg, transparent 0 40px, rgba(255,255,255,0.02) 40px 41px);
   }
   .hero-frame::after {
-    content: "ACE — 2026";
+    content: "ACE · 2026";
     position: absolute; bottom: 1rem; right: 1rem;
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.65rem; letter-spacing: 0.15em;
@@ -209,17 +209,11 @@
   .about-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 4rem; }
   .about-sidebar { display: flex; flex-direction: column; gap: 2rem; }
   .portrait {
-    aspect-ratio: 3 / 4;
-    background:
-      radial-gradient(circle at 50% 40%, rgba(216,67,31,0.35), transparent 60%),
-      linear-gradient(160deg, var(--paper-warm), #d4cbb5);
+    aspect-ratio: 1.307;
+    background: var(--paper-warm);
     position: relative; border: 1px solid var(--rule); overflow: hidden;
   }
-  .portrait::after {
-    content: "";
-    position: absolute; inset: 0;
-    background: repeating-linear-gradient(45deg, transparent 0 20px, rgba(14,14,12,0.04) 20px 21px);
-  }
+  .portrait img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .portrait-label {
     position: absolute; bottom: 1rem; left: 1rem; right: 1rem;
     display: flex; justify-content: space-between;
@@ -228,7 +222,7 @@
     color: var(--ink); z-index: 2;
   }
   .stat-block {
-    display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
     padding: 1.5rem;
     border: 1px solid var(--rule);
     background: var(--paper-warm);
@@ -244,6 +238,23 @@
     font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase;
     color: var(--mute);
     margin-top: 0.3rem; display: block;
+  }
+  .award {
+    display: flex; align-items: center; gap: 0.9rem;
+    padding: 1rem 1.2rem;
+    border: 1px solid var(--rule);
+    background: var(--ink); color: var(--paper);
+  }
+  .award .trophy { font-size: 1.7rem; color: var(--accent); line-height: 1; flex-shrink: 0; }
+  .award .award-text { display: flex; flex-direction: column; }
+  .award .award-name {
+    font-family: 'Fraunces', serif; font-variation-settings: "opsz" 40;
+    font-size: 1.05rem; font-weight: 500; line-height: 1.15;
+  }
+  .award .award-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: rgba(243,239,230,0.6); margin-top: 0.3rem;
   }
   .about-body { font-size: 1.15rem; line-height: 1.6; }
   .about-body .lede {
@@ -272,6 +283,43 @@
     transition: all 0.2s;
   }
   .skills span:hover { background: var(--ink); color: var(--paper); }
+
+  /* WORK */
+  .work-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2.5rem 3rem; }
+  .work-card { text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 1rem; }
+  .work-frame {
+    aspect-ratio: 4 / 3; border: 1px solid var(--rule); overflow: hidden;
+    background: var(--paper-warm); position: relative;
+  }
+  .work-frame img {
+    width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block;
+    transition: transform 0.6s cubic-bezier(0.2,0.8,0.2,1);
+  }
+  .work-card:hover .work-frame img { transform: scale(1.04); }
+  .work-meta {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
+    border-top: 1px solid var(--rule); padding-top: 0.8rem;
+  }
+  .work-name {
+    font-family: 'Fraunces', serif; font-variation-settings: "opsz" 40;
+    font-size: 1.45rem; font-weight: 400; line-height: 1.1;
+  }
+  .work-sub { color: var(--mute); margin-top: 0.25rem; }
+  .work-arrow {
+    font-family: 'JetBrains Mono', monospace; color: var(--accent); font-size: 1.1rem;
+    transition: transform 0.2s; flex-shrink: 0;
+  }
+  .work-card:hover .work-arrow { transform: translate(2px,-2px); }
+  .work-card.feature { grid-column: 1 / -1; }
+  .work-card.feature .work-frame { aspect-ratio: 16 / 7; }
+  .work-card.feature .work-name { font-size: 1.9rem; }
+  .work-tag {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.58rem;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent); border: 1px solid var(--accent-deep);
+    border-radius: 999px; padding: 0.2rem 0.6rem; margin-left: 0.6rem;
+    vertical-align: middle; white-space: nowrap;
+  }
 
   /* REACH */
   .reach { background: var(--ink); color: var(--paper); padding: 7rem 2.5rem; position: relative; overflow: hidden; }
@@ -332,6 +380,7 @@
     .chapter { padding: 4rem 1.2rem; }
     .chapter-head { grid-template-columns: 1fr; gap: 0.8rem; margin-bottom: 2.5rem; }
     .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .work-grid { grid-template-columns: 1fr; gap: 2rem; }
     .contact-grid { grid-template-columns: 1fr; gap: 1.5rem; }
     .reach { padding: 4rem 1.2rem; }
     footer { flex-direction: column; gap: 0.5rem; padding: 1.2rem; }
@@ -342,32 +391,55 @@
   .delay-2 { animation-delay: 0.25s; }
   .delay-3 { animation-delay: 0.4s; }
   @keyframes rise { to { opacity: 1; transform: translateY(0); } }
+
+  /* hamburger menu */
+  .hamburger { background: none; border: 0; cursor: pointer; display: flex; flex-direction: column; gap: 5px; padding: 8px; margin: -8px; }
+  .hamburger span { display: block; width: 26px; height: 2px; background: var(--ink); border-radius: 2px; transition: transform 0.3s ease, opacity 0.2s ease; }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .navmenu { position: absolute; top: calc(100% + 1px); right: 2.5rem; min-width: 230px; background: var(--paper); border: 1px solid var(--rule); box-shadow: 0 18px 44px rgba(14,14,12,0.20); padding: 0.8rem 0; display: flex; flex-direction: column; opacity: 0; visibility: hidden; transform: translateY(-8px); transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s; }
+  .navmenu.open { opacity: 1; visibility: visible; transform: translateY(0); }
+  .navmenu a { display: block; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); text-decoration: none; padding: 0.7rem 1.6rem; transition: background 0.15s, color 0.15s; }
+  .navmenu a:hover { background: var(--paper-warm); color: var(--accent-deep); opacity: 1; }
+  .navmenu-div { height: 1px; background: var(--rule); margin: 0.6rem 1.6rem; }
+  .navmenu-label { font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mute); padding: 0.1rem 1.6rem 0.5rem; }
+  .navmenu .ext { opacity: 0.5; font-size: 0.85em; }
+  @media (max-width: 860px) { .navmenu { right: 1.2rem; left: 1.2rem; min-width: 0; } }
 </style>
+<link rel="canonical" href="https://acedigitalservicesco.com/">
 <script defer src="https://mc.acedigitalservicesco.com/analytics/track.js" data-site="ace-digital"></script>
 </head>
 <body>
 
 <nav>
   <a href="/" class="brand">
-    <img src="assets/logo.png" alt="Ace Digital Services Co.">
+    <img src="assets/logo-clean.png?v=4" alt="Ace Digital Services Co.">
     <span class="brand-text">ACE DIGITAL SERVICES CO.</span>
   </a>
-  <ul>
-    <li><a href="https://acedigitalservicesco.com" class="active">Ace Digital</a></li>
-      <li><a href="https://ace3dprintingco.com">Ace 3D Printing <span class="ext">↗</span></a></li>
-      <li><a href="https://acephotographyco.com">Ace Photography <span class="ext">↗</span></a></li>
-  </ul>
+  <button class="hamburger" id="navToggle" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="navmenu" id="navMenu" aria-label="Site navigation">
+    <a href="#about">About</a>
+    <a href="#work">Work</a>
+    <a href="#reach">Reach</a>
+    <div class="navmenu-div"></div>
+    <span class="navmenu-label">More from Ace</span>
+    <a href="https://ace3dprintingco.com" target="_blank" rel="noopener">Ace 3D Printing <span class="ext">↗</span></a>
+    <a href="https://acephotographyco.com" target="_blank" rel="noopener">Ace Photography <span class="ext">↗</span></a>
+  </div>
 </nav>
 
 <header class="hero">
   <div class="hero-meta">
-    <span class="mono reveal delay-1">Studio — Vol. 01 / 2026</span>
+    <span class="mono reveal delay-1">Ace Digital · Vol. 01 / 2026</span>
     <span class="tag reveal delay-1">Now accepting projects</span>
     <h1 class="display reveal delay-2">
       Custom<br>sites. <em>Real<br>hosting.</em>
     </h1>
     <p class="mono reveal delay-3" style="color: var(--mute); max-width: 32ch; line-height: 1.8;">
-      Custom web design, private hosting, and quietly-working tools for small businesses.
+      Custom web design, private hosting, and practical tools for small businesses.
     </p>
   </div>
 
@@ -382,47 +454,51 @@
 
 <div class="marquee">
   <div class="marquee-track">
-    <span>Web Design</span><span class="dot">✦</span><span>Private Hosting</span><span class="dot">✦</span><span>Branding</span><span class="dot">✦</span><span>Custom Tools</span><span class="dot">✦</span><span>Creative Tech</span><span class="dot">✦</span><span>Web Design</span><span class="dot">✦</span><span>Private Hosting</span><span class="dot">✦</span><span>Branding</span><span class="dot">✦</span><span>Custom Tools</span><span class="dot">✦</span><span>Creative Tech</span><span class="dot">✦</span>
+    <span>Web Design</span><span class="dot">✦</span><span>Private Hosting</span><span class="dot">✦</span><span>Site Management</span><span class="dot">✦</span><span>Branding</span><span class="dot">✦</span><span>Social Media</span><span class="dot">✦</span><span>Photo &amp; Video</span><span class="dot">✦</span><span>Custom Tools</span><span class="dot">✦</span><span>Web Design</span><span class="dot">✦</span><span>Private Hosting</span><span class="dot">✦</span><span>Site Management</span><span class="dot">✦</span><span>Branding</span><span class="dot">✦</span><span>Social Media</span><span class="dot">✦</span><span>Photo &amp; Video</span><span class="dot">✦</span><span>Custom Tools</span><span class="dot">✦</span>
   </div>
 </div>
 
 <section class="chapter" id="about">
   <div class="chapter-head">
     <div class="chapter-num">CH. 01</div>
-    <h2 class="chapter-title">About <em>the studio.</em></h2>
+    <h2 class="chapter-title">About <em>the work.</em></h2>
   </div>
 
   <div class="about-grid">
     <aside class="about-sidebar">
       <div class="portrait">
-        <div class="portrait-label">
-          <span>Studio N°01</span>
-          <span>Hunterdon, NJ</span>
-        </div>
+        <img src="assets/award-citation.jpg" alt="State of New Jersey Senate &amp; General Assembly Citation honoring Corey Smith, Amazing Kids in Business Award, 2024">
       </div>
 
       <div class="stat-block">
-      <div class="stat"><div class="num">2</div><span class="label">Businesses run</span></div>
+      <div class="stat"><div class="num">3</div><span class="label">Businesses run</span></div>
       <div class="stat"><div class="num">19</div><span class="label">Years young</span></div>
       <div class="stat"><div class="num">4th</div><span class="label">Gen. maker</span></div>
-      <div class="stat"><div class="num">'24</div><span class="label">Amazing Kids</span></div>
+      </div>
+
+      <div class="award">
+        <span class="trophy">🏆</span>
+        <div class="award-text">
+          <span class="award-name">Amazing Kids in Business Award</span>
+          <span class="award-sub">NJ Senate &amp; General Assembly Citation · Hunterdon County Chamber of Commerce · 2024</span>
+        </div>
       </div>
     </aside>
 
     <div class="about-body">
       <p class="lede">
-        We build digital things the way a sign shop builds signs — carefully, by hand, so they last. No subscription traps. No outsourced soul.
+        We build digital things the way a sign shop builds signs, carefully, by hand, so they last. No platform fees. No outsourced soul.
       </p>
 
       
       <p>
-        Ace Digital Services is a one-person studio out of Hunterdon County, NJ. We design and host websites for local businesses, and build custom tools for the busywork that keeps you up at night — spreadsheets, follow-ups, the admin nobody should be doing in 2026.
+        Ace Digital Services is a one-person operation out of Hunterdon County, NJ. We design, build, host, and manage websites for local businesses, and keep them running so you never have to touch them. We also handle branding, social media, and photo &amp; video content, so your whole online presence can come from one person who actually picks up the phone.
       </p>
       <p>
-        Private hosting means your site lives on a real server we own and run — no shared GoDaddy plan, no monthly subscription to a builder that locks you in. You pay us once to build it. We keep it online. You own it.
+        Private hosting means your site lives on a real server we own and run, not a shared GoDaddy box or a Wix/Squarespace plan with platform fees and ads piled on. No big upfront cost: one simple monthly covers the hosting and keeps your site updated, so it never goes stale, and you never have to touch it.
       </p>
       <p>
-        Custom tools means we wire up scripts and integrations across the apps you already use (Gmail, Stripe, your CRM, whatever) so the repetitive parts run themselves. You see the result. It just works.
+        Custom tools are available when you want them. We can wire up scripts and integrations across the apps you already use (Gmail, Stripe, your CRM, whatever) to take repetitive busywork off your plate.
       </p>
 
 
@@ -431,10 +507,13 @@
         <div class="skills">
           <span>Web Design</span>
           <span>Private Hosting</span>
-          <span>Custom Tools</span>
+          <span>Site Management</span>
           <span>Branding</span>
+          <span>Social Media</span>
+          <span>Photo &amp; Video</span>
+          <span>SEO &amp; Google</span>
           <span>E-Commerce</span>
-          <span>Integrations</span>
+          <span>Custom Tools</span>
           <span>Domain Setup</span>
           <span>Maintenance</span>
         </div>
@@ -443,11 +522,86 @@
   </div>
 </section>
 
+<section class="chapter" id="work">
+  <div class="chapter-head">
+    <div class="chapter-num">CH. 02</div>
+    <h2 class="chapter-title">Selected <em>work.</em></h2>
+  </div>
+
+  <div class="work-grid">
+    <a class="work-card feature" href="/work/ace-sign-company/">
+      <div class="work-frame"><img src="assets/work/ace-sign-company.jpg" alt="Ace Sign Company, commercial sign fabrication website" loading="lazy"></div>
+      <div class="work-meta">
+        <div>
+          <div class="work-name">Ace Sign Company<span class="work-tag">Family flagship</span></div>
+          <div class="mono work-sub">Commercial Signage · Est. 1928 · New Jersey</div>
+        </div>
+        <span class="work-arrow">↗</span>
+      </div>
+    </a>
+
+    <a class="work-card" href="/work/working-class-tattoo/">
+      <div class="work-frame"><img src="assets/work/working-class-tattoo.jpg" alt="Working Class Art, tattoo & piercing studio website" loading="lazy"></div>
+      <div class="work-meta">
+        <div>
+          <div class="work-name">Working Class Art</div>
+          <div class="mono work-sub">Tattoo &amp; Piercing · Lebanon, NJ</div>
+        </div>
+        <span class="work-arrow">↗</span>
+      </div>
+    </a>
+
+    <a class="work-card" href="/work/my-dogs-got-class/">
+      <div class="work-frame"><img src="assets/work/my-dogs-got-class.jpg" alt="My Dog's Got Class, dog training website" loading="lazy"></div>
+      <div class="work-meta">
+        <div>
+          <div class="work-name">My Dog's Got Class</div>
+          <div class="mono work-sub">Dog Training · Lebanon, NJ</div>
+        </div>
+        <span class="work-arrow">↗</span>
+      </div>
+    </a>
+
+    <a class="work-card" href="/work/flemington-coffee-shop/">
+      <div class="work-frame"><img src="assets/work/flemington-coffee-shop.jpg" alt="Flemington Coffee Shop, breakfast &amp; lunch website" loading="lazy"></div>
+      <div class="work-meta">
+        <div>
+          <div class="work-name">Flemington Coffee Shop</div>
+          <div class="mono work-sub">Breakfast &amp; Lunch · Flemington, NJ</div>
+        </div>
+        <span class="work-arrow">↗</span>
+      </div>
+    </a>
+
+    <a class="work-card" href="/work/rosata-s-pizza-and-pasta/">
+      <div class="work-frame"><img src="assets/work/rosata-s-pizza-and-pasta.jpg" alt="Rosata's Pizza and Pasta, restaurant website" loading="lazy"></div>
+      <div class="work-meta">
+        <div>
+          <div class="work-name">Rosata's Pizza &amp; Pasta</div>
+          <div class="mono work-sub">Pizza &amp; Pasta · Hampton, NJ</div>
+        </div>
+        <span class="work-arrow">↗</span>
+      </div>
+    </a>
+
+    <a class="work-card feature" href="https://carolynmoonofficial.com" target="_blank" rel="noopener">
+      <div class="work-frame"><img src="assets/work/carolyn-moon.jpg" alt="Carolyn Moon, singer-songwriter website" loading="lazy" style="object-position:center"></div>
+      <div class="work-meta">
+        <div>
+          <div class="work-name">Carolyn Moon<span class="work-tag">Artist site</span></div>
+          <div class="mono work-sub">Singer-Songwriter · Music, Merch &amp; Live · carolynmoonofficial.com</div>
+        </div>
+        <span class="work-arrow">↗</span>
+      </div>
+    </a>
+  </div>
+</section>
+
 <section class="reach" id="reach">
   <div class="reach-big-mono">AD</div>
   <div class="reach-inner">
     <div class="chapter-head">
-      <div class="chapter-num">CH. 02</div>
+      <div class="chapter-num">CH. 03</div>
       <h2 class="chapter-title">Reach <em>out.</em></h2>
     </div>
 
@@ -477,5 +631,16 @@
   <span>Made in Hunterdon County</span>
 </footer>
 
+<script>
+(function(){
+  var t = document.getElementById('navToggle'), m = document.getElementById('navMenu');
+  if(!t || !m) return;
+  function setOpen(o){ m.classList.toggle('open', o); t.classList.toggle('open', o); t.setAttribute('aria-expanded', o); }
+  t.addEventListener('click', function(e){ e.stopPropagation(); setOpen(!m.classList.contains('open')); });
+  m.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ setOpen(false); }); });
+  document.addEventListener('click', function(e){ if(!m.contains(e.target) && !t.contains(e.target)) setOpen(false); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') setOpen(false); });
+})();
+</script>
 </body>
 </html>
