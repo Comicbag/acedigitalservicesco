@@ -491,13 +491,24 @@ document.getElementById('agalClose').addEventListener('click',closeAgal);
 agal.addEventListener('click',function(e){if(e.target===agal)closeAgal();});
 var bf=document.getElementById('bookform');
 if(bf){bf.addEventListener('submit',function(e){e.preventDefault();
-  var n=(bf.querySelector('[name=name]').value||'').trim().replace(/[<>]/g,'');
-  var p=(bf.querySelector('[name=phone]').value||'').trim().replace(/[<>]/g,'');
-  var note=document.getElementById('formnote');
-  if(!n||!p){note.textContent='Please add your name and number so we can reach you.';return;}
-  bf.querySelectorAll('input,select,textarea,button').forEach(function(el){el.style.display='none';});
-  note.innerHTML='Thanks, '+n+'! 🐧 We got your request, we&rsquo;ll text you back at '+p+' soon. Want to lock it in now? Call or text <a href="tel:+19104520066" style="color:var(--pink-d);font-weight:800">(910) 452-0066</a>.';
-});}
+    var n=(bf.querySelector('[name=name]').value||'').trim().replace(/[<>]/g,'');
+    var p=(bf.querySelector('[name=phone]').value||'').trim().replace(/[<>]/g,'');
+    var svc=(bf.querySelector('[name=service]')||{}).value||'';
+    var msg=(bf.querySelector('[name=note],textarea')||{}).value||'';
+    var note=document.getElementById('formnote');
+    if(!n||!p){note.textContent='Please add your name and number so we can reach you.';return;}
+    var btn=bf.querySelector('button[type=submit]'); if(btn){btn.disabled=true;btn.textContent='Sending…';}
+    fetch('https://mc.acedigitalservicesco.com/api/book-request',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({site:'gay-penguin',name:n,phone:p,service:svc,note:msg})})
+    .then(function(r){if(!r.ok)throw 0;return r.json();})
+    .then(function(){
+      bf.querySelectorAll('input,select,textarea,button').forEach(function(el){el.style.display='none';});
+      note.innerHTML='Thanks, '+n+'! \ud83d\udc27 We got your request, we\u2019ll text you back at '+p+' soon. Want to lock it in now? Call or text <a href="tel:+19104520066">(910) 452-0066</a>.';
+    })
+    .catch(function(){
+      if(btn){btn.disabled=false;btn.textContent='Send request';}
+      note.innerHTML='Hmm, that didn\u2019t go through. Call or text us at <a href="tel:+19104520066">(910) 452-0066</a> and we\u2019ll get you booked.';
+    });
+  });}
 (function(){var t=document.getElementById('navToggle'),h=document.querySelector('header.nav'),nl=document.getElementById('navlinks');
 if(t&&h){t.addEventListener('click',function(e){e.stopPropagation();var o=h.classList.toggle('open');t.setAttribute('aria-expanded',o?'true':'false');});
 if(nl){nl.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){h.classList.remove('open');t.setAttribute('aria-expanded','false');});});}
