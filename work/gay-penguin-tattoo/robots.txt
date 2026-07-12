@@ -1,2 +1,11 @@
+User-agent: *
+Allow: /
+
+# Internal 3D try-on build/scratch pages — not real content, keep out of the index
+Disallow: /_
+Disallow: /proc_test.html
+Disallow: /heads-preview.html
+Disallow: /place.html
+Disallow: /model-options.html
 
 Sitemap: https://thegaypenguintattoo.com/sitemap.xml
