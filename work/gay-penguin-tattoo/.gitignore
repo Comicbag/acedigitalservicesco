@@ -3,3 +3,13 @@ models/female_head.glb
 models/male_head.glb
 models/cand_female.glb
 models/options/
+
+# Never ship internal docs or dev scripts to the public web root (2026-08-08)
+*.md
+*.py
+_*.html
+proc_test.html
+heads-preview.html
+model-options.html
+piercing-builder.html
+place.html
