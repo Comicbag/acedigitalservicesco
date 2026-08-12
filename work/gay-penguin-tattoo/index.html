@@ -53,6 +53,9 @@ header.nav{position:sticky;top:0;z-index:50;background:rgba(255,248,252,.9);back
 .nav-links{display:flex;align-items:center;gap:26px}
 .nav-links a.lk{font-family:'Fredoka';font-weight:500;font-size:15.5px;color:var(--ink)}
 .nav-links a.lk:hover{color:var(--pink-d)}
+.nav-links a.lk-more{display:none}
+@media(min-width:1100px){.nav-links a.lk-more{display:inline}}
+
 .nav-toggle{display:none;background:none;border:0;cursor:pointer;width:44px;height:44px;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:0}
 .nav-toggle span{display:block;width:25px;height:2.5px;background:var(--ink);border-radius:3px;transition:transform .28s ease,opacity .2s ease}
 
@@ -193,8 +196,9 @@ footer a.ftl{color:#ffd9ea;font-weight:700}
   .visit-map{order:-1}.visit-map iframe{min-height:240px}
   .nav-toggle{display:flex}
   .nav-links{position:absolute;top:70px;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;background:rgba(255,248,252,.98);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:6px 22px 16px;max-height:0;overflow:hidden;opacity:0;pointer-events:none;transition:max-height .32s ease,opacity .25s ease;box-shadow:0 14px 26px rgba(216,27,106,.12)}
-  header.nav.open .nav-links{max-height:440px;opacity:1;pointer-events:auto}
+  header.nav.open .nav-links{max-height:min(78vh,680px);opacity:1;pointer-events:auto;overflow-y:auto}
   .nav-links a.lk{display:block;padding:14px 2px;font-size:17px;border-bottom:1px solid var(--line)}
+  .nav-links a.lk-more{display:block}
   .nav-links a.btn{margin-top:14px;justify-content:center}
   header.nav.open .nav-toggle span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
   header.nav.open .nav-toggle span:nth-child(2){opacity:0}
@@ -292,6 +296,10 @@ header.nav.scrolled{box-shadow:0 6px 22px rgba(216,27,106,.12)}
     <a class="brand" href="#top"><img src="img/nav-logo.png" alt="The Gay Penguin logo"><span class="bn">The Gay <b>Penguin</b></span></a>
     <nav class="nav-links" id="navlinks">
       <a class="lk" href="#services">Services</a>
+      <a class="lk lk-more" href="tattoos.html">Tattoos</a>
+      <a class="lk lk-more" href="piercings.html">Piercings</a>
+      <a class="lk lk-more" href="aftercare.html">Aftercare</a>
+      <a class="lk lk-more" href="tattoo-pricing.html">Pricing</a>
       <a class="lk" href="piercing-3d.html">Try It On 3D</a>
       <a class="lk" href="#work">Work</a>
       <a class="lk" href="#team">Team</a>
