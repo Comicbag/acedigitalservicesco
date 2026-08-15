@@ -68,11 +68,16 @@ body:not(.started) #tray{display:none}
   body:not(.started) .hud h1{font-size:24px}
   body:not(.started) .regions button{font-size:16px;padding:15px 22px}
 }
+
+.sitebar{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;pointer-events:auto;margin-bottom:4px}
+.sitebar a{font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;text-decoration:none;color:var(--ink);background:rgba(255,255,255,.88);backdrop-filter:blur(8px);border:1px solid #ffd0e4;border-radius:999px;padding:6px 12px;white-space:nowrap;line-height:1}
+.sitebar a.cta{background:var(--pink);color:#fff;border-color:var(--pink)}
 </style></head>
 <body>
 <div class="rainbow"></div>
 <div id="stage"></div>
 <div class="topbar">
+<div class="sitebar"><a href="index.html">&lsaquo; The Gay Penguin</a><a href="piercings.html">Piercings</a><a class="cta" href="tel:+19104520066">Call / Text</a></div>
 <div class="hud"><h1>Try It On <b>in 3D</b> 🐧</h1><p>Tap a body part to zoom in · tap a piece to try it on · drag to spin</p></div>
 <div class="regions" id="regions"></div>
 <div class="controls"><button id="resetBtn">⤢ Full view</button><button id="clearBtn">Clear all</button></div>
