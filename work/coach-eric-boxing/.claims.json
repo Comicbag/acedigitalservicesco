@@ -1,0 +1,92 @@
+{
+  "deliverable": "Coach Eric Boxing concept demo (acedigitalservicesco.com/work/coach-eric-boxing/)",
+  "checked": "2026-08-18",
+  "status": "CONCEPT DEMO. Most content is deliberately invented placeholder. Not client-approved. Not fact-checked against Eric, because Eric has not supplied any material yet.",
+  "rule": "source-or-strike normally applies. This demo is an explicit exception: it exists to show layout before content exists. Every page therefore carries a visible demo banner, and everything invented is listed below.",
+  "sources": {
+    "corey": "Corey Smith, direct, 2026-08-18 (this is the only source of real facts on the site)",
+    "imessage": "3 TikTok links Eric sent Corey 2026-08-17 14:47, unwatched at build time"
+  },
+  "claims": [
+    {
+      "claim": "Eric Delpiano coaches boxing and self defense",
+      "source": "corey",
+      "status": "sourced"
+    },
+    {
+      "claim": "He coaches at UFC FIT in Wayne, New Jersey",
+      "source": "corey",
+      "status": "sourced",
+      "note": "Corey said 'Wayne UFC fit'. Rendered on the site as 'UFC FIT, Wayne, New Jersey'. Exact legal name of the gym NOT independently verified."
+    },
+    {
+      "claim": "Around 80 clients, men and women",
+      "source": "corey",
+      "status": "sourced"
+    },
+    {
+      "claim": "His in person schedule is full / at capacity",
+      "source": "corey",
+      "status": "sourced"
+    },
+    {
+      "claim": "He is NOT a competition or fight camp coach",
+      "source": "corey",
+      "status": "sourced",
+      "note": "Stated explicitly on about.html and in-person.html. Hard rule, must not be softened."
+    },
+    {
+      "claim": "Most clients are beginners, roughly half women",
+      "source": "corey (half women confirmed)",
+      "status": "PARTIAL",
+      "note": "'Half women' is from Corey. 'Most had never thrown a punch' is INVENTED and plausible, not confirmed."
+    },
+    {
+      "claim": "Business name 'Coach Eric Boxing'",
+      "status": "INVENTED",
+      "note": "Eric has no business name. Corey proposed 'Coach Eric UFC' or 'Coach Eric Boxing' on 2026-08-18. 'Boxing' was chosen: 'Coach Eric UFC' would put a third party trademark in his business name and imply UFC affiliation he does not have. He coaches at a UFC FIT gym, which is a licensed franchise and does not grant naming rights. Needs Eric's sign off either way."
+    },
+    {
+      "claim": "All pricing ($19, $39, one to one)",
+      "status": "INVENTED",
+      "note": "Marked EXAMPLE on every page it appears. Eric sets real prices. Corey has NOT quoted these."
+    },
+    {
+      "claim": "Course tracks, lesson names, lesson counts, runtimes",
+      "status": "INVENTED",
+      "note": "Fundamentals 18 / Defense 14 / Self defense 12 and every lesson title are placeholders for layout."
+    },
+    {
+      "claim": "Eric's first person voice on about.html",
+      "status": "INVENTED",
+      "note": "Written as plausible coach voice. No real bio, no quotes from Eric. Deliberately avoids inventing verifiable credentials: no years boxing, no titles, no certifications, no record."
+    },
+    {
+      "claim": "Member quote on the homepage",
+      "status": "INVENTED",
+      "note": "Left as an explicit placeholder with no fake attribution, rather than inventing a person."
+    },
+    {
+      "claim": "Sample member 'JM', Full library plan, progress percentages",
+      "status": "INVENTED",
+      "note": "members.html is a logged in mockup. Page carries its own separate mockup notice and is noindex."
+    },
+    {
+      "claim": "All photography",
+      "status": "PLACEHOLDER",
+      "note": "No real photos exist. Every image slot is a labelled placeholder tile, not stock, not AI generated, so nothing false is depicted."
+    },
+    {
+      "claim": "Contact details, address, social links, response time",
+      "status": "PLACEHOLDER",
+      "note": "Eric's real phone (on file in Mission Control) is deliberately NOT published on this demo."
+    }
+  ],
+  "checks": [
+    "No em dashes anywhere in copy (Ace Digital demo voice standard).",
+    "No claim of ADA certification or legal compliance on accessibility.html. States 'built to follow WCAG 2.1 AA' only.",
+    "members.html is noindex and excluded from sitemap.xml.",
+    "Forms are inert (onsubmit return false) and say so on the page.",
+    "No real personal contact details published."
+  ]
+}

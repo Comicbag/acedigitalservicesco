@@ -1,0 +1,189 @@
+/* Coach Eric Boxing — shared shell
+   Concept demo built for Ace Digital. Dark, high contrast, type led.
+   No framework, no build step. */
+
+:root{
+  --ink:#0c0c0e;
+  --surface:#141418;
+  --surface-2:#1c1c22;
+  --line:#2a2a33;
+  --chalk:#f5f3ef;
+  --chalk-dim:#c9c5bd;
+  --muted:#8a8691;
+  --ember:#e2571f;
+  --ember-soft:#f0855a;
+  --maxw:1200px;
+  --pad:clamp(20px,4vw,40px);
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  background:var(--ink);color:var(--chalk-dim);
+  line-height:1.65;-webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+:focus-visible{outline:3px solid var(--ember);outline-offset:3px}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
+.section{padding:clamp(56px,9vw,120px) 0}
+.section-tight{padding:clamp(40px,6vw,72px) 0}
+
+/* ---------- type ---------- */
+.display{
+  font-family:"Archivo Black","Arial Black",sans-serif;
+  text-transform:uppercase;line-height:.9;letter-spacing:-.015em;
+  color:var(--chalk);
+}
+.d1{font-size:clamp(2.6rem,8.5vw,6rem)}
+.d2{font-size:clamp(2rem,5.5vw,3.6rem)}
+.d3{font-size:clamp(1.5rem,3.4vw,2.3rem)}
+.eyebrow{
+  font-family:"Barlow Condensed",sans-serif;text-transform:uppercase;
+  letter-spacing:.24em;font-weight:700;font-size:.82rem;color:var(--ember);
+}
+.eyebrow-dim{color:var(--muted)}
+.lede{font-size:clamp(1.05rem,1.8vw,1.28rem);color:var(--chalk-dim);max-width:62ch}
+p{max-width:70ch}
+.hl{color:var(--chalk)}
+
+/* ---------- buttons ---------- */
+.btn{
+  font-family:"Barlow Condensed",sans-serif;text-transform:uppercase;
+  letter-spacing:.14em;font-weight:700;font-size:1rem;
+  display:inline-flex;align-items:center;gap:.6em;
+  padding:15px 30px;border:2px solid transparent;transition:.2s;
+}
+.btn-solid{background:var(--ember);color:#fff;border-color:var(--ember)}
+.btn-solid:hover{background:#c74715;border-color:#c74715}
+.btn-ghost{border-color:var(--line);color:var(--chalk)}
+.btn-ghost:hover{border-color:var(--chalk);background:var(--chalk);color:var(--ink)}
+.btn-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:32px}
+
+/* ---------- demo banner (Ace Digital note, not part of the brand) ---------- */
+.demobar{
+  background:#f3e2b8;color:#3b2f14;font-size:.9rem;
+  border-bottom:2px solid #d9c184;
+}
+.demobar .wrap{
+  display:flex;align-items:center;gap:14px;
+  padding-top:10px;padding-bottom:10px;
+}
+.demobar strong{font-weight:700}
+.demobar p{max-width:none;line-height:1.45}
+.demobar button{
+  margin-left:auto;flex:none;font-family:"Barlow Condensed",sans-serif;
+  text-transform:uppercase;letter-spacing:.12em;font-weight:700;
+  border:1.5px solid #3b2f14;padding:4px 12px;
+}
+.demobar button:hover{background:#3b2f14;color:#f3e2b8}
+.demobar[hidden]{display:none}
+
+/* ---------- header ---------- */
+header.mast{
+  position:sticky;top:0;z-index:60;
+  background:rgba(12,12,14,.94);border-bottom:1px solid var(--line);
+}
+.mast .wrap{display:flex;align-items:center;gap:20px;padding-top:16px;padding-bottom:16px}
+.logo{display:flex;align-items:baseline;gap:.5ch;flex:none}
+.logo .lname{
+  font-family:"Archivo Black","Arial Black",sans-serif;text-transform:uppercase;
+  font-size:1.18rem;letter-spacing:-.01em;color:var(--chalk);line-height:1;
+}
+.logo .lmark{width:10px;height:10px;background:var(--ember);flex:none;transform:translateY(-1px)}
+.mast nav{margin-left:auto;display:flex;gap:26px;align-items:center}
+.mast nav a{
+  font-family:"Barlow Condensed",sans-serif;text-transform:uppercase;
+  letter-spacing:.14em;font-weight:600;font-size:.95rem;color:var(--chalk-dim);
+  padding:4px 0;border-bottom:2px solid transparent;
+}
+.mast nav a:hover{color:var(--chalk)}
+.mast nav a[aria-current="page"]{color:var(--chalk);border-bottom-color:var(--ember)}
+.mast .btn{padding:10px 20px;font-size:.9rem}
+.navtoggle{display:none;margin-left:auto;padding:8px;border:1px solid var(--line)}
+.navtoggle span{display:block;width:22px;height:2px;background:var(--chalk);margin:4px 0}
+
+@media(max-width:900px){
+  .mast nav{
+    position:fixed;inset:64px 0 auto 0;background:var(--surface);
+    flex-direction:column;align-items:stretch;gap:0;
+    border-bottom:1px solid var(--line);padding:8px 0;
+    max-height:calc(100vh - 64px);overflow-y:auto;
+  }
+  .mast nav[hidden]{display:none}
+  .mast nav a{padding:14px var(--pad);border-bottom:1px solid var(--line)}
+  .mast nav a[aria-current="page"]{border-bottom-color:var(--line);color:var(--ember)}
+  .mast nav .btn{margin:12px var(--pad);justify-content:center}
+  .navtoggle{display:block}
+}
+
+/* ---------- placeholder tiles (honest stand-ins for real photos) ---------- */
+.ph{
+  position:relative;background:var(--surface-2);
+  border:1px solid var(--line);overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+  min-height:180px;
+}
+.ph::before{
+  content:"";position:absolute;inset:0;opacity:.5;
+  background:repeating-linear-gradient(135deg,transparent 0 11px,rgba(255,255,255,.035) 11px 22px);
+}
+.ph span{
+  position:relative;font-family:"Barlow Condensed",sans-serif;
+  text-transform:uppercase;letter-spacing:.2em;font-weight:600;
+  font-size:.76rem;color:var(--muted);text-align:center;padding:0 16px;
+}
+.ph-tall{aspect-ratio:3/4}
+.ph-wide{aspect-ratio:16/9}
+.ph-sq{aspect-ratio:1}
+
+/* ---------- grids ---------- */
+.grid{display:grid;gap:clamp(18px,2.4vw,30px)}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.split{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(28px,5vw,72px);align-items:center}
+@media(max-width:900px){
+  .g3,.g4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .split{grid-template-columns:minmax(0,1fr)}
+}
+@media(max-width:560px){
+  .g2,.g3,.g4{grid-template-columns:minmax(0,1fr)}
+}
+
+/* ---------- cards ---------- */
+.card{background:var(--surface);border:1px solid var(--line);padding:clamp(22px,3vw,32px)}
+.card h3{font-family:"Archivo Black",sans-serif;text-transform:uppercase;color:var(--chalk);font-size:1.05rem;letter-spacing:-.01em;margin-bottom:10px;line-height:1.2}
+.card p{font-size:.96rem}
+.rule{height:1px;background:var(--line);border:0;margin:0}
+
+/* number-led stat block */
+.stat .num{font-family:"Archivo Black",sans-serif;font-size:clamp(2.2rem,4.5vw,3.2rem);color:var(--ember);line-height:1}
+.stat .lbl{font-family:"Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:.18em;font-weight:600;font-size:.82rem;color:var(--muted);margin-top:6px}
+
+/* ---------- footer ---------- */
+footer.foot{background:var(--surface);border-top:1px solid var(--line);padding:clamp(44px,6vw,72px) 0 28px}
+.foot .cols{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4vw,56px)}
+@media(max-width:760px){.foot .cols{grid-template-columns:minmax(0,1fr)}}
+.foot h4{font-family:"Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:.18em;font-weight:700;font-size:.85rem;color:var(--chalk);margin-bottom:14px}
+.foot nav{display:flex;flex-direction:column;gap:9px}
+.foot nav a{font-size:.95rem}
+.foot nav a:hover{color:var(--ember)}
+.foot .base{
+  margin-top:clamp(32px,5vw,56px);padding-top:20px;border-top:1px solid var(--line);
+  display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-between;
+  font-size:.85rem;color:var(--muted);
+}
+
+/* skip link */
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:12px;top:12px;z-index:200;background:var(--ember);color:#fff;padding:10px 16px}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
