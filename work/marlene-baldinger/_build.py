@@ -262,7 +262,7 @@ def page(fname, title, active, body, desc):
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{desc}">
 <meta property="og:image" content="https://acedigitalservicesco.com/work/marlene-baldinger/assets/marlene-portrait.jpg">
-<link rel="stylesheet" href="style.css?v=103256"></head>
+<link rel="stylesheet" href="style.css?v=103472"></head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="site"><div class="wrap brand">
@@ -287,7 +287,7 @@ def page(fname, title, active, body, desc):
     <a href="mailto:MarleneforLebanon@gmail.com" aria-label="Email">{IC["mail"]}</a>
   </div>
 </div></footer>
-<script src="app.js?v=103256"></script>
+<script src="app.js?v=103472"></script>
 </body></html>"""
     open(os.path.join(OUT,fname),"w").write(html)
 
@@ -356,26 +356,6 @@ page("index.html","Marlene Baldinger for Lebanon Borough Council","index.html",f
   <a class="tile" href="get-involved.html#sign">{IC["sign"]}GET A YARD SIGN<span class="chev">&rsaquo;</span></a>
   <a class="tile" href="get-involved.html">{IC["people"]}GET INVOLVED<span class="chev">&rsaquo;</span></a>
   <a class="tile" href="contact.html">{IC["mail"]}CONTACT<span class="chev">&rsaquo;</span></a>
- </div>
- <div class="ctaband">
-  {IC["q"].replace('class="ic"','class="ic" style="width:72px;height:72px"')}
-  <div><h3>ASK MARLENE A QUESTION</h3>
-  <p>Have a question about our town or council decisions? Submit it and Marlene will
-  answer it here for everyone.</p></div>
-  <a class="btn" href="ask.html">SUBMIT A QUESTION</a>
- </div>
- <div class="signcard">
-  <div class="minisign" aria-hidden="true">
-   <div class="m1">MARLENE<br>BALDINGER</div>
-   <div class="m2">COUNCIL PRESIDENT</div>
-   <div class="m3">RUNNING FOR WHAT&rsquo;S<br>IMPORTANT TO YOU</div>
-   <div class="legs"><i></i><i></i></div>
-  </div>
-  <div><h3>HELP SPREAD THE WORD</h3>
-  <div class="sub">REQUEST A YARD SIGN</div>
-  <p style="margin-top:8px;max-width:26rem">Yard signs help more neighbors learn about
-  the campaign. Request yours today!</p></div>
-  <a class="btn navy" href="get-involved.html#sign">REQUEST A YARD SIGN</a>
  </div>
 </div>
 ""","Marlene Baldinger, Council President, is running for re-election to the Lebanon Borough Common Council. Running for what's important to you.")
