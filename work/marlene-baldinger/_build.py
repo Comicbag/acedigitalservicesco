@@ -12,7 +12,7 @@ h1,h2,h3,.serif{font-family:Baskerville,Georgia,'Times New Roman',serif}
 a{color:var(--teal)}
 .wrap{max-width:1060px;margin:0 auto;padding:0 20px}
 header.site{background:var(--navy);color:#fff;border-bottom:4px solid var(--gold)}
-.brand{display:flex;align-items:center;justify-content:space-between;padding:14px 0;gap:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;gap:12px;flex-wrap:wrap}
 .brand .name{font-family:Baskerville,Georgia,serif;font-size:1.5rem;letter-spacing:.06em;color:#fff;text-decoration:none}
 .brand .name small{display:block;font-size:.72rem;letter-spacing:.22em;color:var(--gold);font-family:inherit}
 .stars{color:var(--teal);letter-spacing:.3em;font-size:.9rem}
@@ -58,14 +58,6 @@ form.f input:focus,form.f textarea:focus{outline:3px solid var(--teal);border-co
 footer.site{background:var(--navy);color:#cfd8de;margin-top:60px;padding:34px 0;font-size:.92rem}
 footer.site .elec{color:#fff;font-weight:600;margin-top:10px}
 .skip{position:absolute;left:-9999px}.skip:focus{position:static;display:block;background:var(--gold);color:var(--navy);padding:10px}
-@media(max-width:480px){
- .lockup{gap:9px}
- .lockup .runner{width:32px;height:40px}
- .lockup .l2{font-size:1.35rem}
- .lockup .l1{letter-spacing:.2em;font-size:.8rem}
- .lockup .l3{letter-spacing:.18em;font-size:.58rem}
- .lockup .l4{letter-spacing:.1em;font-size:.55rem}
-}
 @media(max-width:760px){
  .brand .name{font-size:1.15rem}
  .brand .name small{letter-spacing:.12em}
@@ -150,6 +142,14 @@ footer.site .elec{letter-spacing:.18em;font-size:.8rem;text-transform:uppercase}
  .statdiv{flex-direction:row}.statdiv::before,.statdiv::after{width:52px;height:2px}
  .ctaband .btn,.signcard .btn{margin-left:0}
 }
+@media(max-width:480px){
+ .lockup{gap:9px}
+ .lockup .runner{width:32px;height:40px}
+ .lockup .l2{font-size:1.35rem}
+ .lockup .l1{letter-spacing:.2em;font-size:.8rem}
+ .lockup .l3{letter-spacing:.18em;font-size:.58rem}
+ .lockup .l4{letter-spacing:.1em;font-size:.55rem}
+}
 """
 JS = """
 async function pbPost(col, data, flash){
@@ -216,7 +216,7 @@ def page(fname, title, active, body, desc):
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{title}</title>
 <meta name="description" content="{desc}">
-<link rel="stylesheet" href="style.css?v=101056"></head>
+<link rel="stylesheet" href="style.css?v=101118"></head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="site"><div class="wrap brand">
@@ -241,7 +241,7 @@ def page(fname, title, active, body, desc):
     <a href="mailto:MarleneforLebanon@gmail.com" aria-label="Email">{IC["mail"]}</a>
   </div>
 </div></footer>
-<script src="app.js?v=101056"></script>
+<script src="app.js?v=101118"></script>
 </body></html>"""
     open(os.path.join(OUT,fname),"w").write(html)
 
