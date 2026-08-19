@@ -1,0 +1,61 @@
+
+:root{--navy:#1c3447;--teal:#2e8b7a;--gold:#c69c6d;--red:#722727;--bg:#fdfcfa;--ink:#22303c}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg);font-size:18px;line-height:1.65}
+h1,h2,h3,.serif{font-family:Baskerville,Georgia,'Times New Roman',serif}
+a{color:var(--teal)}
+.wrap{max-width:1060px;margin:0 auto;padding:0 20px}
+header.site{background:var(--navy);color:#fff;border-bottom:4px solid var(--gold)}
+.brand{display:flex;align-items:center;justify-content:space-between;padding:14px 0;gap:12px;flex-wrap:wrap}
+.brand .name{font-family:Baskerville,Georgia,serif;font-size:1.5rem;letter-spacing:.06em;color:#fff;text-decoration:none}
+.brand .name small{display:block;font-size:.72rem;letter-spacing:.22em;color:var(--gold);font-family:inherit}
+.stars{color:var(--teal);letter-spacing:.3em;font-size:.9rem}
+nav.main{background:#16293a}
+nav.main ul{display:flex;flex-wrap:wrap;list-style:none;gap:2px}
+nav.main a{display:block;padding:11px 14px;color:#e8edf2;text-decoration:none;font-size:.92rem}
+nav.main a:hover,nav.main a.on{background:var(--teal);color:#fff}
+.hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:36px;align-items:center;padding:52px 0}
+.hero .kicker{color:var(--teal);letter-spacing:.18em;font-weight:600;font-size:.95rem}
+.hero h1{font-size:clamp(2.4rem,6vw,4rem);line-height:1.05;color:var(--navy);margin:.2em 0 .35em}
+.hero h1 em{color:var(--teal);font-style:italic}
+.hero .sub{color:var(--red);font-weight:600;letter-spacing:.04em}
+.hero img{width:100%;height:auto;border-radius:8px;box-shadow:0 12px 34px rgba(28,52,71,.25)}
+.rule{border:none;border-top:3px solid var(--gold);width:130px;margin:26px 0}
+.btnrow{display:flex;gap:14px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-block;padding:14px 22px;border-radius:6px;text-decoration:none;font-weight:700;font-size:1rem}
+.btn.teal{background:var(--teal);color:#fff}.btn.navy{background:var(--navy);color:#fff}.btn.ghost{border:2px solid var(--navy);color:var(--navy)}
+.band{background:var(--navy);color:#fff;padding:34px 0;font-size:1.25rem}
+.band .gold{color:var(--gold);font-style:italic}
+section.block{padding:54px 0}
+section.alt{background:#f2efe9}
+h2.sec{font-size:2rem;color:var(--navy);margin-bottom:.35em}
+.lead{max-width:46rem}
+.grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:34px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+ul.stats{list-style:none;margin-top:14px}
+ul.stats li{padding:10px 0 10px 30px;position:relative;border-bottom:1px solid #e4ded4}
+ul.stats li::before{content:"\2605";position:absolute;left:2px;color:var(--teal);font-size:.85rem;top:13px}
+.card{background:#fff;border:1px solid #e4ded4;border-radius:8px;padding:26px}
+.card h3{color:var(--navy);margin-bottom:.4em}
+.promise{border-left:5px solid var(--gold);background:#fff;padding:26px;border-radius:0 8px 8px 0;margin-top:22px}
+.promise .tag{display:inline-block;background:var(--teal);color:#fff;font-size:.8rem;font-weight:700;letter-spacing:.08em;padding:4px 10px;border-radius:4px;margin-bottom:10px}
+form.f{display:grid;gap:14px;max-width:34rem}
+form.f label{font-weight:600;color:var(--navy);font-size:.95rem}
+form.f input,form.f textarea{width:100%;padding:12px;border:2px solid #cfd8de;border-radius:6px;font-size:1rem;font-family:inherit}
+form.f input:focus,form.f textarea:focus{outline:3px solid var(--teal);border-color:var(--teal)}
+.note{font-size:.9rem;color:#5c6b76}
+.flash{padding:14px;border-radius:6px;display:none;font-weight:600}
+.flash.ok{display:block;background:#e5f2ee;color:#1d5c4e}.flash.err{display:block;background:#f7e8e8;color:#7c2d2d}
+.qa{background:#fff;border:1px solid #e4ded4;border-radius:8px;padding:22px;margin-top:16px}
+.qa .q{font-weight:700;color:var(--navy)}
+.qa .a{margin-top:8px}
+footer.site{background:var(--navy);color:#cfd8de;margin-top:60px;padding:34px 0;font-size:.92rem}
+footer.site .elec{color:#fff;font-weight:600;margin-top:10px}
+.skip{position:absolute;left:-9999px}.skip:focus{position:static;display:block;background:var(--gold);color:var(--navy);padding:10px}
+@media(max-width:760px){
+ .hero{grid-template-columns:minmax(0,1fr);padding:34px 0}
+ .hero img{max-width:340px;justify-self:center;order:-1}
+ .grid2,.grid3{grid-template-columns:minmax(0,1fr)}
+ nav.main ul{justify-content:center}
+ body{font-size:17px}
+}

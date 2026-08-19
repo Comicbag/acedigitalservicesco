@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ask Marlene a Question | Marlene Baldinger</title>
+<meta name="description" content="Ask Marlene Baldinger a question about Lebanon Borough and get a public answer.">
+<link rel="stylesheet" href="style.css"></head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site"><div class="wrap brand">
+  <a class="name" href="index.html">MARLENE BALDINGER<small>COUNCIL PRESIDENT &middot; LEBANON BOROUGH</small></a>
+  <div class="stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;</div>
+</div>
+<nav class="main" aria-label="Main"><div class="wrap"><ul><li><a href="index.html">Home</a></li><li><a href="meet-marlene.html">Meet Marlene</a></li><li><a href="promises.html">Promises Made, Promises Kept</a></li><li><a href="priorities.html">Priorities</a></li><li><a href="articles.html">Articles</a></li><li><a href="ask.html" class="on">Ask Marlene</a></li><li><a href="get-involved.html">Get Involved</a></li><li><a href="contact.html">Contact</a></li></ul></div></nav>
+</header>
+<main id="main">
+<section class="block"><div class="wrap">
+ <h2 class="sec">Ask Marlene a Question</h2>
+ <p class="lead">Ask about our town, a council decision, or anything the borough is
+ working on. Marlene answers here, publicly, so neighbors with the same question can
+ see the answer too. That is the point: connecting the dots between listening and leading.</p>
+ <form class="f" id="askForm" style="margin-top:24px">
+  <div><label for="qname">Your name</label><input id="qname" name="name" required maxlength="120"></div>
+  <div><label for="qemail">Email (only so Marlene can follow up, never published)</label>
+  <input id="qemail" name="email" type="email" required maxlength="200"></div>
+  <div><label for="qq">Your question</label><textarea id="qq" name="question" rows="4" required maxlength="2000"></textarea></div>
+  <button class="btn teal" type="submit">Submit your question</button>
+  <div class="flash" role="status"></div>
+ </form>
+ <h3 style="margin-top:44px;color:var(--navy)">Answered so far</h3>
+ <div id="answered"><p class="note">Loading&hellip;</p></div>
+</div></section>
+</main>
+<footer class="site"><div class="wrap">
+  <div>Marlene is Running for What&rsquo;s Important to You</div>
+  <div>Email: <a href="mailto:MarleneforLebanon@gmail.com" style="color:#fff">MarleneforLebanon@gmail.com</a></div>
+  <div class="elec">Paid for by Baldinger for Lebanon, 61 Brunswick Avenue, Lebanon NJ.</div>
+</div></footer>
+<script src="app.js"></script>
+</body></html>
