@@ -7,47 +7,42 @@
 <meta property="og:title" content="Ask Marlene a Question | Marlene Baldinger">
 <meta property="og:description" content="Ask Marlene Baldinger a question about Lebanon Borough and get a public answer.">
 <meta property="og:image" content="https://acedigitalservicesco.com/work/marlene-baldinger/assets/marlene-portrait.jpg">
-<link rel="stylesheet" href="style.css?v=103472"></head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,400;1,9..144,600&family=Public+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=104496"></head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<header class="site"><div class="wrap brand">
-  <a class="lockup" href="index.html" aria-label="Marlene Baldinger home">
-    <svg class="runner" viewBox="0 0 90 64" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="57" cy="10" r="6.5" fill="currentColor" stroke="none"/><path d="M53 18 43 30l12 8-4 16"/><path d="M43 30l-9 6-10-2M55 26l12 4 9-3M51 38 38 50l-11 3"/><path d="M4 22h14M2 34h10M6 46h12" stroke-width="3.5" opacity=".75"/></svg>
-    <span class="lines">
-      <span class="l1">MARLENE</span><br>
-      <span class="l2">BALDINGER</span>
-      <span class="l3" style="display:block">COUNCIL PRESIDENT</span>
-      <span class="l4" style="display:block">LEBANON BOROUGH COMMON COUNCIL</span>
-    </span>
-  </a>
-  <button class="burger" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
-</div>
-<nav id="menu" aria-label="Main"><ul><li><a href="index.html">Home</a></li><li><a href="meet-marlene.html">Meet Marlene</a></li><li><a href="promises.html">Promises Made, Promises Kept</a></li><li><a href="priorities.html">Priorities</a></li><li><a href="articles.html">Articles</a></li><li><a href="ask.html" class="on">Ask Marlene</a></li><li><a href="get-involved.html">Get Involved</a></li><li><a href="contact.html">Contact</a></li></ul></nav>
+<header class="masthead">
+  <p class="dateline">Lebanon Borough &middot; Hunterdon County, New Jersey</p>
+  <p class="mast"><a href="index.html">Marlene Baldinger</a></p>
+  <p class="mastsub">for Common Council &middot; Election Day is Tuesday, November 3, 2026</p>
+  <nav class="paper" aria-label="Main"><ul><li><a href="index.html">Home</a></li><li><a href="meet-marlene.html">Meet Marlene</a></li><li><a href="promises.html">Her Record</a></li><li><a href="priorities.html">Priorities</a></li><li><a href="articles.html">Articles</a></li><li><a href="ask.html" class="on">Ask Marlene</a></li><li><a href="get-involved.html">Get Involved</a></li><li><a href="contact.html">Contact</a></li></ul></nav>
 </header>
 <main id="main">
-<section class="block"><div class="wrap">
- <h2 class="sec">Ask Marlene a Question</h2>
- <p class="lead">Ask about our town, a council decision, or anything the borough is
- working on. Marlene answers here, publicly, so neighbors with the same question can
- see the answer too. That is the point: connecting the dots between listening and leading.</p>
- <form class="f" id="askForm" style="margin-top:24px">
+<div class="wrap">
+ <section class="sec ask" style="border-top:0">
+  <div class="sechead"><span class="star">&#9733;</span><h3>Ask Marlene <em>anything.</em></h3><span class="rule"></span></div>
+  <p class="lead">Ask about our town, a council decision, or anything the borough is
+  working on. Marlene answers here, publicly, like letters to the editor, so a neighbor
+  wondering the same thing can see the answer too.</p>
+  <form class="f" id="askForm">
   <div><label for="qname">Your name</label><input id="qname" name="name" required maxlength="120"></div>
   <div><label for="qemail">Email (only so Marlene can follow up, never published)</label>
   <input id="qemail" name="email" type="email" required maxlength="200"></div>
   <div><label for="qq">Your question</label><textarea id="qq" name="question" rows="4" required maxlength="2000"></textarea></div>
-  <button class="btn teal" type="submit">Submit your question</button>
+  <button class="btn" type="submit">Submit your question</button>
   <div class="flash" role="status"></div>
- </form>
- <h3 style="margin-top:44px;color:var(--navy)">Answered so far</h3>
- <div id="answered"><p class="note">Loading&hellip;</p></div>
-</div></section>
+</form>
+  <h4 style="font-family:var(--disp);font-style:italic;font-size:1.35rem;color:var(--navy);margin-top:var(--s5);border-bottom:1px solid var(--line);padding-bottom:10px">Answered so far</h4>
+  <div id="answered" style="margin-top:var(--s2)"><p class="note">Loading&hellip;</p></div>
+ </section>
+</div>
 </main>
-<footer class="site"><div class="wrap">
+<footer class="paper"><div class="wrap">
+  <div class="fstars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;</div>
+  <div class="links"><a href="mailto:MarleneforLebanon@gmail.com">MarleneforLebanon@gmail.com</a> &middot; Facebook and Instagram coming soon</div>
   <div class="elec">Paid for by Baldinger for Lebanon, 61 Brunswick Avenue, Lebanon NJ.</div>
-  <div class="socials">
-    <a href="#" aria-label="Facebook (coming soon)"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-7h2.4l.4-3h-2.8V9.1c0-.9.3-1.5 1.6-1.5h1.3V4.9c-.3 0-1.1-.1-2-.1-2.1 0-3.5 1.3-3.5 3.6V11H8.5v3h2.4v7z"/></svg></a>
-    <a href="mailto:MarleneforLebanon@gmail.com" aria-label="Email"><svg class="ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2 5h20v14H2zm2 2 8 6 8-6"/><path d="M4 7l8 6 8-6" fill="none" stroke="#fff" stroke-width="1.6"/></svg></a>
-  </div>
 </div></footer>
-<script src="app.js?v=103472"></script>
+<script src="app.js?v=104496"></script>
 </body></html>

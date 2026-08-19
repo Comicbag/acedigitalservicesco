@@ -1,38 +1,43 @@
 {
  "generated": "2026-08-18",
  "status": "DEMO - not client approved yet",
+ "design": "local-paper editorial, replaces the ChatGPT mock per Corey 2026-08-18 night",
  "claims": [
   {
    "claim": "All values, running stats, service stats, third-term goals",
-   "source": "2023 door hanger, scanned 2026-08-15 (~/Desktop/marlene-doorhanger-*.jpg), transcribed verbatim in clients/marlene-baldinger/HISTORY.md"
+   "source": "2023 door hanger scan, transcribed verbatim in clients/marlene-baldinger/HISTORY.md"
   },
   {
    "claim": "Nine years on council",
-   "source": "2023 card said 'Six Years'; +3 years; matches her own 'nine years' in 2026-08-14 transcript. CONFIRM with Marlene before print/live"
+   "source": "2023 card said 'Six Years'; +3 years; matches her own 'nine years' on the 8/14 recording. CONFIRM with Marlene"
   },
   {
    "claim": "Election date Tuesday November 3 2026",
-   "source": "Vault session log 2026-07-11 (re-election Nov 3 2026). Marlene said 'I believe November 2nd' on 8/14 - vault date used. CONFIRM"
+   "source": "Vault session log 2026-07-11. Marlene said 'November 2nd, could be wrong'. CONFIRM"
   },
   {
-   "claim": "First livestream August 19 2026",
-   "source": "2026-08-14 transcript + promo video shoot 2026-08-18"
+   "claim": "First livestream August 19 2026 + land use board being added",
+   "source": "8/14 transcript; promo video 8/18"
   },
   {
-   "claim": "Livestream promise printed 2023",
-   "source": "Door hanger back, Goal 2, verbatim"
+   "claim": "Door hanger artifact image",
+   "source": "Real scan of her 2023 card (goals section crop), not a mockup"
   },
   {
    "claim": "Only council member to vote against 2022 property tax increase",
-   "source": "Her printed 2023 card, verbatim. Her claim, on her material"
+   "source": "Her printed 2023 card, verbatim"
   },
   {
-   "claim": "ELEC footer 'Paid for by Baldinger for Lebanon, 61 Brunswick Avenue, Lebanon NJ.'",
-   "source": "Printed verbatim on her 2023 door hanger. CONFIRM address still current"
+   "claim": "ELEC footer text",
+   "source": "Printed verbatim on her 2023 door hanger. CONFIRM address current"
   },
   {
-   "claim": "ZIP 08833 on donate page",
-   "source": "INFERRED from Lebanon NJ - NOT on the card. CONFIRM"
+   "claim": "ZIP 08833 on donate panel",
+   "source": "INFERRED, not on the card. CONFIRM"
+  },
+  {
+   "claim": "Photo credit Ace Photography Co.",
+   "source": "Corey shot the portrait 2026-08-14"
   }
  ]
 }
