@@ -98,7 +98,7 @@ footer.site .elec{color:#fff;font-weight:600;margin-top:10px}
 .band2 .t1{font-family:Baskerville,Georgia,serif;font-size:1.45rem}
 .band2 .t2{color:var(--gold);font-style:italic;font-family:Baskerville,Georgia,serif;font-size:1.3rem;margin-top:6px}
 .band2 .runner{width:110px;height:78px;color:var(--teal);flex:0 0 auto}
-.statsrow{display:grid;grid-template-columns:minmax(0,1fr) 60px minmax(0,1fr);gap:10px;align-items:center;padding:46px 0}
+.statsrow{display:grid;grid-template-columns:minmax(0,1fr) 60px minmax(0,1fr);gap:10px;align-items:center;padding-block:46px}
 .statcell{display:flex;gap:18px;align-items:flex-start}
 .statcell .ic{width:74px;height:74px;color:var(--teal);flex:0 0 auto}
 .statcell .k{color:var(--teal);letter-spacing:.12em;font-weight:700;font-size:.95rem}
@@ -138,6 +138,9 @@ footer.site .elec{letter-spacing:.18em;font-size:.8rem;text-transform:uppercase}
  .statsrow{grid-template-columns:minmax(0,1fr)}
  .statdiv{flex-direction:row}.statdiv::before,.statdiv::after{width:52px;height:2px}
  .ctaband .btn,.signcard .btn{margin-left:0}
+}
+@media(max-width:860px){
+ .hero2 .txt{padding:44px 24px}
 }
 @media(max-width:480px){
  .lockup{gap:9px}

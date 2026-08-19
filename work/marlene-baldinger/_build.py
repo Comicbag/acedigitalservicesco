@@ -104,7 +104,7 @@ footer.site .elec{color:#fff;font-weight:600;margin-top:10px}
 .band2 .t1{font-family:Baskerville,Georgia,serif;font-size:1.45rem}
 .band2 .t2{color:var(--gold);font-style:italic;font-family:Baskerville,Georgia,serif;font-size:1.3rem;margin-top:6px}
 .band2 .runner{width:110px;height:78px;color:var(--teal);flex:0 0 auto}
-.statsrow{display:grid;grid-template-columns:minmax(0,1fr) 60px minmax(0,1fr);gap:10px;align-items:center;padding:46px 0}
+.statsrow{display:grid;grid-template-columns:minmax(0,1fr) 60px minmax(0,1fr);gap:10px;align-items:center;padding-block:46px}
 .statcell{display:flex;gap:18px;align-items:flex-start}
 .statcell .ic{width:74px;height:74px;color:var(--teal);flex:0 0 auto}
 .statcell .k{color:var(--teal);letter-spacing:.12em;font-weight:700;font-size:.95rem}
@@ -144,6 +144,9 @@ footer.site .elec{letter-spacing:.18em;font-size:.8rem;text-transform:uppercase}
  .statsrow{grid-template-columns:minmax(0,1fr)}
  .statdiv{flex-direction:row}.statdiv::before,.statdiv::after{width:52px;height:2px}
  .ctaband .btn,.signcard .btn{margin-left:0}
+}
+@media(max-width:860px){
+ .hero2 .txt{padding:44px 24px}
 }
 @media(max-width:480px){
  .lockup{gap:9px}
@@ -219,7 +222,7 @@ def page(fname, title, active, body, desc):
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{title}</title>
 <meta name="description" content="{desc}">
-<link rel="stylesheet" href="style.css?v=102097"></head>
+<link rel="stylesheet" href="style.css?v=102167"></head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="site"><div class="wrap brand">
@@ -244,7 +247,7 @@ def page(fname, title, active, body, desc):
     <a href="mailto:MarleneforLebanon@gmail.com" aria-label="Email">{IC["mail"]}</a>
   </div>
 </div></footer>
-<script src="app.js?v=102097"></script>
+<script src="app.js?v=102167"></script>
 </body></html>"""
     open(os.path.join(OUT,fname),"w").write(html)
 
