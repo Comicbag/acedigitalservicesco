@@ -147,6 +147,8 @@ footer.site .elec{letter-spacing:.18em;font-size:.8rem;text-transform:uppercase}
 }
 @media(max-width:860px){
  .hero2 .txt{padding:44px 24px}
+ .hero2 .pic{min-height:0}
+ .hero2 .pic img{position:static;height:auto;display:block}
 }
 @media(max-width:600px){
  section.block{padding:36px 0}
@@ -163,6 +165,12 @@ footer.site .elec{letter-spacing:.18em;font-size:.8rem;text-transform:uppercase}
  .statdiv{display:none}
  .tiles{gap:10px;padding-bottom:28px}
  .tile{padding:15px 14px;font-size:.85rem}
+ .hero2 .txt{padding:30px 24px 40px}
+ .hero2 h1{font-size:2.5rem}
+ .hero2 .kicker{font-size:.9rem}
+ .hero2 .who{font-size:1.15rem}
+ .hero2 .meta1,.hero2 .meta2{font-size:.82rem;letter-spacing:.03em}
+ .goldrule::before,.goldrule::after{flex:1 1 auto}
  .btnrow{flex-direction:column}
  .btnrow .btn{width:100%;text-align:center}
  .ctaband{padding:22px;gap:16px}
@@ -246,7 +254,7 @@ def page(fname, title, active, body, desc):
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{title}</title>
 <meta name="description" content="{desc}">
-<link rel="stylesheet" href="style.css?v=102723"></head>
+<link rel="stylesheet" href="style.css?v=102963"></head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="site"><div class="wrap brand">
@@ -271,7 +279,7 @@ def page(fname, title, active, body, desc):
     <a href="mailto:MarleneforLebanon@gmail.com" aria-label="Email">{IC["mail"]}</a>
   </div>
 </div></footer>
-<script src="app.js?v=102723"></script>
+<script src="app.js?v=102963"></script>
 </body></html>"""
     open(os.path.join(OUT,fname),"w").write(html)
 
