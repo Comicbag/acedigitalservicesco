@@ -59,6 +59,9 @@ footer.site{background:var(--navy);color:#cfd8de;margin-top:60px;padding:34px 0;
 footer.site .elec{color:#fff;font-weight:600;margin-top:10px}
 .skip{position:absolute;left:-9999px}.skip:focus{position:static;display:block;background:var(--gold);color:var(--navy);padding:10px}
 @media(max-width:760px){
+ .wrap{padding:0 24px}
+ .brand{padding:14px 24px}
+ .hero2 .txt{padding:44px 24px}
  .brand .name{font-size:1.15rem}
  .brand .name small{letter-spacing:.12em}
  .hero{grid-template-columns:minmax(0,1fr);padding:34px 0}
@@ -216,7 +219,7 @@ def page(fname, title, active, body, desc):
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{title}</title>
 <meta name="description" content="{desc}">
-<link rel="stylesheet" href="style.css?v=101118"></head>
+<link rel="stylesheet" href="style.css?v=102097"></head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="site"><div class="wrap brand">
@@ -241,7 +244,7 @@ def page(fname, title, active, body, desc):
     <a href="mailto:MarleneforLebanon@gmail.com" aria-label="Email">{IC["mail"]}</a>
   </div>
 </div></footer>
-<script src="app.js?v=101118"></script>
+<script src="app.js?v=102097"></script>
 </body></html>"""
     open(os.path.join(OUT,fname),"w").write(html)
 
