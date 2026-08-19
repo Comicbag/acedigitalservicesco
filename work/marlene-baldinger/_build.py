@@ -174,7 +174,7 @@ footer.site .elec{color:#fff;letter-spacing:.16em;font-size:.76rem;text-transfor
  .statcell{gap:var(--s2)}
  .statcell .ic{width:38px;height:38px}
  .statcell h3{font-size:1.35rem}
- .statcell + .statcell{border-top:1px solid var(--line);padding-top:var(--s4)}
+ .statcell ~ .statcell{border-top:1px solid var(--line);padding-top:var(--s4)}
  .tiles{gap:10px;padding-block:var(--s2) var(--s4)}
  .tile{padding:14px;font-size:.78rem}
  .ctaband{padding:var(--s3);gap:var(--s2)}
@@ -262,7 +262,7 @@ def page(fname, title, active, body, desc):
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{desc}">
 <meta property="og:image" content="https://acedigitalservicesco.com/work/marlene-baldinger/assets/marlene-portrait.jpg">
-<link rel="stylesheet" href="style.css?v=103197"></head>
+<link rel="stylesheet" href="style.css?v=103256"></head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="site"><div class="wrap brand">
@@ -287,7 +287,7 @@ def page(fname, title, active, body, desc):
     <a href="mailto:MarleneforLebanon@gmail.com" aria-label="Email">{IC["mail"]}</a>
   </div>
 </div></footer>
-<script src="app.js?v=103197"></script>
+<script src="app.js?v=103256"></script>
 </body></html>"""
     open(os.path.join(OUT,fname),"w").write(html)
 
