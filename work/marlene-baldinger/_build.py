@@ -59,6 +59,8 @@ footer.site{background:var(--navy);color:#cfd8de;margin-top:60px;padding:34px 0;
 footer.site .elec{color:#fff;font-weight:600;margin-top:10px}
 .skip{position:absolute;left:-9999px}.skip:focus{position:static;display:block;background:var(--gold);color:var(--navy);padding:10px}
 @media(max-width:760px){
+ .brand .name{font-size:1.15rem}
+ .brand .name small{letter-spacing:.12em}
  .hero{grid-template-columns:minmax(0,1fr);padding:34px 0}
  .hero img{max-width:340px;justify-self:center;order:-1}
  .grid2,.grid3{grid-template-columns:minmax(0,1fr)}
