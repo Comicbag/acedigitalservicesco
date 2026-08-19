@@ -148,6 +148,30 @@ footer.site .elec{letter-spacing:.18em;font-size:.8rem;text-transform:uppercase}
 @media(max-width:860px){
  .hero2 .txt{padding:44px 24px}
 }
+@media(max-width:600px){
+ section.block{padding:36px 0}
+ .band2{padding:28px 0;text-align:center}
+ .band2 .wrap{justify-content:center}
+ .band2 .runner{display:none}
+ .band2 .t1{font-size:1.25rem}
+ .band2 .t2{font-size:1.15rem}
+ .statsrow{padding-block:32px;gap:16px}
+ .statcell{background:#fff;border:1px solid #e4ded4;border-radius:10px;padding:20px;gap:14px;align-items:center}
+ .statcell .ic{width:44px;height:44px}
+ .statcell h3{font-size:1.35rem}
+ .statcell p{font-size:.95rem}
+ .statdiv{display:none}
+ .tiles{grid-template-columns:minmax(0,1fr);gap:10px;padding-bottom:28px}
+ .tile{padding:15px 16px}
+ .btnrow{flex-direction:column}
+ .btnrow .btn{width:100%;text-align:center}
+ .ctaband{padding:22px;gap:16px}
+ .ctaband .ic{width:48px;height:48px}
+ .ctaband .btn{width:100%;text-align:center}
+ .signcard{padding:22px;gap:18px}
+ .signcard .btn{width:100%;text-align:center}
+ .minisign{margin:0 auto}
+}
 @media(max-width:480px){
  .lockup{gap:9px}
  .lockup .runner{width:32px;height:40px}
@@ -222,7 +246,7 @@ def page(fname, title, active, body, desc):
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{title}</title>
 <meta name="description" content="{desc}">
-<link rel="stylesheet" href="style.css?v=102167"></head>
+<link rel="stylesheet" href="style.css?v=102345"></head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="site"><div class="wrap brand">
@@ -247,7 +271,7 @@ def page(fname, title, active, body, desc):
     <a href="mailto:MarleneforLebanon@gmail.com" aria-label="Email">{IC["mail"]}</a>
   </div>
 </div></footer>
-<script src="app.js?v=102167"></script>
+<script src="app.js?v=102345"></script>
 </body></html>"""
     open(os.path.join(OUT,fname),"w").write(html)
 
