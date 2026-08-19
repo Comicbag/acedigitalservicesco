@@ -155,8 +155,8 @@ footer.site .elec{letter-spacing:.18em;font-size:.8rem;text-transform:uppercase}
  .statcell h3{font-size:1.35rem}
  .statcell p{font-size:.95rem}
  .statdiv{display:none}
- .tiles{grid-template-columns:minmax(0,1fr);gap:10px;padding-bottom:28px}
- .tile{padding:15px 16px}
+ .tiles{gap:10px;padding-bottom:28px}
+ .tile{padding:15px 14px;font-size:.85rem}
  .btnrow{flex-direction:column}
  .btnrow .btn{width:100%;text-align:center}
  .ctaband{padding:22px;gap:16px}

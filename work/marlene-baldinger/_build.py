@@ -161,8 +161,8 @@ footer.site .elec{letter-spacing:.18em;font-size:.8rem;text-transform:uppercase}
  .statcell h3{font-size:1.35rem}
  .statcell p{font-size:.95rem}
  .statdiv{display:none}
- .tiles{grid-template-columns:minmax(0,1fr);gap:10px;padding-bottom:28px}
- .tile{padding:15px 16px}
+ .tiles{gap:10px;padding-bottom:28px}
+ .tile{padding:15px 14px;font-size:.85rem}
  .btnrow{flex-direction:column}
  .btnrow .btn{width:100%;text-align:center}
  .ctaband{padding:22px;gap:16px}
@@ -246,7 +246,7 @@ def page(fname, title, active, body, desc):
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{title}</title>
 <meta name="description" content="{desc}">
-<link rel="stylesheet" href="style.css?v=102345"></head>
+<link rel="stylesheet" href="style.css?v=102723"></head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="site"><div class="wrap brand">
@@ -271,7 +271,7 @@ def page(fname, title, active, body, desc):
     <a href="mailto:MarleneforLebanon@gmail.com" aria-label="Email">{IC["mail"]}</a>
   </div>
 </div></footer>
-<script src="app.js?v=102345"></script>
+<script src="app.js?v=102723"></script>
 </body></html>"""
     open(os.path.join(OUT,fname),"w").write(html)
 
