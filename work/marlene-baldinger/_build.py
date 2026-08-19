@@ -208,7 +208,7 @@ def page(fname, title, active, body, desc):
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{title}</title>
 <meta name="description" content="{desc}">
-<link rel="stylesheet" href="style.css"></head>
+<link rel="stylesheet" href="style.css?v=100781"></head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="site"><div class="wrap brand">
@@ -233,7 +233,7 @@ def page(fname, title, active, body, desc):
     <a href="mailto:MarleneforLebanon@gmail.com" aria-label="Email">{IC["mail"]}</a>
   </div>
 </div></footer>
-<script src="app.js"></script>
+<script src="app.js?v=100781"></script>
 </body></html>"""
     open(os.path.join(OUT,fname),"w").write(html)
 
