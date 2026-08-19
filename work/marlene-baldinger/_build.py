@@ -58,6 +58,14 @@ form.f input:focus,form.f textarea:focus{outline:3px solid var(--teal);border-co
 footer.site{background:var(--navy);color:#cfd8de;margin-top:60px;padding:34px 0;font-size:.92rem}
 footer.site .elec{color:#fff;font-weight:600;margin-top:10px}
 .skip{position:absolute;left:-9999px}.skip:focus{position:static;display:block;background:var(--gold);color:var(--navy);padding:10px}
+@media(max-width:480px){
+ .lockup{gap:9px}
+ .lockup .runner{width:32px;height:40px}
+ .lockup .l2{font-size:1.35rem}
+ .lockup .l1{letter-spacing:.2em;font-size:.8rem}
+ .lockup .l3{letter-spacing:.18em;font-size:.58rem}
+ .lockup .l4{letter-spacing:.1em;font-size:.55rem}
+}
 @media(max-width:760px){
  .brand .name{font-size:1.15rem}
  .brand .name small{letter-spacing:.12em}
@@ -208,7 +216,7 @@ def page(fname, title, active, body, desc):
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{title}</title>
 <meta name="description" content="{desc}">
-<link rel="stylesheet" href="style.css?v=100781"></head>
+<link rel="stylesheet" href="style.css?v=100970"></head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="site"><div class="wrap brand">
@@ -233,7 +241,7 @@ def page(fname, title, active, body, desc):
     <a href="mailto:MarleneforLebanon@gmail.com" aria-label="Email">{IC["mail"]}</a>
   </div>
 </div></footer>
-<script src="app.js?v=100781"></script>
+<script src="app.js?v=100970"></script>
 </body></html>"""
     open(os.path.join(OUT,fname),"w").write(html)
 
