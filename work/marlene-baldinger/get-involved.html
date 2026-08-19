@@ -7,10 +7,18 @@
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="site"><div class="wrap brand">
-  <a class="name" href="index.html">MARLENE BALDINGER<small>COUNCIL PRESIDENT &middot; LEBANON BOROUGH</small></a>
-  <div class="stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;</div>
+  <a class="lockup" href="index.html" aria-label="Marlene Baldinger home">
+    <svg class="runner" viewBox="0 0 90 64" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="57" cy="10" r="6.5" fill="currentColor" stroke="none"/><path d="M53 18 43 30l12 8-4 16"/><path d="M43 30l-9 6-10-2M55 26l12 4 9-3M51 38 38 50l-11 3"/><path d="M4 22h14M2 34h10M6 46h12" stroke-width="3.5" opacity=".75"/></svg>
+    <span class="lines">
+      <span class="l1">MARLENE</span><br>
+      <span class="l2">BALDINGER</span>
+      <span class="l3" style="display:block">COUNCIL PRESIDENT</span>
+      <span class="l4" style="display:block">LEBANON BOROUGH COMMON COUNCIL</span>
+    </span>
+  </a>
+  <button class="burger" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
 </div>
-<nav class="main" aria-label="Main"><div class="wrap"><ul><li><a href="index.html">Home</a></li><li><a href="meet-marlene.html">Meet Marlene</a></li><li><a href="promises.html">Promises Made, Promises Kept</a></li><li><a href="priorities.html">Priorities</a></li><li><a href="articles.html">Articles</a></li><li><a href="ask.html">Ask Marlene</a></li><li><a href="get-involved.html" class="on">Get Involved</a></li><li><a href="contact.html">Contact</a></li></ul></div></nav>
+<nav id="menu" aria-label="Main"><ul><li><a href="index.html">Home</a></li><li><a href="meet-marlene.html">Meet Marlene</a></li><li><a href="promises.html">Promises Made, Promises Kept</a></li><li><a href="priorities.html">Priorities</a></li><li><a href="articles.html">Articles</a></li><li><a href="ask.html">Ask Marlene</a></li><li><a href="get-involved.html" class="on">Get Involved</a></li><li><a href="contact.html">Contact</a></li></ul></nav>
 </header>
 <main id="main">
 <section class="block"><div class="wrap">
@@ -46,9 +54,11 @@
 </div></section>
 </main>
 <footer class="site"><div class="wrap">
-  <div>Marlene is Running for What&rsquo;s Important to You</div>
-  <div>Email: <a href="mailto:MarleneforLebanon@gmail.com" style="color:#fff">MarleneforLebanon@gmail.com</a></div>
   <div class="elec">Paid for by Baldinger for Lebanon, 61 Brunswick Avenue, Lebanon NJ.</div>
+  <div class="socials">
+    <a href="#" aria-label="Facebook (coming soon)"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-7h2.4l.4-3h-2.8V9.1c0-.9.3-1.5 1.6-1.5h1.3V4.9c-.3 0-1.1-.1-2-.1-2.1 0-3.5 1.3-3.5 3.6V11H8.5v3h2.4v7z"/></svg></a>
+    <a href="mailto:MarleneforLebanon@gmail.com" aria-label="Email"><svg class="ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2 5h20v14H2zm2 2 8 6 8-6"/><path d="M4 7l8 6 8-6" fill="none" stroke="#fff" stroke-width="1.6"/></svg></a>
+  </div>
 </div></footer>
 <script src="app.js"></script>
 </body></html>

@@ -67,6 +67,81 @@ footer.site .elec{color:#fff;font-weight:600;margin-top:10px}
  nav.main ul{justify-content:center}
  body{font-size:17px}
 }
+
+/* ==== GPT-mock layout ==== */
+.lockup{display:flex;align-items:center;gap:14px;text-decoration:none}
+.lockup .runner{width:46px;height:56px;color:var(--gold)}
+.lockup .lines{line-height:1.1}
+.lockup .l1{color:var(--gold);font-family:Baskerville,Georgia,serif;letter-spacing:.30em;font-size:.95rem}
+.lockup .l2{color:#fff;font-family:Baskerville,Georgia,serif;font-size:1.9rem;letter-spacing:.05em}
+.lockup .l3{color:var(--gold);letter-spacing:.28em;font-size:.66rem;border-top:1px solid rgba(198,156,109,.6);border-bottom:1px solid rgba(198,156,109,.6);padding:2px 0;margin-top:3px}
+.lockup .l4{color:#fff;letter-spacing:.18em;font-size:.62rem;margin-top:3px}
+.burger{background:none;border:0;cursor:pointer;padding:10px}
+.burger span{display:block;width:30px;height:3px;background:#fff;margin:6px 0;border-radius:2px}
+#menu{display:none;background:#16293a}
+#menu.open{display:block}
+#menu ul{list-style:none;display:flex;flex-direction:column}
+#menu a{display:block;padding:13px 20px;color:#e8edf2;text-decoration:none;border-top:1px solid rgba(255,255,255,.07)}
+#menu a:hover{background:var(--teal)}
+.hero2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:stretch}
+.hero2 .txt{padding:56px 6% 56px max(20px,calc((100vw - 1060px)/2));background:var(--bg)}
+.hero2 .pic{position:relative;min-height:420px}
+.hero2 .pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center}
+.hero2 .kicker{color:var(--teal);letter-spacing:.2em;font-weight:700;font-size:1rem;font-family:Baskerville,Georgia,serif}
+.hero2 h1{font-size:clamp(2.6rem,5.4vw,4.2rem);line-height:1.02;color:var(--navy);margin:.15em 0 .3em}
+.hero2 h1 em{color:var(--teal);font-style:italic}
+.goldrule{display:flex;align-items:center;gap:10px;margin:18px 0;color:var(--gold)}
+.goldrule::before,.goldrule::after{content:"";flex:0 0 120px;border-top:2px solid var(--gold)}
+.hero2 .who{font-family:Baskerville,Georgia,serif;font-size:1.25rem;color:var(--navy)}
+.hero2 .meta1{color:var(--teal);font-weight:700;letter-spacing:.06em;font-size:.95rem;margin-top:8px}
+.hero2 .meta2{color:var(--navy);letter-spacing:.06em;font-size:.9rem}
+.btn .ic{width:20px;height:20px;vertical-align:-4px;margin-right:9px}
+.band2{background:var(--navy);color:#fff;padding:36px 0}
+.band2 .wrap{display:flex;align-items:center;gap:26px;justify-content:space-between;flex-wrap:wrap}
+.band2 .t1{font-family:Baskerville,Georgia,serif;font-size:1.45rem}
+.band2 .t2{color:var(--gold);font-style:italic;font-family:Baskerville,Georgia,serif;font-size:1.3rem;margin-top:6px}
+.band2 .runner{width:110px;height:78px;color:var(--teal);flex:0 0 auto}
+.statsrow{display:grid;grid-template-columns:minmax(0,1fr) 60px minmax(0,1fr);gap:10px;align-items:center;padding:46px 0}
+.statcell{display:flex;gap:18px;align-items:flex-start}
+.statcell .ic{width:74px;height:74px;color:var(--teal);flex:0 0 auto}
+.statcell .k{color:var(--teal);letter-spacing:.12em;font-weight:700;font-size:.95rem}
+.statcell h3{font-family:Baskerville,Georgia,serif;font-size:1.7rem;color:var(--navy)}
+.statcell p{color:#5c6b76;margin-top:6px}
+.statdiv{display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--gold)}
+.statdiv::before,.statdiv::after{content:"";width:2px;height:52px;background:var(--gold)}
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;padding:10px 0 40px}
+.tile{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #e4ded4;border-radius:10px;padding:18px 16px;text-decoration:none;color:var(--navy);font-weight:700;font-size:.95rem;box-shadow:0 2px 6px rgba(28,52,71,.06)}
+.tile .ic{width:34px;height:34px;color:var(--teal);flex:0 0 auto}
+.tile .chev{margin-left:auto;color:var(--gold);font-size:1.2rem}
+.tile:hover{border-color:var(--teal)}
+.ctaband{background:var(--teal);color:#fff;border-radius:12px;padding:30px;display:flex;align-items:center;gap:24px;flex-wrap:wrap;margin:10px 0 26px}
+.ctaband .ic{width:72px;height:72px;flex:0 0 auto;opacity:.9}
+.ctaband h3{font-size:1.4rem;letter-spacing:.04em}
+.ctaband p{margin-top:6px;max-width:34rem}
+.ctaband .btn{background:#fff;color:var(--teal);margin-left:auto;white-space:nowrap}
+.signcard{background:#fff;border:1px solid #e4ded4;border-radius:12px;padding:30px;display:flex;gap:26px;align-items:center;flex-wrap:wrap;margin-bottom:40px}
+.minisign{flex:0 0 190px;border:2px solid #d8d2c6;border-radius:4px;padding:14px 10px;text-align:center;background:#fff;box-shadow:0 4px 10px rgba(28,52,71,.10)}
+.minisign .m1{font-family:Baskerville,Georgia,serif;color:var(--navy);font-size:1rem;letter-spacing:.04em}
+.minisign .m2{color:var(--gold);font-size:.55rem;letter-spacing:.2em;border-top:1px solid var(--gold);border-bottom:1px solid var(--gold);padding:2px 0;margin:4px 6px}
+.minisign .m3{color:var(--teal);font-size:.55rem;letter-spacing:.08em;margin-top:5px}
+.minisign .legs{display:flex;justify-content:space-around;margin-top:10px}
+.minisign .legs i{width:5px;height:22px;background:#b9b2a5;display:block}
+.signcard h3{font-family:Baskerville,Georgia,serif;color:var(--navy);font-size:1.5rem}
+.signcard .sub{color:var(--teal);font-weight:700;letter-spacing:.1em;font-size:.95rem}
+.signcard .btn{margin-left:auto;white-space:nowrap}
+footer.site{text-align:center;border-top:4px solid var(--gold)}
+footer.site .elec{letter-spacing:.18em;font-size:.8rem;text-transform:uppercase}
+.socials{display:flex;gap:14px;justify-content:center;margin-top:16px}
+.socials a{display:flex;width:40px;height:40px;border-radius:50%;background:#243c52;color:#fff;align-items:center;justify-content:center;text-decoration:none}
+.socials svg{width:18px;height:18px}
+@media(max-width:860px){
+ .hero2{grid-template-columns:minmax(0,1fr)}
+ .hero2 .pic{min-height:340px;order:-1}
+ .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .statsrow{grid-template-columns:minmax(0,1fr)}
+ .statdiv{flex-direction:row}.statdiv::before,.statdiv::after{width:52px;height:2px}
+ .ctaband .btn,.signcard .btn{margin-left:0}
+}
 """
 JS = """
 async function pbPost(col, data, flash){
@@ -100,8 +175,27 @@ wire('contactForm','messages','Message sent. Marlene will get back to you.');
     box.innerHTML=j.items.map(i=>'<div class="qa"><div class="q">Q: '+esc(i.question)+'</div><div class="a"><strong>Marlene:</strong> '+esc(i.answer)+'</div></div>').join('');
   }catch(e){ box.innerHTML='<p class="note">Questions and answers will appear here as they come in.</p>'; }
 })();
+document.getElementById('burger')?.addEventListener('click',()=>{
+  const m=document.getElementById('menu'); m.classList.toggle('open');
+  document.getElementById('burger').setAttribute('aria-expanded', m.classList.contains('open'));
+});
 function esc(s){const d=document.createElement('div');d.textContent=s||'';return d.innerHTML;}
 """
+
+RUNNER = """<svg class="{cls}" viewBox="0 0 90 64" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="57" cy="10" r="6.5" fill="currentColor" stroke="none"/><path d="M53 18 43 30l12 8-4 16"/><path d="M43 30l-9 6-10-2M55 26l12 4 9-3M51 38 38 50l-11 3"/><path d="M4 22h14M2 34h10M6 46h12" stroke-width="3.5" opacity=".75"/></svg>"""
+IC = {
+ "ask": '<svg class="ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 4h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H9l-5 4v-4H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/></svg>',
+ "sign": '<svg class="ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 4h18v9H3zM7 13h2v7H7zM15 13h2v7h-2z"/></svg>',
+ "person": '<svg class="ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="7" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7z"/></svg>',
+ "check": '<svg class="ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-1.2 14.6-4.3-4.3 1.7-1.7 2.6 2.6 5.8-5.8 1.7 1.7z"/></svg>',
+ "flag": '<svg class="ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 2h2v20H5zM9 3h11l-3 4.5L20 12H9z"/></svg>',
+ "news": '<svg class="ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 4h15v14a2 2 0 0 0 2 2H5a2 2 0 0 1-2-2zm18 4h-2v10a1 1 0 0 0 2 0zM6 7h9v4H6zm0 6h9v2H6zm0 3.5h9v2H6z"/></svg>',
+ "q": '<svg class="ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 3h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H10l-6 5v-5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm7.1 10.6h2v2h-2zm3.6-6.1c0 1.3-.7 2-1.6 2.7-.7.5-1 .8-1 1.6h-2c0-1.5.7-2.2 1.6-2.9.6-.5 1--.8 1-1.4 0-.8-.6-1.3-1.5-1.3s-1.6.6-1.7 1.5H7.4c.1-2 1.7-3.4 3.8-3.4 2.1 0 3.5 1.3 3.5 3.2z"/></svg>',
+ "people": '<svg class="ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="8" cy="8" r="3.4"/><circle cx="16.5" cy="9" r="2.8"/><path d="M1.5 20c0-3.4 2.9-5.8 6.5-5.8s6.5 2.4 6.5 5.8zM15.4 20c0-2 .9-3.7 2.3-4.8 2.7.4 4.8 2.4 4.8 4.8z"/></svg>',
+ "mail": '<svg class="ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2 5h20v14H2zm2 2 8 6 8-6"/><path d="M4 7l8 6 8-6" fill="none" stroke="#fff" stroke-width="1.6"/></svg>',
+ "fb": '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-7h2.4l.4-3h-2.8V9.1c0-.9.3-1.5 1.6-1.5h1.3V4.9c-.3 0-1.1-.1-2-.1-2.1 0-3.5 1.3-3.5 3.6V11H8.5v3h2.4v7z"/></svg>',
+}
+
 ELEC = "Paid for by Baldinger for Lebanon, 61 Brunswick Avenue, Lebanon NJ."
 def page(fname, title, active, body, desc):
     nav = [("index.html","Home"),("meet-marlene.html","Meet Marlene"),
@@ -118,16 +212,26 @@ def page(fname, title, active, body, desc):
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="site"><div class="wrap brand">
-  <a class="name" href="index.html">MARLENE BALDINGER<small>COUNCIL PRESIDENT &middot; LEBANON BOROUGH</small></a>
-  <div class="stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;</div>
+  <a class="lockup" href="index.html" aria-label="Marlene Baldinger home">
+    {RUNNER.format(cls="runner")}
+    <span class="lines">
+      <span class="l1">MARLENE</span><br>
+      <span class="l2">BALDINGER</span>
+      <span class="l3" style="display:block">COUNCIL PRESIDENT</span>
+      <span class="l4" style="display:block">LEBANON BOROUGH COMMON COUNCIL</span>
+    </span>
+  </a>
+  <button class="burger" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
 </div>
-<nav class="main" aria-label="Main"><div class="wrap"><ul>{links}</ul></div></nav>
+<nav id="menu" aria-label="Main"><ul>{links}</ul></nav>
 </header>
 <main id="main">{body}</main>
 <footer class="site"><div class="wrap">
-  <div>Marlene is Running for What&rsquo;s Important to You</div>
-  <div>Email: <a href="mailto:MarleneforLebanon@gmail.com" style="color:#fff">MarleneforLebanon@gmail.com</a></div>
   <div class="elec">{ELEC}</div>
+  <div class="socials">
+    <a href="#" aria-label="Facebook (coming soon)">{IC["fb"]}</a>
+    <a href="mailto:MarleneforLebanon@gmail.com" aria-label="Email">{IC["mail"]}</a>
+  </div>
 </div></footer>
 <script src="app.js"></script>
 </body></html>"""
@@ -155,49 +259,71 @@ SERVICE = ["Respectful, Responsive and Timely Advocacy for ALL Residents",
 li = lambda xs: "".join(f"<li>{x}</li>" for x in xs)
 
 page("index.html","Marlene Baldinger for Lebanon Borough Council","index.html",f"""
-<div class="wrap hero">
- <div>
+<div class="hero2">
+ <div class="txt">
   <div class="kicker">RUNNING FOR</div>
-  <h1>What&rsquo;s Important <em>to You</em></h1>
-  <hr class="rule">
-  <p><strong>Council President Marlene Baldinger</strong><br>
-  Running for re-election &middot; Tuesday, November 3, 2026<br>
-  Lebanon Borough &middot; Hunterdon County, New Jersey</p>
+  <h1>What&rsquo;s<br>Important<br><em>to You</em></h1>
+  <div class="goldrule">&#9733;</div>
+  <p class="who">Council President Marlene Baldinger</p>
+  <p class="meta1">RUNNING FOR RE-ELECTION &bull; NOVEMBER 2026</p>
+  <p class="meta2">LEBANON BOROUGH &bull; HUNTERDON COUNTY, NEW JERSEY</p>
   <div class="btnrow">
-   <a class="btn teal" href="ask.html">Ask Marlene a Question</a>
-   <a class="btn navy" href="get-involved.html#sign">Request a Yard Sign</a>
+   <a class="btn teal" href="ask.html">{IC["ask"]}ASK MARLENE A QUESTION</a>
+   <a class="btn navy" href="get-involved.html#sign">{IC["sign"]}REQUEST A YARD SIGN</a>
   </div>
  </div>
- <img src="assets/marlene-portrait.jpg" alt="Marlene Baldinger outside the Lebanon Borough municipal building">
+ <div class="pic"><img src="assets/marlene-portrait.jpg" alt="Marlene Baldinger outside the Lebanon Borough municipal building"></div>
 </div>
-<div class="band"><div class="wrap">A registered nurse. A 36 year resident. She knocks on every door.<br>
-<span class="gold">She runs through our town, and she runs for you.</span></div></div>
-<section class="block"><div class="wrap">
- <h2 class="sec">Promises Made, Promises Kept</h2>
- <div class="promise">
-  <span class="tag">DELIVERED &middot; AUGUST 19, 2026</span>
-  <h3>Council meetings are now livestreamed</h3>
-  <p>On her 2023 campaign card, Marlene printed a promise: improve communication by
-  livestreaming council meetings and making them available on the borough website.
-  She pushed for it for nine years. On August 19, 2026, Lebanon Borough held its first
-  livestreamed council meeting.</p>
-  <p style="margin-top:10px"><a href="promises.html">See her full record &rarr;</a></p>
+<div class="band2"><div class="wrap">
+ <div>
+  <div class="t1">A registered nurse. A 36 year resident. I knock on every door.</div>
+  <div class="t2">I run through our town, and I run for you.</div>
  </div>
-</div></section>
-<section class="block alt"><div class="wrap">
- <h2 class="sec">What Marlene stands for</h2>
- <ul class="stats">{li(VALUES)}</ul>
-</div></section>
-<section class="block"><div class="wrap grid2">
- <div class="card"><h3>Ask Marlene a Question</h3>
- <p>Have a question about our town or a council decision? Ask it here and Marlene
- answers publicly, so a neighbor with the same question can see the answer too.</p>
- <p style="margin-top:12px"><a class="btn teal" href="ask.html">Ask a question</a></p></div>
- <div class="card"><h3>Help spread the word</h3>
- <p>Yard signs go up in October. Request yours now and it will be there when the
- season starts.</p>
- <p style="margin-top:12px"><a class="btn navy" href="get-involved.html#sign">Request a yard sign</a></p></div>
-</div></section>
+ {RUNNER.format(cls="runner")}
+</div></div>
+<div class="wrap statsrow">
+ <div class="statcell">{RUNNER.format(cls="ic")}<div>
+  <div class="k">PERSONAL</div><h3>RUNNING STATS</h3>
+  <p>Nurse, mom, 36 year resident, and yes, trained stand-up comedian.
+  <a href="meet-marlene.html">Meet Marlene &rarr;</a></p></div></div>
+ <div class="statdiv">&#9733;</div>
+ <div class="statcell"><svg class="ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2 2 8h20zM4 10h3v8H4zm6.5 0h3v8h-3zM17 10h3v8h-3zM2 20h20v2H2z"/></svg><div>
+  <div class="k">COUNCIL SERVICE</div><h3>STATS</h3>
+  <p>Nine years on council, and a promise she printed in 2023 delivered in 2026.
+  <a href="promises.html">See the record &rarr;</a></p></div></div>
+</div>
+<div class="wrap">
+ <div class="tiles">
+  <a class="tile" href="meet-marlene.html">{IC["person"]}MEET MARLENE<span class="chev">&rsaquo;</span></a>
+  <a class="tile" href="promises.html">{IC["check"]}PROMISES MADE, PROMISES KEPT<span class="chev">&rsaquo;</span></a>
+  <a class="tile" href="priorities.html">{IC["flag"]}PRIORITIES<span class="chev">&rsaquo;</span></a>
+  <a class="tile" href="articles.html">{IC["news"]}ARTICLES<span class="chev">&rsaquo;</span></a>
+  <a class="tile" href="ask.html">{IC["q"]}ASK MARLENE A QUESTION<span class="chev">&rsaquo;</span></a>
+  <a class="tile" href="get-involved.html#sign">{IC["sign"]}GET A YARD SIGN<span class="chev">&rsaquo;</span></a>
+  <a class="tile" href="get-involved.html">{IC["people"]}GET INVOLVED<span class="chev">&rsaquo;</span></a>
+  <a class="tile" href="contact.html">{IC["mail"]}CONTACT<span class="chev">&rsaquo;</span></a>
+ </div>
+ <div class="ctaband">
+  {IC["q"].replace('class="ic"','class="ic" style="width:72px;height:72px"')}
+  <div><h3>ASK MARLENE A QUESTION</h3>
+  <p>Have a question about our town or council decisions? Submit it and Marlene will
+  answer it here for everyone.</p></div>
+  <a class="btn" href="ask.html">SUBMIT A QUESTION</a>
+ </div>
+ <div class="signcard">
+  <div class="minisign" aria-hidden="true">
+   <div class="m1">MARLENE<br>BALDINGER</div>
+   <div class="m2">COUNCIL PRESIDENT</div>
+   <div class="m3">RUNNING FOR WHAT&rsquo;S<br>IMPORTANT TO YOU</div>
+   <div class="legs"><i></i><i></i></div>
+  </div>
+  <div><h3>HELP SPREAD THE WORD</h3>
+  <div class="sub">REQUEST A YARD SIGN</div>
+  <p style="margin-top:8px;max-width:26rem">Yard signs help more neighbors learn about
+  the campaign. Request yours today!</p></div>
+  <a class="btn navy" href="get-involved.html#sign">REQUEST A YARD SIGN</a>
+ </div>
+</div>
 ""","Marlene Baldinger, Council President, is running for re-election to the Lebanon Borough Common Council. Running for what's important to you.")
 
 page("meet-marlene.html","Meet Marlene | Marlene Baldinger","meet-marlene.html",f"""
