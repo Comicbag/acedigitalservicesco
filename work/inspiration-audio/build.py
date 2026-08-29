@@ -64,7 +64,7 @@ def nav(active):
     return f"""<header class="nav">
   <div class="bar">
     <a class="brand" href="index.html" aria-label="Inspiration Audio, home">
-      <img src="img/logo.png" width="600" height="600" alt="Inspiration Audio">
+      <img src="img/logo.png" width="564" height="120" alt="Inspiration Audio">
     </a>
     <button class="burger" type="button" aria-expanded="false" aria-controls="navmenu" aria-label="Menu">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" focusable="false" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
@@ -81,7 +81,7 @@ def footer():
   <div class="wrap">
     <div class="grid">
       <div>
-        <img class="mark" src="img/logo.png" width="600" height="600" alt="Inspiration Audio">
+        <img class="mark" src="img/logo.png" width="564" height="120" alt="Inspiration Audio">
         <p style="max-width:30ch;font-size:.92rem">A 501(c)(3) nonprofit in Rahway, New Jersey, building a music ecosystem where creativity can thrive.</p>
         <div class="soc">{soc}</div>
       </div>
