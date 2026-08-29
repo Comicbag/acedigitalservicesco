@@ -13,6 +13,7 @@ import json, os, re, datetime
 HERE = os.path.dirname(os.path.abspath(__file__))
 BASE = "https://acedigitalservicesco.com/work/inspiration-audio/"
 TODAY = "2026-08-29"
+ASSET_V = "3"   # bump on every asset change: Cloudflare serves same-name files stale
 
 ARTISTS = json.load(open(os.path.join(HERE, "artists.json")))
 GEAR = json.load(open(os.path.join(HERE, "gear.json")))
@@ -64,7 +65,7 @@ def nav(active):
     return f"""<header class="nav">
   <div class="bar">
     <a class="brand" href="index.html" aria-label="Inspiration Audio, home">
-      <img src="img/logo.png" width="564" height="120" alt="Inspiration Audio">
+      <img src="img/logo.png?v={ASSET_V}" width="564" height="120" alt="Inspiration Audio">
     </a>
     <button class="burger" type="button" aria-expanded="false" aria-controls="navmenu" aria-label="Menu">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" focusable="false" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
@@ -81,7 +82,7 @@ def footer():
   <div class="wrap">
     <div class="grid">
       <div>
-        <img class="mark" src="img/logo.png" width="564" height="120" alt="Inspiration Audio">
+        <img class="mark" src="img/logo.png?v={ASSET_V}" width="564" height="120" alt="Inspiration Audio">
         <p style="max-width:30ch;font-size:.92rem">A 501(c)(3) nonprofit in Rahway, New Jersey, building a music ecosystem where creativity can thrive.</p>
         <div class="soc">{soc}</div>
       </div>
@@ -152,7 +153,7 @@ def page(slug, title, desc, body, og="img/hero.webp", preview=True):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800;900&family=JetBrains+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="css/site.css?v=1">
+<link rel="stylesheet" href="css/site.css?v={ASSET_V}">
 </head>
 <body>
 {banner}
@@ -162,7 +163,7 @@ def page(slug, title, desc, body, og="img/hero.webp", preview=True):
 {body}
 </main>
 {footer()}
-<script src="css/ui.js?v=1" defer></script>
+<script src="css/ui.js?v={ASSET_V}" defer></script>
 </body>
 </html>
 """
