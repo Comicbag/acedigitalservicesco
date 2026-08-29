@@ -13,7 +13,7 @@ import json, os, re, datetime
 HERE = os.path.dirname(os.path.abspath(__file__))
 BASE = "https://acedigitalservicesco.com/work/inspiration-audio/"
 TODAY = "2026-08-29"
-ASSET_V = "5"   # bump on every asset change: Cloudflare serves same-name files stale
+ASSET_V = "6"   # bump on every asset change: Cloudflare serves same-name files stale
 
 ARTISTS = json.load(open(os.path.join(HERE, "artists.json")))
 GEAR = json.load(open(os.path.join(HERE, "gear.json")))
@@ -421,7 +421,11 @@ def artist_card(a):
            f'width="520" height="520"></div>') if a["img"] else '<div class="pic"></div>'
     player = ""
     if a["embed"]:
-        h = 152 if a["embed_type"] == "track" else 232
+        # Spotify renders exactly two layouts: compact (152) and standard (352).
+        # Any height in between draws the compact player and pads the remainder
+        # with dead space, which is what the 232 used to do on artist/album embeds.
+        # 152 for everything keeps the roster cards a uniform height.
+        h = 152
         player = (f'<div class="player"><iframe src="{a["embed"]}" height="{h}" '
                   f'loading="lazy" title="{a["name"]} on Spotify" '
                   f'allow="encrypted-media; clipboard-write; picture-in-picture" '
