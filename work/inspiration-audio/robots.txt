@@ -1,3 +1,7 @@
-# Preview build. Not for indexing until the client approves and it moves to their domain.
+# robots.txt only takes effect at a DOMAIN ROOT, so on this preview subpath it is inert.
+# Preview indexing is blocked by the noindex meta tag on every page instead.
+# AT LAUNCH on the client's own domain: remove the noindex meta tags from build.py
+# and update the Sitemap line below to the live domain.
 User-agent: *
-Disallow: /
+Allow: /
+Sitemap: https://acedigitalservicesco.com/work/inspiration-audio/sitemap.xml

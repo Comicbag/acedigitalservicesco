@@ -1,0 +1,6 @@
+# Nothing internal may be tracked here: deploy is git pull, every tracked file is a public URL.
+# Build sources live in the capture repo: ace-sites-v3/_captures/inspirationaudio-current/_build/
+*.py
+*.json
+*.md
+_*
