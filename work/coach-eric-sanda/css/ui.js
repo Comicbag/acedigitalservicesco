@@ -1,4 +1,4 @@
-/* Coach Eric Boxing — shell behaviour: mobile nav + demo banner dismiss. */
+/* Coach Eric SanDa — shell behaviour: mobile nav + demo banner dismiss. */
 (function () {
   var toggle = document.querySelector('.navtoggle');
   var nav = document.getElementById('primary-nav');
