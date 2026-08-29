@@ -1,0 +1,3 @@
+# Preview build. Not for indexing until the client approves and it moves to their domain.
+User-agent: *
+Disallow: /
