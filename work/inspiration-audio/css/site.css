@@ -280,3 +280,7 @@ section{padding-block:clamp(56px,7.5vw,110px)}
 .gcell figcaption{padding:10px 14px;font-size:.82rem;color:var(--muted);border-top:1px solid var(--line)}
 @media(max-width:640px){.gallery{columns:2 150px;column-gap:10px}.gcell{margin-bottom:10px}}
 @media(prefers-reduced-motion:reduce){.gcell a:hover img{transform:none}}
+
+/* mic locker: one long alphabetical list, as their PDF has it */
+.miclist{columns:3 210px;column-gap:34px}
+@media(max-width:640px){.miclist{columns:2 130px;column-gap:20px}}

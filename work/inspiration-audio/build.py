@@ -13,7 +13,7 @@ import json, os, re, datetime
 HERE = os.path.dirname(os.path.abspath(__file__))
 BASE = "https://acedigitalservicesco.com/work/inspiration-audio/"
 TODAY = "2026-08-29"
-ASSET_V = "3"   # bump on every asset change: Cloudflare serves same-name files stale
+ASSET_V = "4"   # bump on every asset change: Cloudflare serves same-name files stale
 
 ARTISTS = json.load(open(os.path.join(HERE, "artists.json")))
 GEAR = json.load(open(os.path.join(HERE, "gear.json")))
@@ -112,6 +112,7 @@ def footer():
           <li><a href="tel:+19089000229">(908) 900-0229</a></li>
           <li><a href="mailto:info@inspirationaudio.org">info@inspirationaudio.org</a></li>
           <li><a href="contact.html">Contact form</a></li>
+          <li><a href="membership.html">Membership inquiry</a></li>
           <li><a href="team.html">Who we are</a></li>
           <li><a href="about.html">About IA</a></li>
         </ul>
@@ -445,19 +446,35 @@ artists_body = f"""
     <div class="split">
       <div class="rv">
         <h2>What you get as an IA artist</h2>
-        <p style="margin-top:18px">Studio time in a space where your ideas are heard, respected, and turned into reality. Sit back and let our engineers do what they do best, or jump in the driver's seat yourself.</p>
+        <p style="margin-top:18px">Schedule time to record your music in our state-of-the-art facility in a safe space where you can feel your ideas are heard, respected, and turned into reality.</p>
       </div>
       <div class="rv">
-        <ul class="tags" style="margin-bottom:20px">
-          <li>Collaborate with other artists</li>
-          <li>Access to masterclasses</li>
-          <li>All-ages performance venue</li>
-          <li>On-site photo and video studio</li>
-          <li>Keep every right to your music</li>
-        </ul>
-        <p>You are connected to our extended network of artists, engineers and media managers, so you can network, gain new insights, and launch your musical career. Create all the promotional materials you need for marketing your music, building your brand, and designing your merchandise, at a professional level.</p>
-        <div class="btns"><a class="btn btn-primary" href="contact.html">Become an IA artist</a></div>
+        <p><strong style="color:var(--chalk)">You will retain all of the rights to everything recorded in the space.</strong></p>
+        <div class="btns"><a class="btn btn-primary" href="contact.html">Get started</a></div>
       </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="path rv">
+      <div class="step"><div class="k">01</div><div>
+        <h3>Collaborate with other artists</h3>
+        <p>Be connected to our extended network of artists, engineers and media managers so that you can begin to network with others in the industry, gain new insights, or launch your musical career.</p>
+      </div></div>
+      <div class="step"><div class="k">02</div><div>
+        <h3>Performance venue</h3>
+        <p>Take your music to the stage with our all-ages performance space where you can showcase new work to a vast network of other artists.</p>
+      </div></div>
+      <div class="step"><div class="k">03</div><div>
+        <h3>Access to masterclasses</h3>
+        <p>Continue your learning through our free masterclasses where you can learn from industry professionals, expand your skill set.</p>
+      </div></div>
+      <div class="step"><div class="k">04</div><div>
+        <h3>Access to our on-site photography and video studio</h3>
+        <p>Create all the promotional materials needed for marketing your music, creating your brand, and designing your merchandise at a professional level.</p>
+      </div></div>
     </div>
   </div>
 </section>
@@ -500,7 +517,8 @@ studio_body = f"""
 
 <section>
   <div class="wrap">
-    <h2 class="rv" style="margin-bottom:32px">Two rooms, open now</h2>
+    <h2 class="rv" style="margin-bottom:14px">Two rooms, open now</h2>
+    <p class="rv narrow" style="margin-bottom:32px">Until Carriage City opens, all projects are being conducted out of our Rahway Studio and Garwood Live Room.</p>
     <div class="cols2">
       <div class="rv">
         <figure class="figure" style="margin:0 0 20px"><img src="img/rahway-2.webp" alt="The Rahway studio control room" loading="lazy" width="1600" height="1067"></figure>
@@ -529,7 +547,10 @@ studio_body = f"""
         <p style="margin-top:18px">Our official home will house the recording studio and double as a performance venue and community space, with all-ages concerts, cultural and community events, yoga and music classes, masterclasses and workshops through the year.</p>
         <p>We are partnering with Dolby Atmos and have invested in a spatial audio system, so we can deliver those mixes for artists and train engineers on them as New Jersey expands its involvement in television and film.</p>
       </div>
-      <div class="rv"><p class="pull">Not only a recording studio. A home for the New Jersey music community to gather.</p></div>
+      <div class="rv" style="display:flex;flex-direction:column;gap:26px">
+        <img src="img/carriage-city.webp" alt="Carriage City, established 2023" width="1200" height="800" loading="lazy" style="border:1px solid var(--line)">
+        <p class="pull">Not only a recording studio. A home for the New Jersey music community to gather.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -556,14 +577,14 @@ def gearcard(g):
             f'<h3>{g["name"]}</h3><ul>{items}</ul></div>')
 
 n_gear = sum(len(g["items"]) for g in GEAR["groups"])
-n_mics = sum(len(g["items"]) for g in GEAR["mics"])
+n_mics = len(GEAR["mic_locker"])
 
 gear_body = f"""
 {phead("Gear list", f"{n_gear + n_mics} pieces of equipment, including a mic locker of {n_mics}. EJ is always on the hunt, so this list keeps growing.", "img/gear-room.webp", "Outboard gear racked in the studio")}
 
 <section>
   <div class="wrap">
-    <h2 class="rv">Outboard, instruments and the room</h2>
+    <h2 class="rv">The gear list</h2>
     <div class="gear" style="margin-top:30px">
       {''.join(gearcard(g) for g in GEAR["groups"])}
     </div>
@@ -577,13 +598,27 @@ gear_body = f"""
         <p style="margin-top:16px">{n_mics} microphones, from a Neumann u87 Ai and a FLEA 47 to Coles and Royer ribbons and a full set of Shure workhorses.</p></div>
       <figure class="figure rv" style="margin:0"><img src="img/gear-amps.webp" alt="Amplifiers in the studio" loading="lazy" width="1100" height="1467"></figure>
     </div>
-    <div class="gear">
-      {''.join(gearcard(g) for g in GEAR["mics"])}
+    <div class="gearcard rv" style="max-width:none">
+      <span class="count">{n_mics} microphones</span>
+      <h3>Mic Locker</h3>
+      <ul class="miclist">{''.join(f"<li>{m}</li>" for m in GEAR["mic_locker"])}</ul>
     </div>
   </div>
 </section>
 
-<section>
+<section class="rule">
+  <div class="wrap">
+    <h2 class="rv">Download the full list</h2>
+    <p class="rv narrow" style="margin-top:16px">Click below to download our complete gear list and mic locker. Though remember, EJ is always on the hunt for new things, so this list is constantly growing.</p>
+    <div class="btns rv" style="margin-top:24px">
+      <a class="btn btn-ghost" href="files/inspiration-audio-gear-list.pdf" download>Gear list (PDF)</a>
+      <a class="btn btn-ghost" href="files/inspiration-audio-mic-locker.pdf" download>Mic locker (PDF)</a>
+      <a class="btn btn-ghost" href="https://open.spotify.com/playlist/7JXZhjPYF04AyPYMaOmEya" rel="noopener" target="_blank">Work samples</a>
+    </div>
+  </div>
+</section>
+
+<section class="tint">
   <div class="wrap" style="text-align:center">
     <h2 class="rv">Want to use it?</h2>
     <p class="rv narrow" style="margin:16px auto 26px">The Garwood live room is also available for rental to groups or engineers who want to lead engineer their own projects.</p>
@@ -607,6 +642,28 @@ training_body = f"""
 </section>
 
 <section class="tint rule">
+  <div class="wrap">
+    <h2 class="rv">What you get</h2>
+    <div class="path rv" style="margin-top:30px">
+      <div class="step"><div class="k">01</div><div>
+        <h3>Studio time</h3>
+        <p>Get hands on training and practice in our state-of-the-art recording facility, equipped with gear and softwares that are today's industry standards.</p>
+        <p>Work alongside our lead engineers to record artists, learning different micing techniques, how to mix and master the final product.</p>
+      </div></div>
+      <div class="step"><div class="k">02</div><div>
+        <h3>Collaborate with other artists and engineers</h3>
+        <p>Be connected to our extended network of artists, engineers and media managers so that you can begin to network with others in the industry, gain new insights, or launch your musical career.</p>
+      </div></div>
+      <div class="step"><div class="k">03</div><div>
+        <h3>Live sound opportunities</h3>
+        <p>Have access to live recording opportunities in our all-ages performance venue and at other events throughout the year where you can gain hands-on training and experience.</p>
+      </div></div>
+    </div>
+    <div class="btns rv" style="margin-top:32px"><a class="btn btn-primary" href="contact.html">Get started</a></div>
+  </div>
+</section>
+
+<section>
   <div class="wrap">
     <h2 class="rv">What you leave with</h2>
     <div class="cols3 rv" style="margin-top:30px">
@@ -643,10 +700,10 @@ scholarship_body = f"""
         <p style="margin:18px 0 24px">Everything offered to IA artists and engineers, for free.</p>
         <div class="path">
           <div class="step"><div class="k">01</div><div><h3>Access to the recording studio</h3></div></div>
-          <div class="step"><div class="k">02</div><div><h3>Every masterclass and event</h3></div></div>
+          <div class="step"><div class="k">02</div><div><h3>Attend all masterclasses and events</h3></div></div>
           <div class="step"><div class="k">03</div><div><h3>Use of the photography and video studio</h3></div></div>
-          <div class="step"><div class="k">04</div><div><h3>A network to collaborate with</h3><p>Connect with other like-minded musicians and engineers.</p></div></div>
-          <div class="step"><div class="k">05</div><div><h3>The all-ages performance space</h3><p>Build your fan base and get a platform to perform on.</p></div></div>
+          <div class="step"><div class="k">04</div><div><h3>Connect and collaborate</h3><p>Connect and collaborate with other like-minded musicians and engineers to collaborate and network.</p></div></div>
+          <div class="step"><div class="k">05</div><div><h3>Use the all-ages performance space</h3><p>Use the all-ages performance space to connect and build with your fan base, in addition to giving you a platform to perform.</p></div></div>
         </div>
         <p class="pull rv" style="margin-top:32px">All inquiries are accepted.</p>
       </div>
@@ -738,7 +795,7 @@ events_body = f"""
   <div class="wrap">
     <!-- TODO (EJ / Liz): the old site's events system had one listing and it has already passed.
          Send us anything coming up and we will put it here. -->
-    <h2 class="rv" style="margin-bottom:30px">What's coming up</h2>
+    <h2 class="rv" style="margin-bottom:30px">Upcoming events</h2>
     <div class="empty rv">
       <h3>Nothing on the calendar right now</h3>
       <p>When the next show, masterclass or community night is booked, it will be listed here. Follow along on Instagram in the meantime, or get on the list.</p>
@@ -779,15 +836,6 @@ contact_body = f"""
           </div>
           <div class="field"><label for="c-phone">Phone</label><input id="c-phone" name="phone" type="tel" autocomplete="tel" required></div>
           <div class="field"><label for="c-email">Email</label><input id="c-email" name="email" type="email" autocomplete="email" required></div>
-          <fieldset style="border:0;padding:0;margin:0">
-            <legend class="field" style="font-size:.88rem;font-weight:600;color:var(--chalk);margin-bottom:9px">I am getting in touch as</legend>
-            <div class="radios">
-              <label><input type="radio" name="as" value="artist" required><span>IA Artist</span></label>
-              <label><input type="radio" name="as" value="engineer"><span>IA Engineer</span></label>
-              <label><input type="radio" name="as" value="scholar"><span>IA Scholar</span></label>
-              <label><input type="radio" name="as" value="other"><span>Something else</span></label>
-            </div>
-          </fieldset>
           <div class="field"><label for="c-msg">How would you like to get involved with IA?</label><textarea id="c-msg" name="message" rows="5" required></textarea></div>
           <div><button class="btn btn-primary" type="submit">Send</button></div>
           <p class="formnote">This form is not connected yet in this preview. Nothing you type here is sent anywhere.</p>
@@ -803,7 +851,12 @@ contact_body = f"""
           <div class="row"><span class="t">Diego Gallardo</span><span>Managing Member<br><a href="mailto:Info@inspirationaudio.org">Info@inspirationaudio.org</a></span></div>
           <div class="row"><span class="t">Where</span><span>Rahway, New Jersey</span></div>
         </div>
-        <div class="panel accent" style="margin-top:26px">
+        <div class="panel" style="margin-top:26px">
+          <h3>Want to become a member?</h3>
+          <p style="margin-bottom:16px">There is a separate membership inquiry form.</p>
+          <a class="btn btn-ghost" href="membership.html">Membership inquiry</a>
+        </div>
+        <div class="panel accent" style="margin-top:16px">
           <h3>Applying for a scholarship?</h3>
           <p style="margin-bottom:16px">There is a separate form with a few more questions on it.</p>
           <a class="btn btn-primary" href="scholarship.html#apply">Scholarship application</a>
@@ -883,7 +936,7 @@ tutorials_body = f"""
 <section>
   <div class="wrap">
     {''.join(f'''<div class="vidgroup rv" style="margin-bottom:clamp(40px,5vw,66px)">
-      <h2 style="margin-bottom:26px">{name}</h2>
+      <h2 style="margin-bottom:26px">{name} Tutorials</h2>
       <div class="vidgrid">{''.join(vidcard(*v) for v in vids)}</div>
     </div>''' for name, vids in TUTORIALS)}
     <!-- TODO (EJ / Liz): the six Mixing videos are not on the @inspirationaudio1676 channel,
@@ -932,6 +985,42 @@ gallery_body = f"""
 """
 
 
+# ================================================================== MEMBERSHIP
+membership_body = f"""
+{phead("Membership inquiry", "Tell us which side of the room you want to be on and we will get back to you.")}
+
+<section>
+  <div class="wrap">
+    <h2 class="rv" style="margin-bottom:26px">Tell us about you</h2>
+    <!-- TODO (EJ / Liz): where should this deliver? Same inbox as the general contact form, or its own? -->
+    <form class="form rv" method="post" action="#" novalidate>
+      <div class="cols2" style="gap:16px">
+        <div class="field"><label for="m-first">First name</label><input id="m-first" name="first" type="text" autocomplete="given-name" required></div>
+        <div class="field"><label for="m-last">Last name</label><input id="m-last" name="last" type="text" autocomplete="family-name" required></div>
+      </div>
+      <div class="field"><label for="m-phone">Phone</label><input id="m-phone" name="phone" type="tel" autocomplete="tel" required></div>
+      <div class="field"><label for="m-email">Email</label><input id="m-email" name="email" type="email" autocomplete="email" required></div>
+      <fieldset style="border:0;padding:0;margin:0">
+        <legend class="field" style="font-size:.88rem;font-weight:600;color:var(--chalk);margin-bottom:9px">Membership type</legend>
+        <div class="radios">
+          <label><input type="radio" name="membership" value="artist" required><span>IA Artist</span></label>
+          <label><input type="radio" name="membership" value="engineer"><span>IA Engineer</span></label>
+          <label><input type="radio" name="membership" value="scholar"><span>IA Scholar</span></label>
+        </div>
+      </fieldset>
+      <div class="field"><label for="m-msg">Write a message</label><textarea id="m-msg" name="message" rows="5" required></textarea></div>
+      <div><button class="btn btn-primary" type="submit">Submit</button></div>
+      <p class="formnote">This form is not connected yet in this preview. Nothing you type here is sent anywhere.</p>
+    </form>
+    <div class="panel accent rv" style="margin-top:34px;max-width:640px">
+      <h3>Cannot afford membership?</h3>
+      <p style="margin-bottom:16px">Apply to be an IA Scholar and receive access to everything offered to IA artists and engineers for free. All inquiries are accepted.</p>
+      <a class="btn btn-primary" href="scholarship.html#apply">IA Scholarship</a>
+    </div>
+  </div>
+</section>
+"""
+
 # ================================================================== RENDER
 PAGES = [
  ("index.html","Inspiration Audio | Nonprofit recording studio in Rahway, NJ","A 501(c)(3) nonprofit studio in Rahway, NJ. Record your project, train as an engineer, or apply for a scholarship and do all of it for free.",home_body),
@@ -947,6 +1036,7 @@ PAGES = [
  ("events.html","Events | Inspiration Audio","All-ages concerts, masterclasses, workshops and community nights at Inspiration Audio in Rahway, New Jersey.",events_body),
  ("tutorials.html","Tutorials | Inspiration Audio","Free mixing, recording and production tutorials from the engineers at Inspiration Audio in Rahway, New Jersey.",tutorials_body),
  ("gallery.html","Gallery | Inspiration Audio","Photographs from inside Inspiration Audio: the studio, sessions, the gear and community nights in Rahway, NJ.",gallery_body),
+ ("membership.html","Membership inquiry | Inspiration Audio","Become an IA Artist, IA Engineer or IA Scholar at Inspiration Audio, a nonprofit recording studio in Rahway, New Jersey.",membership_body),
  ("contact.html","Contact | Inspiration Audio","Get in touch with Inspiration Audio in Rahway, NJ. Call (908) 900-0229 or email info@inspirationaudio.org.",contact_body),
  ("accessibility.html","Accessibility | Inspiration Audio","How we have built this site to work for everyone, where it falls short, and how to tell us about a problem.",a11y_body),
 ]
