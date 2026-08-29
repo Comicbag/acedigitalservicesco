@@ -19,14 +19,13 @@ GEAR = json.load(open(os.path.join(HERE, "gear.json")))
 
 # ---------------------------------------------------------------- nav / chrome
 NAV = [
-    ("index.html",       "Home"),
     ("about.html",       "About"),
-    ("team.html",        "Who We Are"),
     ("artists.html",     "Artists"),
-    ("studio.html",      "The Studio"),
+    ("gallery.html",     "Gallery"),
+    ("studio.html",      "Studio"),
     ("gear.html",        "Gear"),
+    ("tutorials.html",   "Tutorials"),
     ("scholarship.html", "Scholarship"),
-    ("events.html",      "Events"),
     ("contact.html",     "Contact"),
 ]
 
@@ -92,6 +91,7 @@ def footer():
           <li><a href="studio.html">The studio</a></li>
           <li><a href="gear.html">Gear list</a></li>
           <li><a href="artists.html">IA artists</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
           <li><a href="listen.html">Listen</a></li>
         </ul>
       </div>
@@ -100,6 +100,7 @@ def footer():
         <ul>
           <li><a href="scholarship.html">IA Scholarship</a></li>
           <li><a href="training.html">Train as an engineer</a></li>
+          <li><a href="tutorials.html">Free tutorials</a></li>
           <li><a href="events.html">Events</a></li>
           <li><a href="support.html">Support us</a></li>
         </ul>
@@ -110,6 +111,7 @@ def footer():
           <li><a href="tel:+19089000229">(908) 900-0229</a></li>
           <li><a href="mailto:info@inspirationaudio.org">info@inspirationaudio.org</a></li>
           <li><a href="contact.html">Contact form</a></li>
+          <li><a href="team.html">Who we are</a></li>
           <li><a href="about.html">About IA</a></li>
         </ul>
       </div>
@@ -833,6 +835,102 @@ a11y_body = f"""
 </section>
 """
 
+# ================================================================== TUTORIALS
+# Video IDs below were confirmed by EXACT title match against Inspiration Audio's
+# own YouTube channel (@inspirationaudio1676). The six long-form mixing videos on
+# their old page are not on that channel, so they are listed but not embedded
+# rather than guessed at.
+TUTORIALS = [
+ ("Mixing", [
+   ("Over EQ'ing Your Mix: The Perspective Shift You're Missing", "28:49", None),
+   ("Steve Albini Did This Differently With Drums", "20:45", None),
+   ("Why 1 Cent Makes Vocals Sound Bigger", "12:05", None),
+   ("The Emotional Side of Reverb", "17:11", None),
+   ("Spectral vs Multiband vs Compression | When Each One Actually Makes Sense", "25:29", None),
+   ("Do You Know What's Killing the Bass in Your Mix?", "20:46", None),
+ ]),
+ ("Recording", [
+   ("BEST VO MICS $$$", "1:06", "-2RDda8iWas"),
+   ("A Recreation of Thriller", "6:48", "mkPqo7ZkYvg"),
+   ("Quick Tip 9 - Drum Muffling", "3:23", "O9mbywNNyjU"),
+   ("Recording Experimentation Day @ Inspiration Audio", "1:13", "3Ew4i9rxmOI"),
+   ("Quick Tip - Drum Mic Placement", "1:03", "D1A7nqNx9kU"),
+   ("Quick Tip - The Pooper Time Cube", "0:54", "uhkY79pDZN8"),
+ ]),
+ ("Production", [
+   ("Recording a Basic Drum Beat", "1:15", "2S1-pLI0wgE"),
+   ("Making Beats on Your iPhone??", "1:24", "4URYO3DnVgQ"),
+   ("Vital Plug-In FX Explained", "0:57", "vLfyzewwGnA"),
+ ]),
+]
+n_vid = sum(len(v) for _, v in TUTORIALS)
+n_emb = sum(1 for _, v in TUTORIALS for x in v if x[2])
+
+def vidcard(t, dur, vid):
+    if vid:
+        return (f'<article class="vid rv"><div class="frame">'
+                f'<iframe src="https://www.youtube-nocookie.com/embed/{vid}" title="{t}" loading="lazy"'
+                f' allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"'
+                f' referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>'
+                f'<h3>{t}</h3><p class="dur">{dur}</p></article>')
+    return (f'<article class="vid rv pending"><div class="frame ph"><span>On their channel</span></div>'
+            f'<h3>{t}</h3><p class="dur">{dur}</p></article>')
+
+tutorials_body = f"""
+{phead("Tutorials", f"{n_vid} videos on mixing, recording and production, free to watch.")}
+
+<section>
+  <div class="wrap">
+    {''.join(f'''<div class="vidgroup rv" style="margin-bottom:clamp(40px,5vw,66px)">
+      <h2 style="margin-bottom:26px">{name}</h2>
+      <div class="vidgrid">{''.join(vidcard(*v) for v in vids)}</div>
+    </div>''' for name, vids in TUTORIALS)}
+    <!-- TODO (EJ / Liz): the six Mixing videos are not on the @inspirationaudio1676 channel,
+         so we have deliberately not guessed at their links. Send us where they live (a second
+         channel, a playlist, or Rainy Night Records) and they get embedded like the rest. -->
+    <div class="formnote rv">
+      The six mixing videos are listed with the titles and run times from your own site, but they
+      are not on the Inspiration Audio YouTube channel, so we have not linked them to anything. Tell
+      us where they live and they will play here like the others.
+    </div>
+    <div class="btns rv" style="margin-top:28px">
+      <a class="btn btn-primary" href="https://www.youtube.com/@inspirationaudio1676" rel="noopener" target="_blank">All videos on YouTube</a>
+      <a class="btn btn-ghost" href="training.html">Train with us in person</a>
+    </div>
+  </div>
+</section>
+"""
+
+# ================================================================== GALLERY
+GALLERY = json.load(open(os.path.join(HERE, "gallery.json")))
+def gitem(g, i):
+    alt = g["alt"] or "Inside the Inspiration Audio studio"
+    cap = f'<figcaption>{g["alt"]}</figcaption>' if g["alt"] else ""
+    tall = " tall" if g["portrait"] else ""
+    return (f'<figure class="gcell{tall} rv">'
+            f'<a href="{g["full"]}" target="_blank" rel="noopener" aria-label="Open larger image: {alt}">'
+            f'<img src="{g["thumb"]}" alt="{alt}" loading="lazy" decoding="async" '
+            f'width="{g["w"]}" height="{g["h"]}"></a>{cap}</figure>')
+
+n_named = sum(1 for g in GALLERY if g["alt"])
+gallery_body = f"""
+{phead("Gallery", f"{len(GALLERY)} photographs from the studio, the sessions, the gear and the community nights.")}
+
+<section>
+  <div class="wrap">
+    <div class="gallery">
+      {''.join(gitem(g, i) for i, g in enumerate(GALLERY))}
+    </div>
+    <p class="formnote rv" style="margin-top:34px">
+      {n_named} of these {len(GALLERY)} photographs came across with their own captions. The rest
+      have a general description for screen readers. If you tell us what is in them we will caption
+      them properly.
+    </p>
+  </div>
+</section>
+"""
+
+
 # ================================================================== RENDER
 PAGES = [
  ("index.html","Inspiration Audio | Nonprofit recording studio in Rahway, NJ","A 501(c)(3) nonprofit studio in Rahway, NJ. Record your project, train as an engineer, or apply for a scholarship and do all of it for free.",home_body),
@@ -846,6 +944,8 @@ PAGES = [
  ("scholarship.html","IA Scholarship | Inspiration Audio","Apply to be an IA Scholar and get studio access, masterclasses, the photo and video studio and the performance space for free. All inquiries are accepted.",scholarship_body),
  ("support.html","Support us | Inspiration Audio","Inspiration Audio is a registered 501(c)(3) nonprofit. Donate, sponsor a program, or donate gear that gets used by people learning on it.",support_body),
  ("events.html","Events | Inspiration Audio","All-ages concerts, masterclasses, workshops and community nights at Inspiration Audio in Rahway, New Jersey.",events_body),
+ ("tutorials.html","Tutorials | Inspiration Audio","Free mixing, recording and production tutorials from the engineers at Inspiration Audio in Rahway, New Jersey.",tutorials_body),
+ ("gallery.html","Gallery | Inspiration Audio","Photographs from inside Inspiration Audio: the studio, sessions, the gear and community nights in Rahway, NJ.",gallery_body),
  ("contact.html","Contact | Inspiration Audio","Get in touch with Inspiration Audio in Rahway, NJ. Call (908) 900-0229 or email info@inspirationaudio.org.",contact_body),
  ("accessibility.html","Accessibility | Inspiration Audio","How we have built this site to work for everyone, where it falls short, and how to tell us about a problem.",a11y_body),
 ]
