@@ -1,11 +1,12 @@
 {
   "deliverable": "Coach Eric Boxing concept demo (acedigitalservicesco.com/work/coach-eric-boxing/)",
   "checked": "2026-08-18",
-  "status": "CONCEPT DEMO. Most content is deliberately invented placeholder. Not client-approved. Not fact-checked against Eric, because Eric has not supplied any material yet.",
+  "status": "CONCEPT DEMO. Eric's background is now real, taken from the resume he supplied. Pricing, lesson names, imagery and member data are still placeholder.",
   "rule": "source-or-strike normally applies. This demo is an explicit exception: it exists to show layout before content exists. Every page therefore carries a visible demo banner, and everything invented is listed below.",
   "sources": {
     "corey": "Corey Smith, direct, 2026-08-18 (this is the only source of real facts on the site)",
-    "imessage": "3 TikTok links Eric sent Corey 2026-08-17 14:47, unwatched at build time"
+    "imessage": "3 TikTok links Eric sent Corey 2026-08-17 14:47, unwatched at build time",
+    "resume": "Eric Del Piano's own martial arts resume, sent to Corey via Snapchat and pasted by Corey 2026-08-23. Self-reported by the client, NOT independently verified."
   },
   "claims": [
     {
@@ -57,11 +58,6 @@
       "note": "Fundamentals 18 / Defense 14 / Self defense 12 and every lesson title are placeholders for layout."
     },
     {
-      "claim": "Eric's first person voice on about.html",
-      "status": "INVENTED",
-      "note": "Written as plausible coach voice. No real bio, no quotes from Eric. Deliberately avoids inventing verifiable credentials: no years boxing, no titles, no certifications, no record."
-    },
-    {
       "claim": "Member quote on the homepage",
       "status": "INVENTED",
       "note": "Left as an explicit placeholder with no fake attribution, rather than inventing a person."
@@ -80,6 +76,66 @@
       "claim": "Contact details, address, social links, response time",
       "status": "PLACEHOLDER",
       "note": "Eric's real phone (on file in Mission Control) is deliberately NOT published on this demo."
+    },
+    {
+      "claim": "Name is spelled 'Eric Del Piano' (two words)",
+      "source": "resume",
+      "status": "sourced",
+      "note": "Mission Control, CLIENT-INDEX and the GoDaddy mail all say 'Delpiano'. His own resume says 'Del Piano'. Site uses HIS spelling. Confirm with him which is correct before anything is printed or registered."
+    },
+    {
+      "claim": "SanDa is his primary discipline; boxing/Muay Thai/kickboxing secondary",
+      "source": "resume",
+      "status": "sourced",
+      "note": "This is the whole positioning. Do NOT describe him as just a boxing coach."
+    },
+    {
+      "claim": "SanDa Black Sash under Coach Edgar Ruiz (Shichahai Sports School, Beijing)",
+      "source": "resume",
+      "status": "sourced"
+    },
+    {
+      "claim": "2x WFMAF U.S. Open Advanced SanDa Champion (2017, 2018)",
+      "source": "resume",
+      "status": "sourced"
+    },
+    {
+      "claim": "2x New England International Chinese Martial Arts Advanced SanDa gold (2023)",
+      "source": "resume",
+      "status": "sourced"
+    },
+    {
+      "claim": "U.S. National SanDa Championships silver, 2021, ankle fracture before the final",
+      "source": "resume",
+      "status": "sourced"
+    },
+    {
+      "claim": "Started ~age 11 under Shifu Chuantong Lin, Shaolin/Wushu, incl. U.S. Capitol Wushu golds",
+      "source": "resume",
+      "status": "sourced"
+    },
+    {
+      "claim": "UFC FIT Wayne since Feb 2025; MMA Lead Aug 2025; Assistant MMA Director Sept 2025",
+      "source": "resume",
+      "status": "sourced",
+      "note": "Employment claims about a named company. Fine on his own site, but verify before Ace Digital repeats them in marketing."
+    },
+    {
+      "claim": "~70-80 private clients, 30+ hours of private coaching per week",
+      "source": "resume + corey",
+      "status": "sourced"
+    },
+    {
+      "claim": "'Built largest private-coaching books in the company'",
+      "source": "resume",
+      "status": "UNVERIFIED CLAIM",
+      "note": "His claim about his employer's internal numbers. NOT put on the site as a boast. Do not publish without his explicit sign off."
+    },
+    {
+      "claim": "He is not a competition/fight-camp COACH, though he competed himself",
+      "source": "corey + resume",
+      "status": "sourced",
+      "note": "REFINED 2026-08-23. Corey's original 'not a competition coach' is about who he COACHES. He is himself a decorated competitor. Both are true and the site says so. Do not flatten either half."
     }
   ],
   "checks": [

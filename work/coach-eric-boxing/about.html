@@ -4,17 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>document.documentElement.classList.add('js')</script>
-<title>About Eric · Coach Eric Boxing</title>
-<meta name="description" content="Eric Delpiano coaches boxing and self defense in Wayne, New Jersey, to around 80 people of every experience level. How he teaches, and who he teaches.">
+<title>About Eric Del Piano · SanDa coach, Wayne NJ</title>
+<meta name="description" content="Eric Del Piano is a SanDa specialist and Black Sash with 13 years in martial arts, two US Open Advanced SanDa titles and a national silver medal. He coaches around 80 private clients a week at UFC FIT Wayne.">
 <link rel="canonical" href="https://acedigitalservicesco.com/work/coach-eric-boxing/about.html">
 <meta property="og:type" content="profile">
 <meta property="og:site_name" content="Coach Eric Boxing">
-<meta property="og:title" content="About Eric · Coach Eric Boxing">
-<meta property="og:description" content="Eric Delpiano coaches boxing and self defense in Wayne, New Jersey, to around 80 people of every experience level.">
+<meta property="og:title" content="About Eric Del Piano · SanDa coach, Wayne NJ">
+<meta property="og:description" content="SanDa specialist and Black Sash. 13 years in martial arts, two US Open titles, a national silver, and around 80 private clients a week at UFC FIT Wayne.">
 <meta property="og:url" content="https://acedigitalservicesco.com/work/coach-eric-boxing/about.html">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="About Eric · Coach Eric Boxing">
-<meta name="twitter:description" content="How Eric teaches boxing and self defense, and who he teaches it to.">
+<meta name="twitter:title" content="About Eric Del Piano · SanDa coach, Wayne NJ">
+<meta name="twitter:description" content="SanDa specialist and Black Sash. Two US Open titles, a national silver, and around 80 private clients a week.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230c0c0e'/%3E%3Crect x='7' y='7' width='18' height='18' fill='%23e2571f'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,19 +22,49 @@
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600&display=swap"></noscript>
 <link rel="stylesheet" href="css/site.css?v=1">
 <style>
-.phero{padding:clamp(44px,6vw,84px) 0 clamp(36px,5vw,60px);border-bottom:1px solid var(--line)}
-.phero .d1{margin:16px 0 22px;font-size:clamp(2.2rem,6.5vw,4.4rem)}
+.phero{padding:clamp(44px,6vw,84px) 0 clamp(30px,4vw,52px);border-bottom:1px solid var(--line)}
+.phero .d1{margin:16px 0 20px;font-size:clamp(2.2rem,6.5vw,4.4rem)}
+.creds{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.cred{font-family:"Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:.12em;font-weight:700;font-size:.82rem;border:1px solid var(--line);padding:7px 13px;color:var(--chalk-dim)}
+.cred.hot{border-color:var(--ember);color:var(--ember)}
+
 .bio .split{align-items:start}
 .bio .ph{position:sticky;top:100px}
 @media(max-width:900px){.bio .ph{position:static}}
-.bio h3{font-family:"Archivo Black",sans-serif;text-transform:uppercase;color:var(--chalk);font-size:1.15rem;margin:34px 0 12px;letter-spacing:-.01em}
+.bio h3{font-family:"Archivo Black",sans-serif;text-transform:uppercase;color:var(--chalk);font-size:1.15rem;margin:38px 0 12px;letter-spacing:-.01em}
+.bio h3:first-of-type{margin-top:0}
 .bio p + p{margin-top:14px}
-.pullout{background:var(--surface);border-left:3px solid var(--ember);padding:clamp(20px,3vw,28px);margin:32px 0}
+.pullout{background:var(--surface);border-left:3px solid var(--ember);padding:clamp(20px,3vw,28px);margin:30px 0}
 .pullout p{color:var(--chalk);font-size:1.06rem}
+
+.diff{background:var(--surface);border-block:1px solid var(--line)}
+.diff .card{background:var(--ink)}
+.diff .n{font-family:"Barlow Condensed",sans-serif;color:var(--ember);letter-spacing:.2em;font-weight:700;font-size:.8rem;margin-bottom:8px}
+
+/* timeline */
+.tl{list-style:none;position:relative;margin-top:6px}
+.tl::before{content:"";position:absolute;left:7px;top:6px;bottom:6px;width:1px;background:var(--line)}
+.tl li{position:relative;padding:0 0 26px 34px}
+.tl li::before{content:"";position:absolute;left:2px;top:7px;width:11px;height:11px;background:var(--ink);border:2px solid var(--ember)}
+.tl .yr{font-family:"Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:.16em;font-weight:700;font-size:.8rem;color:var(--ember)}
+.tl h4{font-family:"Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:.06em;font-weight:700;color:var(--chalk);font-size:1.05rem;margin:3px 0 5px}
+.tl p{font-size:.95rem}
+
+/* medals */
+.medals{list-style:none;display:flex;flex-direction:column;gap:0}
+.medals li{display:flex;gap:16px;align-items:baseline;padding:13px 0;border-bottom:1px solid var(--line);font-size:.97rem}
+.medals .yr{font-family:"Barlow Condensed",sans-serif;font-weight:700;letter-spacing:.1em;font-size:.82rem;color:var(--muted);flex:none;width:52px}
+.medals .res{font-family:"Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:.12em;font-weight:700;font-size:.76rem;flex:none;width:66px}
+.medals .gold{color:var(--ember)}
+.medals .silver{color:var(--chalk-dim)}
+.medals .ev{color:var(--chalk-dim);min-width:0}
+
 .factlist{list-style:none;display:flex;flex-direction:column;gap:0;margin-top:8px}
 .factlist li{display:flex;gap:16px;padding:14px 0;border-bottom:1px solid var(--line);font-size:.96rem}
-.factlist .k{font-family:"Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:.16em;font-weight:700;font-size:.8rem;color:var(--muted);flex:none;width:120px;padding-top:3px}
+.factlist .k{font-family:"Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:.16em;font-weight:700;font-size:.8rem;color:var(--muted);flex:none;width:132px;padding-top:3px}
 .factlist .v{color:var(--chalk-dim);min-width:0}
+.tech{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.tech span{font-family:"Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:.1em;font-weight:600;font-size:.8rem;color:var(--chalk-dim);border:1px solid var(--line);padding:5px 11px}
 .cta{background:var(--ember);color:#fff}
 .cta .display{color:#fff}
 .cta p{color:rgba(255,255,255,.92)}
@@ -47,7 +77,7 @@
 
 <div class="demobar">
   <div class="wrap">
-    <p><strong>Concept demo.</strong> Built by Ace Digital to show the layout. Photos, quotes and prices are placeholders, not Eric's real numbers.</p>
+    <p><strong>Concept demo.</strong> Built by Ace Digital to show the layout. Eric's background is from the resume he sent. Photos and prices are still placeholders.</p>
     <button type="button">Close</button>
   </div>
 </div>
@@ -75,39 +105,111 @@
   <section class="phero">
     <div class="wrap">
       <p class="eyebrow">About</p>
-      <h1 class="display d1">Eric Delpiano</h1>
-      <p class="lede">Boxing and self defense coach in Wayne, New Jersey. Around 80 people train with him, roughly half of them women, and most of them had never thrown a punch before they walked in.</p>
+      <h1 class="display d1">Eric Del Piano</h1>
+      <p class="lede">SanDa coach and competitor. Thirteen years in martial arts, a Black Sash under a Shichahai lineage coach, and around 80 private clients a week at UFC FIT in Wayne, New Jersey.</p>
+      <div class="creds">
+        <span class="cred hot">SanDa Black Sash</span>
+        <span class="cred">2× US Open Advanced SanDa Champion</span>
+        <span class="cred">National Silver Medalist</span>
+        <span class="cred">13+ years</span>
+        <span class="cred">Assistant MMA Director, UFC FIT Wayne</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section diff">
+    <div class="wrap">
+      <p class="eyebrow">Why this and not the other guy</p>
+      <h2 class="display d2" style="margin:14px 0 18px">There are a hundred online striking courses</h2>
+      <p class="lede" style="margin-bottom:clamp(28px,4vw,44px)">Most of them teach you boxing, or Muay Thai, filmed by someone who does not coach anybody in real life. Three things here are actually different.</p>
+      <div class="grid g3">
+        <div class="card">
+          <div class="n">01</div>
+          <h3>It is SanDa, not boxing</h3>
+          <p>SanDa is Chinese kickboxing. Hands and kicks like anything else, but it also keeps the clinch, the throws and the takedowns. So when you ask what happens if they grab you, the answer is part of the same system instead of a different course.</p>
+        </div>
+        <div class="card">
+          <div class="n">02</div>
+          <h3>Eric actually competed</h3>
+          <p>Two US Open Advanced SanDa titles, two New England International golds, and a national silver taken with a fractured ankle. Everything taught here was tested against people who were trying to win.</p>
+        </div>
+        <div class="card">
+          <div class="n">03</div>
+          <h3>He coaches for a living, right now</h3>
+          <p>Around 80 private clients and 30+ hours a week on the pads at UFC FIT Wayne. This is not a training archive from someone who used to compete. It is what he is teaching this week.</p>
+        </div>
+      </div>
     </div>
   </section>
 
   <section class="section bio">
     <div class="wrap split">
       <div>
-        <h2 class="display d3">How I teach</h2>
-        <p>Most people who come to me are not trying to fight anybody. They want to move better, feel stronger, and know what to do if something goes wrong. So that is what I teach. Boxing done properly, and self defense that actually works when you are frightened.</p>
-        <p>I do not rush people. Stance and footwork before punches, punches before combinations, combinations before anything that looks impressive. It is slower at the start and it is the reason people stay.</p>
+        <h3>How I teach</h3>
+        <p>Most people who come to me are not trying to fight anybody. They want to move better, feel stronger, and know what to do if something goes wrong. So that is what I build for them.</p>
+        <p>I do not rush people. Stance and footwork before strikes, strikes before combinations, combinations before anything that looks impressive. It is slower at the start and it is the reason people stay.</p>
+        <p>I am not running fight camps. Almost everyone I work with is a regular person with a job, and the fact that I competed is there to make the coaching better, not to turn you into a competitor. If you do want to compete, we can talk about it.</p>
 
         <div class="pullout">
-          <p>The goal is not to make you look like a boxer. It is to make you move like one without having to think about it.</p>
+          <p>The goal is not to make you look like a fighter. It is to make you move like one without having to think about it.</p>
         </div>
 
-        <h3>Who I work with</h3>
-        <p>Complete beginners. People coming back after years off. People who specifically want self defense and have no interest in the sport side of it at all. Teenagers and people well into their sixties. The room is mixed on purpose and nobody is the odd one out in it.</p>
-        <p>I am not a competition coach. I could take that work and I do not, because it is not what I enjoy and it is not what the people who train with me need. If you are preparing for a fight camp, I am probably not your guy, and I will tell you that honestly.</p>
+        <h3>Where the style comes from</h3>
+        <ul class="tl">
+          <li>
+            <div class="yr">2013 to 2020</div>
+            <h4>Shaolin Kung Fu and Wushu</h4>
+            <p>Started at around 11 years old under Shifu Chuantong Lin, a former Shaolin disciple from China. Competed in Wushu and won a number of golds, including at the U.S. Capitol Wushu Championships.</p>
+          </li>
+          <li>
+            <div class="yr">2016 to 2020</div>
+            <h4>Specialised into SanDa and Qin Na</h4>
+            <p>Moved into SanDa at about 14, still under Shifu Lin. Built a style that combines Chinese kickboxing, striking, throws, takedowns and clinch work. Started teaching weekly SanDa and self defense while still competing.</p>
+          </li>
+          <li>
+            <div class="yr">2020 to 2021</div>
+            <h4>Kickboxing, Muay Thai and boxing</h4>
+            <p>The Shaolin school closed during Covid. Kept training through kickboxing and Muay Thai at Impact Martial Arts, with SanDa still the primary art. Boxing became a real part of the game during college, including dedicated boxing work at Blueline, which is where the hands in his SanDa come from.</p>
+          </li>
+          <li>
+            <div class="yr">2021 to 2024</div>
+            <h4>Black Sash under Edgar Ruiz</h4>
+            <p>Trained under Coach Edgar Ruiz, a graduate of the Shichahai Sports School in Beijing, and earned a Black Sash in SanDa. This is where the wrestling and takedown integration, clinch work and modern competitive SanDa came together.</p>
+          </li>
+          <li>
+            <div class="yr">2025 to now</div>
+            <h4>UFC FIT Wayne</h4>
+            <p>Joined in February 2025 as a private striking coach. Became MMA Lead that August and Assistant MMA Director in September, and built the largest private coaching book in the company.</p>
+          </li>
+        </ul>
 
-        <h3>Why there is an online program</h3>
-        <p>My schedule filled up. I kept getting asked and I kept having to say no, which I hated, and the people I had to turn away were exactly the people who needed the fundamentals most.</p>
-        <p>The online program is the same material, in the same order, taught the same way. It is not a substitute for having someone correct your elbow in real time. It is better than the alternative, which for most people is a YouTube video made by someone who has never taught a beginner in their life.</p>
+        <h3>Competition record</h3>
+        <ul class="medals">
+          <li><span class="yr">2017</span><span class="res gold">Champion</span><span class="ev">WFMAF U.S. Open, Advanced SanDa</span></li>
+          <li><span class="yr">2018</span><span class="res gold">Champion</span><span class="ev">WFMAF U.S. Open, Advanced SanDa</span></li>
+          <li><span class="yr">2019</span><span class="res gold">Champion</span><span class="ev">International Martial Arts Tournament and Festival, SanDa</span></li>
+          <li><span class="yr">2021</span><span class="res silver">Silver</span><span class="ev">U.S. National SanDa Championships. Reached the final and could not contest it after fracturing an ankle</span></li>
+          <li><span class="yr">2023</span><span class="res gold">2× Gold</span><span class="ev">New England International Chinese Martial Arts Championships, Advanced SanDa, including against members of the Kyrgyzstan team</span></li>
+          <li><span class="yr">2023</span><span class="res silver">Competed</span><span class="ev">U.S. National SanDa Championships and U.S. Team Trials</span></li>
+        </ul>
 
-        <h3>Where I coach</h3>
-        <p>UFC FIT in Wayne, New Jersey.</p>
+        <h3>What he actually throws</h3>
+        <p>A SanDa and boxing hybrid built around mobility, distance management and hand fighting. If you want the specifics:</p>
+        <div class="tech">
+          <span>Deng Tui side kick</span><span>Bian Tui round kick</span><span>Jab</span><span>Lead hook</span>
+          <span>Inside low kick</span><span>Pull counters</span><span>Single leg</span><span>Run the pipe</span>
+          <span>Inside trips</span><span>Knee taps</span><span>Clinch entries</span>
+        </div>
 
+        <h3>The short version</h3>
         <ul class="factlist">
-          <li><span class="k">Teaches</span><span class="v">Boxing and self defense</span></li>
-          <li><span class="k">Based</span><span class="v">Wayne, New Jersey</span></li>
-          <li><span class="k">Clients</span><span class="v">Around 80, men and women</span></li>
-          <li><span class="k">Levels</span><span class="v">Complete beginner upwards</span></li>
-          <li><span class="k">Not</span><span class="v">A competition or fight camp coach</span></li>
+          <li><span class="k">Primary art</span><span class="v">SanDa</span></li>
+          <li><span class="k">Also</span><span class="v">Boxing, Muay Thai, kickboxing, Qin Na, Wushu, Shaolin Kung Fu</span></li>
+          <li><span class="k">Rank</span><span class="v">SanDa Black Sash</span></li>
+          <li><span class="k">Experience</span><span class="v">13+ years</span></li>
+          <li><span class="k">Coaches</span><span class="v">Around 80 private clients, 30+ hours a week</span></li>
+          <li><span class="k">Based</span><span class="v">UFC FIT, Wayne, New Jersey</span></li>
+          <li><span class="k">Coaches under</span><span class="v">Shifu Chuantong Lin, then Coach Edgar Ruiz</span></li>
         </ul>
       </div>
 
@@ -117,8 +219,8 @@
 
   <section class="section cta">
     <div class="wrap">
-      <h2 class="display d2">Start with the fundamentals</h2>
-      <p class="lede" style="margin-top:16px">The same first six lessons every person in Wayne gets, in the same order.</p>
+      <h2 class="display d2">Train the system, not a highlight reel</h2>
+      <p class="lede" style="margin-top:16px">Start at lesson one, the same place every person in Wayne starts.</p>
       <div class="btn-row">
         <a class="btn btn-ghost" href="classes.html">See the online classes</a>
         <a class="btn btn-ghost" href="contact.html">Get in touch</a>
@@ -133,7 +235,7 @@
     <div class="cols">
       <div>
         <a class="logo" href="index.html" style="margin-bottom:14px"><span class="lmark"></span><span class="lname">Coach Eric Boxing</span></a>
-        <p style="font-size:.95rem">Boxing and self defense coaching in Wayne, New Jersey, and an online program you can start from anywhere.</p>
+        <p style="font-size:.95rem">SanDa and striking coaching in Wayne, New Jersey, and an online program you can start from anywhere.</p>
       </div>
       <div>
         <h4>Training</h4>
