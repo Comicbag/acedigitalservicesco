@@ -13,7 +13,7 @@ import json, os, re, datetime
 HERE = os.path.dirname(os.path.abspath(__file__))
 BASE = "https://acedigitalservicesco.com/work/inspiration-audio/"
 TODAY = "2026-08-29"
-ASSET_V = "4"   # bump on every asset change: Cloudflare serves same-name files stale
+ASSET_V = "5"   # bump on every asset change: Cloudflare serves same-name files stale
 
 ARTISTS = json.load(open(os.path.join(HERE, "artists.json")))
 GEAR = json.load(open(os.path.join(HERE, "gear.json")))
@@ -547,10 +547,7 @@ studio_body = f"""
         <p style="margin-top:18px">Our official home will house the recording studio and double as a performance venue and community space, with all-ages concerts, cultural and community events, yoga and music classes, masterclasses and workshops through the year.</p>
         <p>We are partnering with Dolby Atmos and have invested in a spatial audio system, so we can deliver those mixes for artists and train engineers on them as New Jersey expands its involvement in television and film.</p>
       </div>
-      <div class="rv" style="display:flex;flex-direction:column;gap:26px">
-        <img src="img/carriage-city.webp" alt="Carriage City, established 2023" width="1200" height="800" loading="lazy" style="border:1px solid var(--line)">
-        <p class="pull">Not only a recording studio. A home for the New Jersey music community to gather.</p>
-      </div>
+      <div class="rv"><p class="pull">Not only a recording studio. A home for the New Jersey music community to gather.</p></div>
     </div>
   </div>
 </section>
