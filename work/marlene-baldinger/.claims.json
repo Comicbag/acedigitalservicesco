@@ -33,6 +33,18 @@
   {
    "claim": "ZIP 08833 on donate page",
    "source": "INFERRED from Lebanon NJ - NOT on the card. CONFIRM"
+  },
+  {
+   "claim": "Individual may give up to $5,500 per election to a candidate committee (stated on donate.html, enforced as max in the form and in PocketBase)",
+   "source": "VERIFIED 2026-08-31 via ELEC/press sources: 2026 non-gubernatorial individual-to-candidate-committee limit. Recheck each cycle, limits are indexed."
+  },
+  {
+   "claim": "Occupation/employer fields appear above $300",
+   "source": "VERIFIED 2026-08-31: NJ requires occupation and employer for contributions over $300 aggregate in the pre-election reporting windows. Form reveals the fields above $300 rather than only in those windows, which is the safe direction."
+  },
+  {
+   "claim": "Donate page takes NO payment",
+   "source": "By design per Corey 2026-08-31: pledge-only. Page states plainly that no card is charged and no card details are collected. Records land in the PocketBase 'donations' collection with status=pledged."
   }
  ]
 }
