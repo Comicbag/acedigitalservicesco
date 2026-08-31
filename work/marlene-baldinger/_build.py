@@ -188,6 +188,18 @@ footer.site .elec{color:#fff;letter-spacing:.16em;font-size:.76rem;text-transfor
  .lockup .l3{letter-spacing:.17em;font-size:.56rem}
  .lockup .l4{letter-spacing:.1em;font-size:.53rem}
 }
+
+/* donate flow */
+.amtrow{display:flex;gap:10px;flex-wrap:wrap}
+.amt{flex:1 1 90px;padding:14px 10px;border:2px solid var(--line);background:#fff;border-radius:8px;font:inherit;font-weight:700;color:var(--navy);cursor:pointer;transition:border-color .2s,background .2s,color .2s}
+.amt:hover{border-color:var(--teal)}
+.amt.sel{border-color:var(--teal);background:var(--teal);color:#fff}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:var(--s2)}
+.callout{border-left:4px solid var(--gold);background:#fffdf8;padding:16px 18px;border-radius:0 8px 8px 0;margin:var(--s3) 0}
+.callout strong{color:var(--navy)}
+#occBox{display:none}
+#occBox.show{display:grid;gap:var(--s2)}
+@media(max-width:600px){.f2{grid-template-columns:1fr}}
 """
 JS = """
 async function pbPost(col, data, flash){
@@ -287,7 +299,7 @@ def page(fname, title, active, body, desc):
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{desc}">
 <meta property="og:image" content="https://acedigitalservicesco.com/work/marlene-baldinger/assets/marlene-portrait.jpg">
-<link rel="stylesheet" href="style.css?v=196955"></head>
+<link rel="stylesheet" href="style.css?v=197016"></head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="site"><div class="wrap brand">
@@ -312,7 +324,7 @@ def page(fname, title, active, body, desc):
     <a href="mailto:MarleneforLebanon@gmail.com" aria-label="Email">{IC["mail"]}</a>
   </div>
 </div></footer>
-<script src="app.js?v=196955"></script>
+<script src="app.js?v=197016"></script>
 </body></html>"""
     open(os.path.join(OUT,fname),"w").write(html)
 
