@@ -7,57 +7,62 @@
 <meta property="og:title" content="Get Involved | Marlene Baldinger">
 <meta property="og:description" content="Volunteer, request a yard sign, or support Marlene Baldinger's campaign for Lebanon Borough Council.">
 <meta property="og:image" content="https://acedigitalservicesco.com/work/marlene-baldinger/assets/marlene-portrait.jpg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,400;1,9..144,600&family=Public+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=104496"></head>
+<link rel="stylesheet" href="style.css?v=195852"></head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<header class="masthead">
-  <p class="dateline">Lebanon Borough &middot; Hunterdon County, New Jersey</p>
-  <p class="mast"><a href="index.html">Marlene Baldinger</a></p>
-  <p class="mastsub">for Common Council &middot; Election Day is Tuesday, November 3, 2026</p>
-  <nav class="paper" aria-label="Main"><ul><li><a href="index.html">Home</a></li><li><a href="meet-marlene.html">Meet Marlene</a></li><li><a href="promises.html">Her Record</a></li><li><a href="priorities.html">Priorities</a></li><li><a href="articles.html">Articles</a></li><li><a href="ask.html">Ask Marlene</a></li><li><a href="get-involved.html" class="on">Get Involved</a></li><li><a href="contact.html">Contact</a></li></ul></nav>
+<header class="site"><div class="wrap brand">
+  <a class="lockup" href="index.html" aria-label="Marlene Baldinger home">
+    <img class="runner" src="assets/runner-gold.png" alt="" aria-hidden="true">
+    <span class="lines">
+      <span class="l1">MARLENE</span><br>
+      <span class="l2">BALDINGER</span>
+      <span class="l3" style="display:block">COUNCIL PRESIDENT</span>
+      <span class="l4" style="display:block">LEBANON BOROUGH COMMON COUNCIL</span>
+    </span>
+  </a>
+  <button class="burger" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
+</div>
+<nav id="menu" aria-label="Main"><ul><li><a href="index.html">Home</a></li><li><a href="meet-marlene.html">Meet Marlene</a></li><li><a href="promises.html">Promises Made, Promises Kept</a></li><li><a href="priorities.html">Priorities</a></li><li><a href="articles.html">Articles</a></li><li><a href="ask.html">Ask Marlene</a></li><li><a href="get-involved.html" class="on">Get Involved</a></li><li><a href="contact.html">Contact</a></li></ul></nav>
 </header>
 <main id="main">
-<div class="wrap">
- <section class="sec" style="border-top:0">
-  <div class="sechead"><span class="star">&#9733;</span><h3>Lend a <em>hand.</em></h3><span class="rule"></span></div>
-  <div class="grid2">
-   <div class="panel" id="sign"><h3>Request a yard sign</h3>
-    <p class="note">Signs go up in October. Request one now and Marlene will make sure you get it.</p>
-    <form class="f" id="signForm" style="margin-top:var(--s2)">
-     <div><label for="sname">Name</label><input id="sname" name="name" required maxlength="120"></div>
-     <div><label for="saddr">Address in Lebanon Borough</label><input id="saddr" name="address" required maxlength="240"></div>
-     <div><label for="semail">Email</label><input id="semail" name="email" type="email" required maxlength="200"></div>
-     <button class="btn" type="submit">Request a sign</button>
-     <div class="flash" role="status"></div>
-    </form></div>
-   <div>
-    <div class="panel"><h3>Stay in the loop</h3>
-     <p class="note">Campaign updates by email. No spam, and you can stop any time.</p>
-     <form class="f" id="joinForm" style="margin-top:var(--s2)">
-      <div><label for="jemail">Email</label><input id="jemail" name="email" type="email" required maxlength="200"></div>
-      <button class="btn" type="submit">Sign up</button>
-      <div class="flash" role="status"></div>
-     </form></div>
-    <div class="panel" id="donate" style="margin-top:var(--s3)"><h3>Support the campaign</h3>
-     <p>This campaign is almost entirely self run, door to door. Contributions help with
-     printing, signs and materials.</p>
-     <p style="margin-top:10px">Checks can be made out to <strong>Baldinger for Lebanon</strong>
-     and mailed to 61 Brunswick Avenue, Lebanon NJ 08833.</p>
-     <p class="note" style="margin-top:10px">Online contributions are coming soon. New Jersey
-     election law requires every contribution to be recorded with the donor&rsquo;s name and
-     address.</p></div>
-   </div>
+<section class="block"><div class="wrap">
+ <h2 class="sec">Get Involved</h2>
+ <div class="grid2" style="margin-top:20px">
+  <div class="card" id="sign"><h3>Request a yard sign</h3>
+  <p>Signs go up in October. Request one now and Marlene will make sure you get it.</p>
+  <form class="f" id="signForm" style="margin-top:16px">
+   <div><label for="sname">Name</label><input id="sname" name="name" required maxlength="120"></div>
+   <div><label for="saddr">Address in Lebanon Borough</label><input id="saddr" name="address" required maxlength="240"></div>
+   <div><label for="semail">Email</label><input id="semail" name="email" type="email" required maxlength="200"></div>
+   <button class="btn navy" type="submit">Request a sign</button>
+   <div class="flash" role="status"></div>
+  </form></div>
+  <div>
+   <div class="card"><h3>Stay in the loop</h3>
+   <p>Campaign updates by email. No spam, and you can stop any time.</p>
+   <form class="f" id="joinForm" style="margin-top:16px">
+    <div><label for="jemail">Email</label><input id="jemail" name="email" type="email" required maxlength="200"></div>
+    <button class="btn teal" type="submit">Sign up</button>
+    <div class="flash" role="status"></div>
+   </form></div>
+   <div class="card" style="margin-top:24px"><h3>Donate</h3>
+   <p>This campaign is almost entirely self run, door to door. Contributions help with
+   printing, signs and materials.</p>
+   <p style="margin-top:10px">Checks can be made out to <strong>Baldinger for Lebanon</strong>
+   and mailed to 61 Brunswick Avenue, Lebanon NJ 08833.</p>
+   <p class="note" style="margin-top:10px">Online contributions are coming soon. New Jersey
+   election law requires every contribution to be recorded with the donor&rsquo;s name and
+   address.</p></div>
   </div>
- </section>
-</div>
+ </div>
+</div></section>
 </main>
-<footer class="paper"><div class="wrap">
-  <div class="fstars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;</div>
-  <div class="links"><a href="mailto:MarleneforLebanon@gmail.com">MarleneforLebanon@gmail.com</a> &middot; Facebook and Instagram coming soon</div>
+<footer class="site"><div class="wrap">
   <div class="elec">Paid for by Baldinger for Lebanon, 61 Brunswick Avenue, Lebanon NJ.</div>
+  <div class="socials">
+    <a href="#" aria-label="Facebook (coming soon)"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-7h2.4l.4-3h-2.8V9.1c0-.9.3-1.5 1.6-1.5h1.3V4.9c-.3 0-1.1-.1-2-.1-2.1 0-3.5 1.3-3.5 3.6V11H8.5v3h2.4v7z"/></svg></a>
+    <a href="mailto:MarleneforLebanon@gmail.com" aria-label="Email"><svg class="ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2 5h20v14H2zm2 2 8 6 8-6"/><path d="M4 7l8 6 8-6" fill="none" stroke="#fff" stroke-width="1.6"/></svg></a>
+  </div>
 </div></footer>
-<script src="app.js?v=104496"></script>
+<script src="app.js?v=195852"></script>
 </body></html>

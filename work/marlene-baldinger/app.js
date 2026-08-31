@@ -17,9 +17,9 @@ function wire(id, col, okMsg){
     else fl.textContent='Something went wrong sending that. Please try again, or email MarleneforLebanon@gmail.com';
   });
 }
-wire('askForm','questions','Thank you. Marlene reads every question and answers here on this page.');
-wire('signForm','sign_requests','Thank you. Your yard sign request is in.');
-wire('joinForm','signups','Thanks for signing up. You are on the list.');
+wire('askForm','questions','Thank you! Marlene reads every question and answers here on this page.');
+wire('signForm','sign_requests','Thank you! Your yard sign request is in.');
+wire('joinForm','signups','Thanks for signing up! You are on the list.');
 wire('contactForm','messages','Message sent. Marlene will get back to you.');
 (async ()=>{
   const box=document.getElementById('answered'); if(!box) return;
@@ -30,4 +30,8 @@ wire('contactForm','messages','Message sent. Marlene will get back to you.');
     box.innerHTML=j.items.map(i=>'<div class="qa"><div class="q">Q: '+esc(i.question)+'</div><div class="a"><strong>Marlene:</strong> '+esc(i.answer)+'</div></div>').join('');
   }catch(e){ box.innerHTML='<p class="note">Questions and answers will appear here as they come in.</p>'; }
 })();
+document.getElementById('burger')?.addEventListener('click',()=>{
+  const m=document.getElementById('menu'); m.classList.toggle('open');
+  document.getElementById('burger').setAttribute('aria-expanded', m.classList.contains('open'));
+});
 function esc(s){const d=document.createElement('div');d.textContent=s||'';return d.innerHTML;}
