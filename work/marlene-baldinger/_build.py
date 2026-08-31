@@ -225,6 +225,35 @@ document.getElementById('burger')?.addEventListener('click',()=>{
   const m=document.getElementById('menu'); m.classList.toggle('open');
   document.getElementById('burger').setAttribute('aria-expanded', m.classList.contains('open'));
 });
+(function(){
+  const f=document.getElementById('donateForm'); if(!f) return;
+  const amt=document.getElementById('damount'), occ=document.getElementById('occBox');
+  function sync(){
+    const v=parseFloat(amt.value||'0');
+    occ.classList.toggle('show', v>300);
+    document.querySelectorAll('.amt').forEach(b=>b.classList.toggle('sel', parseFloat(b.dataset.amt)===v));
+  }
+  document.querySelectorAll('.amt').forEach(b=>b.addEventListener('click',()=>{amt.value=b.dataset.amt;sync();}));
+  amt.addEventListener('input', sync);
+  f.addEventListener('submit', async ev=>{
+    ev.preventDefault();
+    const fl=f.querySelector('.flash'); fl.textContent='Sending...'; fl.className='flash ok';
+    const d=Object.fromEntries(new FormData(f).entries());
+    d.amount=parseFloat(d.amount)||0; d.status='pledged';
+    if(d.amount>5500){ fl.className='flash err'; fl.textContent='New Jersey caps an individual contribution at $5,500 per election. Please enter a lower amount.'; return; }
+    try{
+      const r=await fetch('pb/api/collections/donations/records',{method:'POST',
+        headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});
+      if(!r.ok) throw new Error(await r.text());
+      fl.className='flash ok';
+      fl.textContent='Thank you. Marlene will follow up personally about how to send it. No payment has been taken and no card details were collected.';
+      f.reset(); sync();
+    }catch(e){
+      fl.className='flash err';
+      fl.textContent='Something went wrong sending that. Please try again, or email MarleneforLebanon@gmail.com';
+    }
+  });
+})();
 function esc(s){const d=document.createElement('div');d.textContent=s||'';return d.innerHTML;}
 """
 
@@ -258,7 +287,7 @@ def page(fname, title, active, body, desc):
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{desc}">
 <meta property="og:image" content="https://acedigitalservicesco.com/work/marlene-baldinger/assets/marlene-portrait.jpg">
-<link rel="stylesheet" href="style.css?v=195966"></head>
+<link rel="stylesheet" href="style.css?v=196955"></head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="site"><div class="wrap brand">
@@ -283,7 +312,7 @@ def page(fname, title, active, body, desc):
     <a href="mailto:MarleneforLebanon@gmail.com" aria-label="Email">{IC["mail"]}</a>
   </div>
 </div></footer>
-<script src="app.js?v=195966"></script>
+<script src="app.js?v=196955"></script>
 </body></html>"""
     open(os.path.join(OUT,fname),"w").write(html)
 
@@ -478,18 +507,86 @@ page("get-involved.html","Get Involved | Marlene Baldinger","get-involved.html",
     <button class="btn teal" type="submit">Sign up</button>
     <div class="flash" role="status"></div>
    </form></div>
-   <div class="card" style="margin-top:24px"><h3>Donate</h3>
+   <div class="card" id="donate" style="margin-top:24px"><h3>Support the campaign</h3>
    <p>This campaign is almost entirely self run, door to door. Contributions help with
    printing, signs and materials.</p>
-   <p style="margin-top:10px">Checks can be made out to <strong>Baldinger for Lebanon</strong>
-   and mailed to 61 Brunswick Avenue, Lebanon NJ 08833.</p>
-   <p class="note" style="margin-top:10px">Online contributions are coming soon. New Jersey
-   election law requires every contribution to be recorded with the donor&rsquo;s name and
-   address.</p></div>
+   <p style="margin-top:14px"><a class="btn teal" href="donate.html">Support the campaign</a></p>
+   <p class="note" style="margin-top:12px">You can also mail a check to
+   <strong>Baldinger for Lebanon</strong>, 61 Brunswick Avenue, Lebanon NJ 08833.</p></div>
   </div>
  </div>
 </div></section>
 ""","Volunteer, request a yard sign, or support Marlene Baldinger's campaign for Lebanon Borough Council.")
+
+page("donate.html","Support the Campaign | Marlene Baldinger","donate.html",f"""
+<section class="block"><div class="wrap">
+ <h2 class="sec">Support the campaign</h2>
+ <p class="lead">Marlene runs this campaign almost entirely herself, door to door.
+ Contributions go to the things that actually reach neighbors: printing, door hangers,
+ yard signs and postage.</p>
+
+ <div class="callout">
+  <strong>Card payments are not switched on yet.</strong> You can tell Marlene what
+  you would like to give using the form below and she will follow up personally with
+  how to send it. Nothing is charged here and no card details are collected. If you
+  would rather not wait, a check can be mailed today using the details at the bottom
+  of this page.
+ </div>
+
+ <form class="f" id="donateForm" style="max-width:40rem">
+  <div>
+   <label>How much would you like to give?</label>
+   <div class="amtrow" role="group" aria-label="Choose an amount">
+    <button type="button" class="amt" data-amt="25">$25</button>
+    <button type="button" class="amt" data-amt="50">$50</button>
+    <button type="button" class="amt" data-amt="100">$100</button>
+    <button type="button" class="amt" data-amt="250">$250</button>
+   </div>
+  </div>
+  <div><label for="damount">Amount in dollars</label>
+   <input id="damount" name="amount" type="number" min="1" max="5500" step="1" required inputmode="numeric">
+   <p class="note" style="margin-top:6px">New Jersey allows an individual to give up to
+   $5,500 per election to a candidate committee.</p></div>
+
+  <div><label for="dname">Full name</label><input id="dname" name="name" required maxlength="120"></div>
+  <div class="f2">
+   <div><label for="demail">Email</label><input id="demail" name="email" type="email" required maxlength="200"></div>
+   <div><label for="dphone">Phone (optional)</label><input id="dphone" name="phone" maxlength="40"></div>
+  </div>
+  <div><label for="daddr">Street address</label><input id="daddr" name="address" required maxlength="200"></div>
+  <div class="f2">
+   <div><label for="dcity">City</label><input id="dcity" name="city" required maxlength="80"></div>
+   <div class="f2" style="gap:10px">
+    <div><label for="dstate">State</label><input id="dstate" name="state" required maxlength="30" value="NJ"></div>
+    <div><label for="dzip">ZIP</label><input id="dzip" name="zip" required maxlength="12" inputmode="numeric"></div>
+   </div>
+  </div>
+  <p class="note">Your name and address are required by New Jersey election law for
+  every contribution. They are recorded for her ELEC filing and are not published on
+  this website.</p>
+
+  <div id="occBox">
+   <p class="note" style="margin:0"><strong>Because your amount is over $300</strong>,
+   New Jersey may require your occupation and employer to be reported.</p>
+   <div class="f2">
+    <div><label for="docc">Occupation</label><input id="docc" name="occupation" maxlength="120"></div>
+    <div><label for="demp">Employer</label><input id="demp" name="employer" maxlength="160"></div>
+   </div>
+  </div>
+
+  <div><label for="dnote">Anything you want Marlene to know (optional)</label>
+   <textarea id="dnote" name="note" rows="3" maxlength="1000"></textarea></div>
+  <button class="btn teal" type="submit">Send my pledge</button>
+  <div class="flash" role="status"></div>
+ </form>
+
+ <div class="card" style="margin-top:var(--s4);max-width:40rem">
+  <h3>Prefer to send a check?</h3>
+  <p>Make it out to <strong>Baldinger for Lebanon</strong> and mail it to
+  61 Brunswick Avenue, Lebanon NJ 08833.</p>
+ </div>
+</div></section>
+""","Support Marlene Baldinger's campaign for Lebanon Borough Council. Pledge your support or mail a contribution.")
 
 page("contact.html","Contact | Marlene Baldinger","contact.html",f"""
 <section class="block"><div class="wrap">
