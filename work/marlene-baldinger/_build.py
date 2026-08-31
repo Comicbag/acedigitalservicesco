@@ -43,8 +43,8 @@ header.site{background:var(--navy);border-bottom:3px solid var(--gold)}
 #menu a.on{box-shadow:inset 4px 0 0 var(--gold);color:#fff;background:rgba(255,255,255,.05)}
 
 /* ---- buttons ---- */
-.btnrow{display:flex;gap:var(--s2);flex-wrap:wrap;margin-top:var(--s4)}
-.btn{display:inline-block;padding:14px 22px;border-radius:8px;text-decoration:none;font-weight:700;font-size:.95rem;letter-spacing:.04em;transition:background .2s,transform .15s,box-shadow .2s;border:0;cursor:pointer;font-family:inherit}
+.btnrow{display:flex;gap:14px;flex-wrap:wrap;margin-top:var(--s4)}
+.btn{display:inline-block;padding:14px 18px;border-radius:8px;text-decoration:none;font-weight:700;font-size:.82rem;letter-spacing:.03em;white-space:nowrap;transition:background .2s,transform .15s,box-shadow .2s;border:0;cursor:pointer;font-family:inherit}
 .btn:hover{transform:translateY(-1px)}
 .btn:active{transform:translateY(1px) scale(.99)}
 .btn.teal{background:var(--teal);color:#fff}.btn.teal:hover{background:var(--teal2)}
@@ -258,7 +258,7 @@ def page(fname, title, active, body, desc):
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{desc}">
 <meta property="og:image" content="https://acedigitalservicesco.com/work/marlene-baldinger/assets/marlene-portrait.jpg">
-<link rel="stylesheet" href="style.css?v=195852"></head>
+<link rel="stylesheet" href="style.css?v=195966"></head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="site"><div class="wrap brand">
@@ -283,7 +283,7 @@ def page(fname, title, active, body, desc):
     <a href="mailto:MarleneforLebanon@gmail.com" aria-label="Email">{IC["mail"]}</a>
   </div>
 </div></footer>
-<script src="app.js?v=195852"></script>
+<script src="app.js?v=195966"></script>
 </body></html>"""
     open(os.path.join(OUT,fname),"w").write(html)
 
