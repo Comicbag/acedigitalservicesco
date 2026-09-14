@@ -115,6 +115,7 @@ section{padding-block:clamp(4rem,9vw,8rem)}
 .tri figcaption{padding-top:.9rem}
 .tri h3{font-size:clamp(1.15rem,1.5vw,1.4rem);margin-top:.45rem}
 .tri .spec{margin-top:.4rem;font-size:.95rem;color:var(--muted)}
+.tri .textlink{display:inline-block;margin-top:.7rem;font-size:.9rem}
 .trio + .feat{border-top:1px solid var(--line)}
 .case-foot{margin-top:2.5rem;color:var(--muted);border-top:1px solid var(--line);padding-top:1.5rem}
 
