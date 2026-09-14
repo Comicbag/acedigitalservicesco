@@ -8,10 +8,11 @@
   "caption": "",
   "title": "Henry Big Boy Hush",
   "spec": ".357 Mag / .38 Spl, threaded carbon fiber barrel",
-  "img": "assets/p01.webp",
-  "w": 640,
-  "h": 640,
-  "portrait": false
+  "img": "assets/DdEgNZ5x-Wi-1000.webp",
+  "w": 1000,
+  "h": 1000,
+  "portrait": false,
+  "img2x": "assets/DdEgNZ5x-Wi-1600.webp"
  },
  {
   "n": 2,
@@ -22,10 +23,11 @@
   "caption": "",
   "title": "Palmetto State Armory Sabre Enhanced AOW",
   "spec": "300 BLK, Maxim Defense CQB brace",
-  "img": "assets/p02.webp",
-  "w": 640,
-  "h": 640,
-  "portrait": false
+  "img": "assets/Dc4kp1-vjOm-1000.webp",
+  "w": 1000,
+  "h": 1000,
+  "portrait": false,
+  "img2x": "assets/Dc4kp1-vjOm-1600.webp"
  },
  {
   "n": 3,
@@ -64,10 +66,11 @@
   "caption": "",
   "title": "Stealth Arms 1911 Platypus",
   "spec": "Integrated comp with Acro cut, takes Glock mags",
-  "img": "assets/p05.webp",
-  "w": 640,
-  "h": 640,
-  "portrait": false
+  "img": "assets/Dc0-NPNxL9_-1000.webp",
+  "w": 1000,
+  "h": 1000,
+  "portrait": false,
+  "img2x": "assets/Dc0-NPNxL9_-1600.webp"
  },
  {
   "n": 6,
@@ -78,10 +81,11 @@
   "caption": "",
   "title": "Heckler & Koch SP5K AOW",
   "spec": "9mm, green, Midwest Industries handguard and optic mount, Holosun HE515CT, SB Tactical brace",
-  "img": "assets/p06.webp",
-  "w": 640,
-  "h": 640,
-  "portrait": false
+  "img": "assets/DczYaaIPqZT-1000.webp",
+  "w": 1000,
+  "h": 1000,
+  "portrait": false,
+  "img2x": "assets/DczYaaIPqZT-1600.webp"
  },
  {
   "n": 7,
@@ -92,10 +96,11 @@
   "caption": "",
   "title": "Palmetto State Armory AK V AOW",
   "spec": "9mm, Soviet Arms, EOTech EXPS3",
-  "img": "assets/p07.webp",
-  "w": 640,
-  "h": 640,
-  "portrait": false
+  "img": "assets/Dcy-dzMP2eC-1000.webp",
+  "w": 1000,
+  "h": 1000,
+  "portrait": false,
+  "img2x": "assets/Dcy-dzMP2eC-1600.webp"
  },
  {
   "n": 8,
@@ -106,10 +111,11 @@
   "caption": "",
   "title": "Heckler & Koch MR556 A4",
   "spec": "11 inch, Non NFA Other, SB Tactical SBA6 brace",
-  "img": "assets/p08.webp",
-  "w": 640,
-  "h": 640,
-  "portrait": false
+  "img": "assets/Dcr1mKTPlxU-1000.webp",
+  "w": 1000,
+  "h": 1256,
+  "portrait": true,
+  "img2x": "assets/Dcr1mKTPlxU-1600.webp"
  },
  {
   "n": 9,
@@ -120,10 +126,11 @@
   "caption": "",
   "title": "",
   "spec": "",
-  "img": "assets/p09.webp",
-  "w": 640,
-  "h": 640,
-  "portrait": false
+  "img": "assets/DcrzsPZPohv-1000.webp",
+  "w": 1000,
+  "h": 1241,
+  "portrait": true,
+  "img2x": "assets/DcrzsPZPohv-1600.webp"
  },
  {
   "n": 10,
@@ -134,10 +141,11 @@
   "caption": "",
   "title": "Springfield Armory Kuna AOW",
   "spec": "9mm",
-  "img": "assets/p10.webp",
-  "w": 640,
-  "h": 640,
-  "portrait": false
+  "img": "assets/DcnoGn8vDez-1000.webp",
+  "w": 1000,
+  "h": 1000,
+  "portrait": false,
+  "img2x": "assets/DcnoGn8vDez-1600.webp"
  },
  {
   "n": 11,
@@ -148,10 +156,11 @@
   "caption": "",
   "title": "Geissele Super Duty Mod 1",
   "spec": "11.5 inch, 5.56, Non NFA Other",
-  "img": "assets/p11.webp",
-  "w": 640,
-  "h": 640,
-  "portrait": false
+  "img": "assets/Dcl7jJCvZo7-1000.webp",
+  "w": 1000,
+  "h": 1191,
+  "portrait": true,
+  "img2x": "assets/Dcl7jJCvZo7-1600.webp"
  },
  {
   "n": 12,
@@ -162,9 +171,10 @@
   "caption": "",
   "title": "Sig Sauer MPX K AOW",
   "spec": "9mm",
-  "img": "assets/p12.webp",
-  "w": 640,
-  "h": 640,
-  "portrait": false
+  "img": "assets/Dcj8qa8PIIk-1000.webp",
+  "w": 1000,
+  "h": 1000,
+  "portrait": false,
+  "img2x": "assets/Dcj8qa8PIIk-1600.webp"
  }
 ]
