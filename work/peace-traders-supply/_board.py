@@ -11,7 +11,7 @@ fonts = ("@font-face{font-family:'Cinzel';font-style:normal;font-weight:600 900;
          "@font-face{font-family:'Archivo';font-style:normal;font-weight:400 700;font-display:block;src:url(data:font/woff2;base64,%s) format('woff2');}"
          % (b64(f"{W}/fonts/Cinzel-var.woff2"), b64(f"{W}/fonts/Archivo-var.woff2")))
 PAGES = [("Main", "index.html", 7308), ("Firearms", "firearms/index.html", 2088), ("Handguns", "firearms/handguns/index.html", 3317),
-         ("TheCase", "the-case/index.html", 5179), ("About", "about/index.html", 3561)]
+         ("TheCase", "the-case/index.html", 5625), ("About", "about/index.html", 3561)]
 used = set()
 for name, rel, h in PAGES:
     src = open(f"{W}/{rel}").read()
@@ -53,8 +53,8 @@ canvas = {
   {"file": "Main.dc.html", "x": 0, "y": 0, "w": 1440, "h": 7700, "title": "Home"},
   {"file": "Firearms.dc.html", "x": 1520, "y": 0, "w": 1440, "h": 2250, "title": "Firearms, browse by type"},
   {"file": "About.dc.html", "x": 1520, "y": 2410, "w": 1440, "h": 3750, "title": "About"},
-  {"file": "TheCase.dc.html", "x": 3040, "y": 0, "w": 1440, "h": 5450, "title": "The case, full catalog"},
-  {"file": "Handguns.dc.html", "x": 3040, "y": 5610, "w": 1440, "h": 3500, "title": "Handguns, category page"},
+  {"file": "TheCase.dc.html", "x": 3040, "y": 0, "w": 1440, "h": 5900, "title": "The case, full catalog"},
+  {"file": "Handguns.dc.html", "x": 3040, "y": 6060, "w": 1440, "h": 3500, "title": "Handguns, category page"},
  ],
  "annotations": [
   {"id": "board-note", "x": 0, "y": -170, "w": 520, "text": "Peace Traders Supply, live demo at acedigitalservicesco.com/work/peace-traders-supply/ (14 pages; five shown here). Orange [Confirm with Kyle] blocks are the questions for the walk in."}
