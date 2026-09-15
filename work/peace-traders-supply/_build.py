@@ -19,6 +19,7 @@ def slug_confirm(text): return f'<span class="todo">[Confirm with Kyle: {esc(tex
 
 # ---------- the 17 posts (verbatim captions in captures/ig/posts*.tsv) ----------
 POSTS = [
+ dict(code="DdT1WsIREtA", kind="p", date="September 15, 2026", cat="aows", title="Palmetto State Armory Sabre Enhanced Mixtape Vol. 1", spec="8 inch, 300 BLK, Maxim Defense CQB brace, Magpul M-Lok SVG", w=1000, h=1333),
  dict(code="DdEgNZ5x-Wi", kind="p", date="September 9, 2026", cat="rifles", title="Henry Big Boy Hush", spec=".357 Mag / .38 Spl, threaded carbon fiber barrel", w=1000, h=1000),
  dict(code="Dc4kp1-vjOm", kind="p", date="September 4, 2026", cat="aows", title="Palmetto State Armory Sabre Enhanced AOW", spec="300 BLK, Maxim Defense CQB brace", w=1000, h=1000),
  dict(code="Dc3irtyR5O7", kind="reel", date="September 4, 2026", cat="handguns", title="Kimber 1911 DS Warrior Stealth", spec="9mm, Hillbilly223 Cerakote, Vortex Venom 3 MOA enclosed dot", w=1000, h=1778),
@@ -181,7 +182,9 @@ pages = {}
 
 # ---------------- HOME ----------------
 rel = ""
-newest = [BY["DdEgNZ5x-Wi"], BY["Dc4kp1-vjOm"], BY["Dc3irtyR5O7"], BY["Dc1Ix8jRLuJ"]]
+from datetime import datetime as _dt
+# newest four by post date, so a new entry in POSTS lands on the home page by itself
+newest = sorted(POSTS, key=lambda q: _dt.strptime(q["date"], "%B %d, %Y"), reverse=True)[:4]
 tiles = [
  ("handguns", BY["DcWqzI-Puvf"]), ("aows", BY["Dc4kp1-vjOm"]), ("rifles", BY["DdEgNZ5x-Wi"]), ("shotguns", None), ("ammo", None), ("optics", BY["DcW3MBTvxH8"]),
 ]
@@ -237,7 +240,7 @@ home += f'''<section class="hero" aria-labelledby="hero-h" data-video="assets/he
   <div class="wrap aow-grid">
     <div class="aow-copy reveal">
       <h2 id="aowt-h">AOWs <span class="amp">&amp;</span> Others.</h2>
-      <p class="lead">Nine of the shop's posts are AOW or Non NFA Other builds, the short configurations New Jersey buyers ask about most. As a licensed SOT, Peace Traders can sell and transfer AOWs in store.</p>
+      <p class="lead">Ten of the shop's posts are AOW or Non NFA Other builds, the short configurations New Jersey buyers ask about most. As a licensed SOT, Peace Traders can sell and transfer AOWs in store.</p>
       <div class="cta-row"><a class="btn btn-accent" href="firearms/aows-and-others/">See the AOWs and Others</a><a class="btn btn-ghost" href="buying-in-nj/">How buying works in NJ</a></div>
     </div>
     <figure class="aow-photo reveal" style="--i:1">{photo(BY["DcrzsPZPohv"], rel, "aow-ph")}<figcaption><span class="kicker">Posted Aug 30</span><a class="textlink" href="{BY["DcrzsPZPohv"]["url"]}" target="_blank" rel="noopener">Daniel Defense DD4 MK18 pair, see the post</a></figcaption></figure>
@@ -283,7 +286,7 @@ rel = "../"
 chips = [("all", "Everything", len(POSTS)), ("handguns", "Handguns", counts["handguns"]), ("rifles", "Rifles", counts["rifles"]), ("aows", "AOWs and Others", counts["aows"])]
 case = head("The case | Peace Traders Supply, Lebanon NJ", "Every firearm Peace Traders Supply has posted since opening: handguns, rifles, AOWs and Non NFA Others, with the shop's own photos.", rel, "the-case/")
 case += header(rel, "the-case/")
-case += page_hero("The case.", f"Everything the shop has posted since August 22, sixteen firearms so far. Tap a type to narrow it down. Inventory moves, so <a href=\"{PHONE_TEL}\">call</a> to confirm what is still in the case.")
+case += page_hero("The case.", f"Everything the shop has posted since August 22, seventeen firearms so far. Tap a type to narrow it down. Inventory moves, so <a href=\"{PHONE_TEL}\">call</a> to confirm what is still in the case.")
 case += '<section class="catalog"><div class="wrap">'
 case += '<div class="chips" role="group" aria-label="Filter by type">' + "".join(f'<button class="chip{" is-on" if k=="all" else ""}" data-filter="{k}" aria-pressed="{"true" if k=="all" else "false"}">{n} <span>{c}</span></button>' for k, n, c in chips) + '</div>'
 case += masonry(POSTS, rel)
@@ -330,7 +333,7 @@ category_page("shotguns",
     ("Shotgun inventory", ["Shotguns stocked and the brands carried", "Whether the shop orders shotguns on request", "Gauges kept in stock"]),
     "A Firearms Purchaser Identification Card covers a shotgun purchase in New Jersey. The dealer completes the NICS check at the time of transfer.")
 category_page("aows",
-    "Nine posts and counting: SP5K, MPX K, Kuna, AK V, Sabre, Honey Badger and MR556 builds, plus a matched pair of Daniel Defense DD4 MK18s. As a licensed SOT, the shop can sell and transfer AOWs in store.",
+    "Ten posts and counting: SP5K, MPX K, Kuna, AK V, two Sabre Enhanced builds, Honey Badger and MR556, plus a matched pair of Daniel Defense DD4 MK18s. As a licensed SOT, the shop can sell and transfer AOWs in store.",
     ("AOW and Other builds", ["Whether the builds above were configured in house", "Turnaround on an AOW transfer", "Braces, handguards and optics available for a custom configuration"]),
     "An AOW is an NFA item: the transfer runs on an ATF Form 4 with a $5 transfer tax. A Non NFA Other is configured to stay outside the National Firearms Act, so no stamp is involved. New Jersey still requires your Firearms Purchaser Identification Card or Permit to Purchase as the item requires.",
     extra_html='''<section class="glossary-wrap reveal"><h2>Three terms, in plain words.</h2><dl class="glossary">
@@ -387,7 +390,7 @@ about += f'''<section class="about">
 <section class="about-people">
   <div class="wrap two-col">
     <div class="reveal"><h2>Who you will meet.</h2><p>Kyle Quick is the shop's contact. {slug_confirm("title, a short bio and a photo for this page")}</p></div>
-    <div class="reveal" style="--i:1"><h2>What the shop posts.</h2><p>Seventeen posts since June 18, 2026: sixteen firearms and the storefront. New arrivals go up on Instagram most days, with the brand, the caliber and what is mounted on it.</p><p><a class="textlink" href="{IG}" target="_blank" rel="noopener">Instagram, 370 followers</a><br><a class="textlink" href="{FB}" target="_blank" rel="noopener">Facebook, 752 followers</a></p></div>
+    <div class="reveal" style="--i:1"><h2>What the shop posts.</h2><p>Eighteen posts since June 18, 2026: seventeen firearms and the storefront. New arrivals go up on Instagram most days, with the brand, the caliber and what is mounted on it.</p><p><a class="textlink" href="{IG}" target="_blank" rel="noopener">Instagram, 373 followers</a><br><a class="textlink" href="{FB}" target="_blank" rel="noopener">Facebook, 752 followers</a></p></div>
   </div>
 </section>
 <section class="community" aria-labelledby="comm2-h">
