@@ -335,9 +335,9 @@ category_page("shotguns",
 category_page("aows",
     "Ten posts and counting: SP5K, MPX K, Kuna, AK V, two Sabre Enhanced builds, Honey Badger and MR556, plus a matched pair of Daniel Defense DD4 MK18s. As a licensed SOT, the shop can sell and transfer AOWs in store.",
     ("AOW and Other builds", ["Whether the builds above were configured in house", "Turnaround on an AOW transfer", "Braces, handguards and optics available for a custom configuration"]),
-    "An AOW is an NFA item: the transfer runs on an ATF Form 4 with a $5 transfer tax. A Non NFA Other is configured to stay outside the National Firearms Act, so no stamp is involved. New Jersey still requires your Firearms Purchaser Identification Card or Permit to Purchase as the item requires.",
+    "An AOW is an NFA item: the transfer runs on an ATF Form 4. The federal transfer tax on an AOW dropped to zero on January 1, 2026, though the registration and ATF approval still apply. A Non NFA Other is configured to stay outside the National Firearms Act, so no stamp is involved. New Jersey still requires your Firearms Purchaser Identification Card or Permit to Purchase as the item requires.",
     extra_html='''<section class="glossary-wrap reveal"><h2>Three terms, in plain words.</h2><dl class="glossary">
-      <div><dt>AOW</dt><dd>Any other weapon, a category under the National Firearms Act. The ATF transfer tax on an AOW is <strong>$5</strong>.</dd></div>
+      <div><dt>AOW</dt><dd>Any other weapon, a category under the National Firearms Act. The federal transfer tax on an AOW dropped to <strong>zero</strong> on January 1, 2026. The ATF paperwork and approval still apply.</dd></div>
       <div><dt>Non NFA Other</dt><dd>A firearm configured to stay outside the National Firearms Act, so no tax stamp is involved.</dd></div>
       <div><dt>SOT</dt><dd>Special Occupational Taxpayer. Peace Traders Supply is a licensed SOT, so AOWs can be sold and transferred in store.</dd></div>
     </dl></section>''')
@@ -361,7 +361,7 @@ def service(title, body, sourced=True, i=0):
     tag = '<span class="src-tag">On the record</span>' if sourced else '<span class="src-tag src-tag-todo">To confirm</span>'
     return f'<article class="service reveal" style="--i:{i}"><div class="service-head"><h2>{title}</h2>{tag}</div><p>{body}</p></article>'
 svc += '<section class="services"><div class="wrap"><div class="service-list">'
-svc += service("AOW and NFA transfers", "Peace Traders Supply is a licensed SOT, so AOWs can be sold and transferred in store. An AOW transfer runs on an ATF Form 4 with a $5 transfer tax.", True, 0)
+svc += service("AOW and NFA transfers", "Peace Traders Supply is a licensed SOT, so AOWs can be sold and transferred in store. An AOW transfer runs on an ATF Form 4. The federal transfer tax dropped to zero on January 1, 2026, and ATF approval is still required.", True, 0)
 svc += service("Non NFA Others", "Short configurations built to stay outside the National Firearms Act, like the MR556, the Geissele Super Duty and one of the Daniel Defense MK18s in the case. No tax stamp involved.", True, 1)
 svc += service("New Jersey permit guidance", "Firearms Purchaser ID Cards and handgun permits are applied for online through FARS with your local police department. The shop runs the NICS check at the time of transfer. " + f'<a class="textlink" href="{rel}buying-in-nj/">Read the guide</a>.', True, 2)
 svc += service("FFL transfers", "A firearm bought online or out of state has to ship to a licensed New Jersey dealer. " + slug_confirm("transfer fee and what to bring"), False, 3)
@@ -442,7 +442,7 @@ qa = [
  ("When are you open?", "Tuesday to Friday 9 AM to 6 PM, Saturday 9 AM to 5 PM, Sunday 9 AM to 3 PM. Closed Monday.", True),
  ("Where do I park?", "In front of the store in Lebanon Plaza, in the customer parking spots. The lot exits to the rear.", True),
  ("Where exactly are you?", "Unit W-1 in Lebanon Plaza, 1271 US Highway 22 East, Lebanon, NJ 08833, under the Guns and Ammo sign, just off Interstate 78 at exit 20A.", True),
- ("What is an AOW, and can I buy one here?", "Any other weapon, a category under the National Firearms Act, transferred on an ATF Form 4 with a $5 tax. Peace Traders Supply is a licensed SOT, so AOWs can be sold and transferred in store.", True),
+ ("What is an AOW, and can I buy one here?", "Any other weapon, a category under the National Firearms Act, transferred on an ATF Form 4. The federal transfer tax dropped to zero on January 1, 2026, though ATF approval is still required. Peace Traders Supply is a licensed SOT, so AOWs can be sold and transferred in store.", True),
  ("What do I bring to buy a handgun?", "Your electronic Permit to Purchase a Handgun from FARS, one per handgun, and a valid photo ID with your residence address. The dealer runs the NICS check at the time of transfer.", True),
  ("What do I bring to buy a rifle or shotgun?", "Your New Jersey Firearms Purchaser Identification Card and a valid photo ID with your residence address.", True),
  ("Do you accept transfers from other dealers or online sellers?", slug_confirm("transfer policy and fee"), False),
