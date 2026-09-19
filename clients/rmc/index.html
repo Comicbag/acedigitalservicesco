@@ -221,7 +221,12 @@ footer{border-top:1px solid var(--line);padding-block:30px 60px}
     if (AUTH) opts.headers.Authorization = AUTH.token;
     return fetch(PB + path, opts).then(function (r) {
       return r.json().catch(function () { return {}; }).then(function (j) {
-        if (!r.ok) throw new Error(j.message || ('HTTP ' + r.status));
+        if (!r.ok) {
+          var e = new Error(j.message || ('HTTP ' + r.status));
+          e.status = r.status;
+          e.authFailed = (r.status === 401);
+          throw e;
+        }
         return j;
       });
     });
@@ -396,9 +401,6 @@ footer{border-top:1px solid var(--line);padding-block:30px 60px}
     ]).then(function (res) {
       SITES = res[0].items || [];
       ROWS = res[1].items || [];
-      var open = ROWS.filter(function (r) { return !r.handled; }).length;
-      $('lede').textContent = SITES.length + ' sites · ' + ROWS.length + ' enquir' + (ROWS.length === 1 ? 'y' : 'ies') +
-        ' received · ' + open + ' still to deal with';
       renderSites(); renderList();
     });
   }
@@ -406,10 +408,19 @@ footer{border-top:1px solid var(--line);padding-block:30px 60px}
   function start() {
     show($('login'), false); show($('app'), true);
     $('whoami').textContent = (AUTH && AUTH.record && (AUTH.record.name || AUTH.record.email)) || '';
-    refresh().catch(function () {
-      // Token expired or revoked: send them back to the door rather than to an empty page.
-      AUTH = null; try { localStorage.removeItem('rmc_auth'); } catch (e) {}
-      show($('app'), false); show($('login'), true);
+    refresh().catch(function (err) {
+      // Only an actual auth failure sends them back to the door. Anything else
+      // is a bug on our side, and quietly logging someone out to hide it makes
+      // it near-impossible to diagnose -- which is exactly what happened when a
+      // stale reference to a removed element threw here.
+      if (err && err.authFailed) {
+        AUTH = null; try { localStorage.removeItem('rmc_auth'); } catch (e) {}
+        show($('app'), false); show($('login'), true);
+        return;
+      }
+      console.error('dashboard refresh failed:', err);
+      $('bigline').textContent = 'Something went wrong.';
+      $('metaline').textContent = 'We could not load your enquiries just now. Try Refresh, and tell Corey if it keeps happening.';
     });
   }
 
