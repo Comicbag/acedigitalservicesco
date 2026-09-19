@@ -614,8 +614,17 @@ nav.tabs button[aria-selected=true] .cnt{background:var(--accent);color:#fff}
     });
   }
 
-  var hash = (location.hash || '').replace('#', '');
-  if (['overview', 'inbox', 'sites', 'todo'].indexOf(hash) !== -1) setTab(hash);
+  // Read the hash on load AND on change. Without the listener, following a
+  // link to #sites from a page already showing #todo changes the URL without
+  // reloading, so the tab never actually switches -- and browser back/forward
+  // does nothing.
+  var TABS = ['overview', 'inbox', 'sites', 'todo'];
+  function tabFromHash() {
+    var h = (location.hash || '').replace('#', '');
+    if (TABS.indexOf(h) !== -1 && h !== TAB) setTab(h);
+  }
+  window.addEventListener('hashchange', tabFromHash);
+  tabFromHash();
 
   load();
   if (AUTH && AUTH.token) start(); else { show($('login'), true); }
