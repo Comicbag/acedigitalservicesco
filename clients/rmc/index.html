@@ -125,6 +125,57 @@ header.top .brandmark .sep{height:20px}
 pre{background:var(--surface);border:1px solid var(--line);padding:14px;overflow-x:auto;font-size:12.5px;color:var(--chalk-dim);
   font-family:"JetBrains Mono",ui-monospace,monospace}
 footer{border-top:1px solid var(--line);padding-block:30px 60px}
+
+/* ---- tabs ---- */
+nav.tabs{border-bottom:1px solid var(--line);position:sticky;top:68px;background:rgba(10,10,13,.94);backdrop-filter:blur(10px);z-index:15}
+nav.tabs .wrap{display:flex;gap:0;overflow-x:auto;scrollbar-width:none}
+nav.tabs .wrap::-webkit-scrollbar{display:none}
+nav.tabs button{appearance:none;background:none;border:0;border-bottom:2px solid transparent;color:var(--muted);
+  font:inherit;font-weight:700;font-size:14px;letter-spacing:-.01em;padding:17px 0;margin-right:28px;
+  cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:8px}
+nav.tabs button:last-child{margin-right:0}
+nav.tabs button[aria-selected=true]{color:var(--chalk);border-bottom-color:var(--accent)}
+nav.tabs .cnt{font-size:11px;font-weight:800;padding:2px 7px;background:var(--surface-2);color:var(--muted)}
+nav.tabs button[aria-selected=true] .cnt{background:var(--accent);color:#fff}
+
+/* ---- site detail cards ---- */
+.sitecard{border:1px solid var(--line);background:var(--surface);padding:0;margin-bottom:18px}
+.sitecard .hd{display:flex;align-items:flex-start;gap:14px;padding:22px 24px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.sitecard h3{font-size:21px;font-weight:900;letter-spacing:-.03em}
+.sitecard .dm{color:var(--muted);font-size:13px;margin-top:3px}
+.sitecard .hd .right{margin-left:auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));border-bottom:1px solid var(--line)}
+.facts div{padding:16px 24px;border-right:1px solid var(--line)}
+.facts div:last-child{border-right:0}
+.facts dt{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.facts dd{margin:6px 0 0;color:var(--chalk);font-size:17px;font-weight:800;letter-spacing:-.02em}
+.facts dd.warn{color:var(--warn)}
+.facts dd.bad{color:var(--accent-hot)}
+.findings{padding:20px 24px}
+.findings .lbl2{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:12px}
+.findings ul{margin:0;padding:0;list-style:none}
+.findings li{position:relative;padding-left:20px;margin-bottom:10px;font-size:14px;color:var(--chalk-dim);line-height:1.55}
+.findings li:last-child{margin-bottom:0}
+.findings li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;background:var(--accent)}
+
+/* ---- to-do ---- */
+.todo{border-top:1px solid var(--line)}
+.todo .t{display:grid;grid-template-columns:auto 1fr auto;gap:16px;padding:18px 4px;border-bottom:1px solid var(--line);align-items:start}
+.todo .t.done{opacity:.4}
+.todo .t.done .tt{text-decoration:line-through}
+.todo .tt{color:var(--chalk);font-weight:700;font-size:16px;letter-spacing:-.01em}
+.todo .td{color:var(--chalk-dim);font-size:14px;margin-top:6px;max-width:70ch;line-height:1.55}
+.todo .p{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:800;padding:5px 8px;border:1px solid var(--line-2);color:var(--muted);white-space:nowrap}
+.todo .p.p1{border-color:var(--accent);color:var(--accent-hot)}
+.todo .p.p2{border-color:var(--warn);color:var(--warn)}
+.tick{appearance:none;width:22px;height:22px;border:1px solid var(--line-2);background:var(--ink);cursor:pointer;flex:0 0 auto;position:relative}
+.tick:checked{background:var(--accent);border-color:var(--accent)}
+.tick:checked::after{content:"";position:absolute;left:7px;top:3px;width:5px;height:10px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
+@media(max-width:640px){
+  .facts div{border-right:0;border-bottom:1px solid var(--line)}
+  .todo .t{grid-template-columns:auto 1fr;gap:12px}
+  .todo .p{grid-column:2}
+}
 @media(max-width:640px){
   .row{grid-template-columns:1fr;gap:8px}
   .row .when{text-align:left}
@@ -169,12 +220,27 @@ footer{border-top:1px solid var(--line);padding-block:30px 60px}
     <p class="meta" id="metaline"></p>
   </div></section>
 
-  <div class="strip" id="sites"></div>
+  <nav class="tabs"><div class="wrap" role="tablist">
+    <button role="tab" data-tab="overview" aria-selected="true">Overview</button>
+    <button role="tab" data-tab="inbox" aria-selected="false">Inbox <span class="cnt" id="cntInbox">0</span></button>
+    <button role="tab" data-tab="sites" aria-selected="false">Sites <span class="cnt" id="cntSites">4</span></button>
+    <button role="tab" data-tab="todo" aria-selected="false">To do <span class="cnt" id="cntTodo">0</span></button>
+  </div></nav>
 
-  <main class="wrap">
+  <!-- OVERVIEW -->
+  <div id="tab-overview">
+    <div class="strip" id="sites"></div>
+    <main class="wrap"><section class="sec">
+      <div class="sechead"><h2>Needs you first</h2></div>
+      <div class="todo" id="topTodo"></div>
+    </section></main>
+  </div>
+
+  <!-- INBOX -->
+  <div id="tab-inbox" class="hide"><main class="wrap">
     <section class="sec">
       <div class="sechead">
-        <h2>Enquiries</h2>
+        <h2>Inbox</h2>
         <div class="bar">
           <select id="fSite"><option value="">Every site</option></select>
           <select id="fKind">
@@ -192,7 +258,24 @@ footer{border-top:1px solid var(--line);padding-block:30px 60px}
       </div>
       <div class="list" id="list"></div>
     </section>
-  </main>
+  </main></div>
+
+  <!-- SITES -->
+  <div id="tab-sites" class="hide"><main class="wrap">
+    <section class="sec">
+      <div class="sechead"><h2>Your four sites</h2></div>
+      <div id="siteCards"></div>
+    </section>
+  </main></div>
+
+  <!-- TO DO -->
+  <div id="tab-todo" class="hide"><main class="wrap">
+    <section class="sec">
+      <div class="sechead"><h2>What we need from you</h2></div>
+      <p class="fine" style="max-width:70ch;margin:-10px 0 22px">Tick one off when it is done and it drops to the bottom. Nothing here is urgent busywork &mdash; each one is genuinely blocking a piece of the work.</p>
+      <div class="todo" id="todoList"></div>
+    </section>
+  </main></div>
 
   <footer class="wrap">
     <p class="fine" style="max-width:76ch">Visitor numbers for rmcstudios.com, carriagecitystudios.com and rmcstaging.com
@@ -210,7 +293,7 @@ footer{border-top:1px solid var(--line);padding-block:30px 60px}
 (function () {
   'use strict';
   var PB = location.origin + '/rmc-pb';
-  var AUTH = null, SITES = [], ROWS = [];
+  var AUTH = null, SITES = [], ROWS = [], TASKS = [];
 
   var $ = function (id) { return document.getElementById(id); };
   function show(el, on) { el.classList.toggle('hide', !on); }
@@ -266,6 +349,103 @@ footer{border-top:1px solid var(--line);padding-block:30px 60px}
     show($('app'), false); show($('login'), true);
   });
 
+
+  // ---- tabs
+  var TAB = 'overview';
+  function setTab(name) {
+    TAB = name;
+    ['overview', 'inbox', 'sites', 'todo'].forEach(function (t) {
+      show($('tab-' + t), t === name);
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('nav.tabs button'), function (b) {
+      b.setAttribute('aria-selected', b.getAttribute('data-tab') === name ? 'true' : 'false');
+    });
+    try { history.replaceState(null, '', '#' + name); } catch (e) {}
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('nav.tabs button'), function (b) {
+    b.addEventListener('click', function () { setTab(b.getAttribute('data-tab')); });
+  });
+
+  function fmtDate(iso) {
+    if (!iso) return '\u2014';
+    var d = new Date(iso + 'T00:00:00');
+    return d.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
+  }
+  function daysUntil(iso) {
+    if (!iso) return null;
+    return Math.round((new Date(iso + 'T00:00:00') - Date.now()) / 86400000);
+  }
+
+  // ---- per-site detail
+  function renderSiteCards() {
+    var counts = {};
+    ROWS.forEach(function (r) { if (!r.handled) counts[r.site] = (counts[r.site] || 0) + 1; });
+    $('siteCards').innerHTML = SITES.map(function (s) {
+      var d = daysUntil(s.domainExpiry);
+      var expCls = d == null ? '' : d < 60 ? ' class="bad"' : d < 120 ? ' class="warn"' : '';
+      var open = counts[s.key] || 0;
+      var f = Array.isArray(s.findings) ? s.findings : [];
+      var label = s.status === 'wix' ? 'On Wix' : s.status === 'preview' ? 'Rebuilt, in preview' : 'Live';
+      return '<div class="sitecard">' +
+        '<div class="hd"><div><h3>' + esc(s.name) + '</h3><div class="dm">' + esc(s.domain) + '</div></div>' +
+          '<div class="right"><span class="badge' + (s.status === 'preview' ? ' new' : '') + '">' + label + '</span>' +
+          (s.liveUrl ? '<a class="btn ghost sm" href="' + esc(s.liveUrl) + '" target="_blank" rel="noreferrer">Open</a>' : '') +
+          '</div></div>' +
+        '<dl class="facts">' +
+          '<div><dt>Pages</dt><dd>' + (s.builtPages ? s.builtPages + ' rebuilt' : (s.pages || '\u2014')) + '</dd></div>' +
+          '<div><dt>Registrar</dt><dd style="font-size:14px">' + esc(s.registrar || '\u2014') + '</dd></div>' +
+          '<div><dt>Domain expires</dt><dd' + expCls + '>' + fmtDate(s.domainExpiry) +
+            (d != null && d < 120 ? '<span style="display:block;font-size:12px;font-weight:600;margin-top:3px">in ' + d + ' days</span>' : '') + '</dd></div>' +
+          '<div><dt>Enquiries waiting</dt><dd' + (open ? ' class="bad"' : '') + '>' + open + '</dd></div>' +
+        '</dl>' +
+        (f.length ? '<div class="findings"><div class="lbl2">What we found on it</div><ul>' +
+          f.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></div>' : '') +
+        '</div>';
+    }).join('');
+  }
+
+  // ---- their homework
+  function taskRow(t) {
+    var p = t.priority === 1 ? '<span class="p p1">Blocking</span>'
+          : t.priority === 2 ? '<span class="p p2">Soon</span>'
+          : '<span class="p">When you can</span>';
+    var site = SITES.find(function (s) { return s.key === t.site; });
+    return '<div class="t' + (t.done ? ' done' : '') + '" data-id="' + t.id + '">' +
+      '<input type="checkbox" class="tick" ' + (t.done ? 'checked' : '') + ' aria-label="Mark done">' +
+      '<div><div class="tt">' + esc(t.title) + '</div>' +
+        '<div class="td">' + esc(t.detail || '') + '</div>' +
+        (site ? '<div class="em" style="margin-top:7px;color:var(--muted);font-size:12.5px">' + esc(site.name) + '</div>' : '') +
+      '</div>' + p + '</div>';
+  }
+  function wireTicks(root) {
+    Array.prototype.forEach.call(root.querySelectorAll('.tick'), function (box) {
+      box.addEventListener('change', function () {
+        var id = box.closest('.t').getAttribute('data-id');
+        api('/api/collections/tasks/records/' + id, {
+          method: 'PATCH', body: JSON.stringify({ done: box.checked })
+        }).then(refresh).catch(function () { box.checked = !box.checked; });
+      });
+    });
+  }
+  function renderTasks() {
+    var open = TASKS.filter(function (t) { return !t.done; })
+      .sort(function (a, b) { return (a.priority || 9) - (b.priority || 9); });
+    var done = TASKS.filter(function (t) { return t.done; });
+
+    $('todoList').innerHTML = (open.concat(done).map(taskRow).join('')) ||
+      '<div class="empty"><b>Nothing outstanding</b>You are all caught up.</div>';
+    wireTicks($('todoList'));
+
+    // Overview shows only what is actually blocking.
+    var top = open.filter(function (t) { return t.priority === 1; }).slice(0, 4);
+    $('topTodo').innerHTML = top.length ? top.map(taskRow).join('')
+      : '<div class="empty"><b>Nothing blocking</b>' +
+        (open.length ? open.length + ' less urgent item' + (open.length === 1 ? '' : 's') + ' in the To do tab.' : 'You are all caught up.') + '</div>';
+    wireTicks($('topTodo'));
+
+    $('cntTodo').textContent = open.length;
+  }
+
   // ---- render
   function siteName(key) { var s = SITES.find(function (x) { return x.key === key; }); return s ? s.name : key; }
 
@@ -297,7 +477,13 @@ footer{border-top:1px solid var(--line);padding-block:30px 60px}
   function renderState() {
     var open = ROWS.filter(function (r) { return !r.handled; });
     var big, meta;
+    var blocking = TASKS.filter(function (t) { return !t.done && t.priority === 1; }).length;
     if (!ROWS.length) {
+      if (blocking) {
+        $('bigline').innerHTML = blocking + ' thing' + (blocking === 1 ? '' : 's') + ' <em>need' + (blocking === 1 ? 's' : '') + ' you</em> before we can go further.';
+        $('metaline').textContent = 'No enquiries yet. The forms on your rebuilt site are live and waiting.';
+        return;
+      }
       big = 'Nothing yet.';
       meta = 'When someone fills in a form on any of your four sites, it lands here.';
     } else if (!open.length) {
@@ -397,11 +583,15 @@ footer{border-top:1px solid var(--line);padding-block:30px 60px}
   function refresh() {
     return Promise.all([
       api('/api/collections/sites/records?sort=sortOrder&perPage=50'),
-      api('/api/collections/submissions/records?sort=-created&perPage=500')
+      api('/api/collections/submissions/records?sort=-created&perPage=500'),
+      api('/api/collections/tasks/records?perPage=200')
     ]).then(function (res) {
       SITES = res[0].items || [];
       ROWS = res[1].items || [];
-      renderState(); renderSites(); renderList();
+      TASKS = res[2].items || [];
+      $('cntInbox').textContent = ROWS.filter(function (r) { return !r.handled; }).length;
+      $('cntSites').textContent = SITES.length;
+      renderState(); renderSites(); renderSiteCards(); renderTasks(); renderList();
     });
   }
 
@@ -423,6 +613,9 @@ footer{border-top:1px solid var(--line);padding-block:30px 60px}
       $('metaline').textContent = 'We could not load your enquiries just now. Try Refresh, and tell Corey if it keeps happening.';
     });
   }
+
+  var hash = (location.hash || '').replace('#', '');
+  if (['overview', 'inbox', 'sites', 'todo'].indexOf(hash) !== -1) setTab(hash);
 
   load();
   if (AUTH && AUTH.token) start(); else { show($('login'), true); }
