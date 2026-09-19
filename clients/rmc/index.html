@@ -7,105 +7,134 @@
 <title>Dashboard | RMC Studios &amp; Inspiration Audio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
+/* Same design language as the Inspiration Audio site we built them: locked dark,
+   Archivo, everything square. The previous version was rounded cards in Inter,
+   which belonged to no one. */
 :root{
-  --bg:#0c0d10; --panel:#14161b; --panel-2:#1a1d24; --line:#252932;
-  --ink:#f2f4f8; --dim:#9aa2b1; --faint:#6b7280;
-  --accent:#d81f38; --accent-hot:#ff4c67;
-  --ok:#34c759; --warn:#ffb020; --bad:#ff4d4d; --info:#4da3ff;
-  --radius:14px;
+  --ink:#0a0a0d; --surface:#121218; --surface-2:#191921;
+  --line:rgba(255,255,255,.11); --line-2:rgba(255,255,255,.18);
+  --chalk:#f4f4f7; --chalk-dim:#c9c9d4; --muted:#8e8e9e;
+  --accent:#d81f38; --accent-hover:#b81529; --accent-hot:#ff4c67;
+  --ok:#3ddc84; --warn:#ffb020;
+  --maxw:1120px; --pad:clamp(20px,5vw,40px);
+  --ease:cubic-bezier(.16,1,.3,1);
 }
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
-a{color:var(--info)}
-.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--ink);color:var(--chalk-dim);
+  font-family:Archivo,"Helvetica Neue",Arial,sans-serif;font-size:16px;line-height:1.6;
+  -webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit}
+h1,h2,h3{color:var(--chalk);margin:0;font-weight:800;letter-spacing:-.02em;line-height:1.05}
+.wrap{max-width:var(--maxw);margin:0 auto;padding-inline:var(--pad)}
 .hide{display:none!important}
+.mono{font-family:"JetBrains Mono",ui-monospace,monospace}
 
 /* ---- login ---- */
 .login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
-.login .card{width:100%;max-width:400px;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:32px}
-/* Their own logos, not a placeholder. RMC's is their real artwork from their
-   Drive, inverted to white so it reads on a dark panel; Inspiration Audio's is
-   already white on transparent. */
-.brandmark{display:flex;align-items:center;gap:14px;margin-bottom:6px;flex-wrap:wrap;min-width:0}
+.login .card{width:100%;max-width:420px;background:var(--surface);border:1px solid var(--line);padding:38px 34px}
+.brandmark{display:flex;align-items:center;gap:14px;min-width:0}
 .brandmark img{display:block;width:auto}
 .brandmark .rmc{height:30px}
 .brandmark .ia{height:22px}
-.brandmark .sep{width:1px;height:24px;background:var(--line);flex:0 0 auto}
-header.top .brandmark .rmc{height:24px}
-header.top .brandmark .ia{height:18px}
-header.top .brandmark .sep{height:20px}
-.sub{color:var(--dim);font-size:14px;margin:0 0 26px}
-label{display:block;font-size:13px;color:var(--dim);margin:0 0 6px}
-input[type=email],input[type=password],input[type=search],select,textarea{
-  width:100%;padding:11px 13px;background:var(--panel-2);border:1px solid var(--line);
-  border-radius:10px;color:var(--ink);font:inherit;font-size:15px}
-input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--accent-hot);outline-offset:2px}
-.field{margin-bottom:16px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 18px;border:0;border-radius:10px;
-  background:var(--accent);color:#fff;font:inherit;font-weight:600;font-size:15px;cursor:pointer}
-.btn:hover{background:#b81529}
-.btn[disabled]{opacity:.55;cursor:not-allowed}
-.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--dim);font-weight:500}
-.btn.ghost:hover{background:var(--panel-2);color:var(--ink)}
-.btn.sm{padding:6px 11px;font-size:13px;border-radius:8px}
-.err{margin-top:14px;padding:11px 13px;border-radius:9px;background:rgba(255,77,77,.1);border:1px solid rgba(255,77,77,.35);color:#ff9d96;font-size:14px}
+.brandmark .sep{width:1px;height:24px;background:var(--line-2);flex:0 0 auto}
+.login h1{font-size:30px;font-weight:900;letter-spacing:-.035em;margin:26px 0 8px}
+.sub{color:var(--muted);font-size:15px;margin:0 0 28px}
+label{display:block;font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:0 0 7px;font-weight:600}
+input,select{width:100%;padding:13px 14px;background:var(--ink);border:1px solid var(--line-2);
+  color:var(--chalk);font:inherit;font-size:15px;border-radius:0}
+input:focus,select:focus,button:focus-visible,a:focus-visible{outline:2px solid var(--accent-hot);outline-offset:2px}
+.field{margin-bottom:18px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 22px;border:0;border-radius:0;
+  background:var(--accent);color:#fff;font:inherit;font-weight:700;font-size:15px;cursor:pointer;
+  letter-spacing:.01em;transition:background .15s}
+.btn:hover{background:var(--accent-hover)}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.btn.ghost{background:transparent;border:1px solid var(--line-2);color:var(--chalk-dim);font-weight:600}
+.btn.ghost:hover{background:var(--surface-2);color:var(--chalk)}
+.btn.sm{padding:8px 13px;font-size:13px}
+.err{margin-top:16px;padding:12px 14px;background:rgba(216,31,56,.12);border-left:3px solid var(--accent);color:#ff9d96;font-size:14px}
+.fine{color:var(--muted);font-size:13px;line-height:1.6}
 
 /* ---- shell ---- */
-header.top{border-bottom:1px solid var(--line);background:rgba(12,13,16,.9);backdrop-filter:blur(8px);position:sticky;top:0;z-index:20}
-header.top .wrap{display:flex;align-items:center;gap:16px;height:64px}
-.who{margin-left:auto;display:flex;align-items:center;gap:12px;font-size:14px;color:var(--dim)}
-h1{font-size:26px;letter-spacing:-.02em;margin:30px 0 4px}
-.lede{color:var(--dim);margin:0 0 26px;font-size:15px}
-h2{font-size:18px;letter-spacing:-.01em;margin:34px 0 14px}
-.grid{display:grid;gap:14px}
-.sites{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
-.site h3{margin:0 0 3px;font-size:16px}
-.site .dom{color:var(--faint);font-size:13px;margin:0 0 14px;word-break:break-all}
-.site .note{color:var(--dim);font-size:13px;line-height:1.5;margin:12px 0 0}
-.pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:500}
-.pill.live{background:rgba(52,199,89,.14);color:#7fe39b}
-.pill.preview{background:rgba(77,163,255,.14);color:#8cc4ff}
-.pill.wix{background:rgba(255,176,32,.14);color:#ffc95c}
-.count{font-size:30px;font-weight:600;letter-spacing:-.02em;line-height:1}
-.count small{display:block;font-size:13px;font-weight:400;color:var(--dim);margin-top:6px;letter-spacing:0}
+header.top{border-bottom:1px solid var(--line);background:rgba(10,10,13,.92);backdrop-filter:blur(10px);position:sticky;top:0;z-index:20}
+header.top .wrap{display:flex;align-items:center;gap:16px;height:68px}
+header.top .brandmark .rmc{height:24px}
+header.top .brandmark .ia{height:17px}
+header.top .brandmark .sep{height:20px}
+.who{margin-left:auto;display:flex;align-items:center;gap:14px;font-size:13px;color:var(--muted)}
+
+/* ---- the one thing that matters ---- */
+.state{padding-block:clamp(44px,7vw,78px);border-bottom:1px solid var(--line)}
+.state .big{font-size:clamp(2.1rem,1.2rem + 3.6vw,3.9rem);font-weight:900;letter-spacing:-.04em;
+  color:var(--chalk);line-height:1.02;max-width:20ch}
+.state .big em{font-style:normal;color:var(--accent-hot)}
+.state .meta{margin-top:18px;color:var(--muted);font-size:15px}
+
+/* ---- sites: a compact strip, not four fat cards ---- */
+.strip{display:flex;flex-wrap:wrap;gap:0;border-bottom:1px solid var(--line)}
+.strip a{flex:1 1 210px;min-width:0;padding:20px 22px;border-right:1px solid var(--line);
+  text-decoration:none;display:block;transition:background .15s}
+.strip a:last-child{border-right:0}
+.strip a:hover{background:var(--surface)}
+.strip .nm{color:var(--chalk);font-weight:700;font-size:15px;letter-spacing:-.01em;display:flex;align-items:center;gap:8px}
+.strip .dot{width:7px;height:7px;flex:0 0 auto;border-radius:50%}
+.strip .dot.live{background:var(--ok)}
+.strip .dot.preview{background:var(--accent-hot)}
+.strip .dot.wix{background:var(--warn)}
+.strip .dm{color:var(--muted);font-size:12.5px;margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.strip .n{margin-top:12px;font-size:13px;color:var(--chalk-dim)}
+.strip .n b{color:var(--accent-hot);font-weight:800}
 
 /* ---- enquiries ---- */
-.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
-.bar .spacer{flex:1}
-select,input[type=search]{width:auto;min-width:150px}
-.list{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--panel)}
-.row{display:grid;grid-template-columns:110px 1fr auto;gap:14px;padding:14px 16px;border-top:1px solid var(--line);cursor:pointer;align-items:start}
-.row:first-child{border-top:0}
-.row:hover{background:var(--panel-2)}
-.row.done{opacity:.5}
-.tag{font-size:11px;padding:3px 8px;border-radius:6px;background:var(--panel-2);color:var(--dim);white-space:nowrap;display:inline-block}
-.row .nm{font-weight:500}
-.row .msg{color:var(--dim);font-size:14px;margin-top:3px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.row .when{color:var(--faint);font-size:12px;white-space:nowrap;text-align:right}
-.empty{padding:40px 22px;text-align:center;color:var(--dim);font-size:15px}
-.empty b{display:block;color:var(--ink);font-weight:500;margin-bottom:6px}
+.sec{padding-block:clamp(34px,5vw,54px)}
+.sechead{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:22px}
+.sechead h2{font-size:clamp(1.3rem,1.1rem + .8vw,1.7rem);font-weight:900;letter-spacing:-.03em}
+.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:0;margin-left:auto}
+.bar select,.bar input{width:auto;min-width:0;padding:8px 11px;font-size:13.5px}
+.list{border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:auto 1fr auto;gap:18px;padding:18px 4px;border-bottom:1px solid var(--line);
+  cursor:pointer;align-items:start;transition:background .13s}
+.row:hover{background:var(--surface)}
+.row.done{opacity:.42}
+.row .who2{min-width:0}
+.row .nm{color:var(--chalk);font-weight:700;font-size:16px;letter-spacing:-.01em}
+.row .em{color:var(--muted);font-size:13px;margin-top:2px}
+.row .msg{color:var(--chalk-dim);font-size:14px;margin-top:7px;max-width:62ch;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.row .when{color:var(--muted);font-size:12px;white-space:nowrap;text-align:right}
+.badge{display:inline-block;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;
+  padding:5px 8px;border:1px solid var(--line-2);color:var(--muted);white-space:nowrap}
+.badge.new{border-color:var(--accent);color:var(--accent-hot)}
+.empty{padding:52px 0;color:var(--muted);font-size:15px;border-bottom:1px solid var(--line)}
+.empty b{display:block;color:var(--chalk);font-weight:800;font-size:19px;letter-spacing:-.02em;margin-bottom:8px}
 
 /* ---- detail ---- */
-.sheet{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;justify-content:flex-end;z-index:40}
-.sheet>div{width:min(560px,96vw);height:100%;background:var(--bg);border-left:1px solid var(--line);overflow-y:auto;padding:24px}
-.kv{display:grid;grid-template-columns:120px 1fr;gap:8px 14px;font-size:14px;margin:18px 0}
-.kv dt{color:var(--dim)}
-.kv dd{margin:0;word-break:break-word}
-pre{background:var(--panel-2);border:1px solid var(--line);border-radius:10px;padding:13px;overflow-x:auto;font-size:13px;color:var(--dim)}
-.note{color:var(--faint);font-size:13px;line-height:1.6}
-footer{margin:56px 0 40px;padding-top:22px;border-top:1px solid var(--line);color:var(--faint);font-size:13px}
-@media(max-width:620px){.row{grid-template-columns:1fr;gap:6px}.row .when{text-align:left}}
-/* On a phone the header cannot hold two logos, a name and a button without
-   wrapping into itself. Keep the parent mark, drop the second one. */
+.sheet{position:fixed;inset:0;background:rgba(0,0,0,.66);display:flex;justify-content:flex-end;z-index:40}
+.sheet>div{width:min(580px,96vw);height:100%;background:var(--ink);border-left:1px solid var(--line-2);
+  overflow-y:auto;padding:28px clamp(20px,4vw,34px)}
+.sheet h2{font-size:26px;font-weight:900;letter-spacing:-.035em;margin:0 0 6px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:10px 20px;font-size:14px;margin:22px 0;align-items:baseline}
+.kv dt{color:var(--muted);font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:600}
+.kv dd{margin:0;word-break:break-word;color:var(--chalk)}
+.kv a{color:var(--accent-hot)}
+.lbl{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:26px 0 9px}
+pre{background:var(--surface);border:1px solid var(--line);padding:14px;overflow-x:auto;font-size:12.5px;color:var(--chalk-dim);
+  font-family:"JetBrains Mono",ui-monospace,monospace}
+footer{border-top:1px solid var(--line);padding-block:30px 60px}
+@media(max-width:640px){
+  .row{grid-template-columns:1fr;gap:8px}
+  .row .when{text-align:left}
+  .strip a{flex:1 1 100%;border-right:0;border-bottom:1px solid var(--line)}
+  .bar{margin-left:0;width:100%}
+  .bar select,.bar input{flex:1 1 auto}
+}
 @media(max-width:560px){
-  header.top .brandmark{flex-wrap:nowrap}
   header.top .brandmark .ia,header.top .brandmark .sep{display:none}
-  header.top .wrap{gap:10px}
-  .who{font-size:13px;gap:8px}
-  .who span{max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .who span{max-width:88px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 }
 </style>
 </head>
@@ -115,14 +144,15 @@ footer{margin:56px 0 40px;padding-top:22px;border-top:1px solid var(--line);colo
 <div class="login" id="login">
   <div class="card">
     <div class="brandmark"><img class="rmc" src="img/rmc-studios.png" alt="RMC Studios"><span class="sep"></span><img class="ia" src="img/inspiration-audio.png" alt="Inspiration Audio"></div>
-    <p class="sub">Sign in to see enquiries from all four of your sites.</p>
+    <h1>Your four sites,<br>one inbox.</h1>
+    <p class="sub">Sign in to see who has been in touch.</p>
     <form id="loginForm">
       <div class="field"><label for="u">Email</label><input id="u" type="email" autocomplete="username" required></div>
       <div class="field"><label for="p">Password</label><input id="p" type="password" autocomplete="current-password" required></div>
       <button class="btn" style="width:100%" type="submit" id="loginBtn">Sign in</button>
       <div class="err hide" id="loginErr"></div>
     </form>
-    <p class="note" style="margin-top:22px">Built and maintained by Ace Digital. If you need an account, or you are locked out, contact Corey.</p>
+    <p class="fine" style="margin-top:24px">Built and maintained by Ace Digital. If you need an account, or you are locked out, contact Corey.</p>
   </div>
 </div>
 
@@ -133,34 +163,42 @@ footer{margin:56px 0 40px;padding-top:22px;border-top:1px solid var(--line);colo
     <div class="who"><span id="whoami"></span><button class="btn ghost sm" id="out">Sign out</button></div>
   </div></header>
 
+  <!-- The page answers one question first: does anything need them right now. -->
+  <section class="state"><div class="wrap">
+    <h1 class="big" id="bigline">&nbsp;</h1>
+    <p class="meta" id="metaline"></p>
+  </div></section>
+
+  <div class="strip" id="sites"></div>
+
   <main class="wrap">
-    <h1>Everything in one place</h1>
-    <p class="lede" id="lede">All four of your sites, and every enquiry that comes in from any of them.</p>
-
-    <div class="grid sites" id="sites"></div>
-
-    <h2>Enquiries</h2>
-    <div class="bar">
-      <select id="fSite"><option value="">All sites</option></select>
-      <select id="fKind">
-        <option value="">All types</option>
-        <option value="contact">Contact</option>
-        <option value="scholarship">Scholarship</option>
-        <option value="membership">Membership</option>
-        <option value="booking">Booking</option>
-        <option value="other">Other</option>
-      </select>
-      <select id="fState"><option value="open">Not handled</option><option value="">All</option><option value="done">Handled</option></select>
-      <input type="search" id="fQ" placeholder="Search name, email, message">
-      <span class="spacer"></span>
-      <button class="btn ghost sm" id="refresh">Refresh</button>
-    </div>
-    <div class="list" id="list"></div>
-
-    <footer>
-      <p><b style="color:var(--dim)">What is not here yet.</b> Visitor numbers for rmcstudios.com, carriagecitystudios.com and rmcstaging.com need Search Console access on those domains, which we have asked you for. Store orders and Drum Club members appear once RMC moves off Wix. We would rather show you nothing than show you a number we made up.</p>
-    </footer>
+    <section class="sec">
+      <div class="sechead">
+        <h2>Enquiries</h2>
+        <div class="bar">
+          <select id="fSite"><option value="">Every site</option></select>
+          <select id="fKind">
+            <option value="">Every type</option>
+            <option value="contact">Contact</option>
+            <option value="scholarship">Scholarship</option>
+            <option value="membership">Membership</option>
+            <option value="booking">Booking</option>
+            <option value="other">Other</option>
+          </select>
+          <select id="fState"><option value="open">To deal with</option><option value="">All</option><option value="done">Done</option></select>
+          <input type="search" id="fQ" placeholder="Search">
+          <button class="btn ghost sm" id="refresh">Refresh</button>
+        </div>
+      </div>
+      <div class="list" id="list"></div>
+    </section>
   </main>
+
+  <footer class="wrap">
+    <p class="fine" style="max-width:76ch">Visitor numbers for rmcstudios.com, carriagecitystudios.com and rmcstaging.com
+    need Search Console access on those domains, which we have asked you for. Store orders and Drum Club members appear
+    once RMC moves off Wix. We would rather show you nothing than a number we made up.</p>
+  </footer>
 </div>
 
 <div class="sheet hide" id="sheet"><div id="sheetBody"></div></div>
@@ -226,20 +264,19 @@ footer{margin:56px 0 40px;padding-top:22px;border-top:1px solid var(--line);colo
   // ---- render
   function siteName(key) { var s = SITES.find(function (x) { return x.key === key; }); return s ? s.name : key; }
 
+  // A compact strip. These four are reference, not the subject of the page, so
+  // they get one line each rather than four identical full-width cards.
   function renderSites() {
     var counts = {};
     ROWS.forEach(function (r) { if (!r.handled) counts[r.site] = (counts[r.site] || 0) + 1; });
     $('sites').innerHTML = SITES.map(function (s) {
       var n = counts[s.key] || 0;
-      return '<div class="card site">' +
-        '<h3>' + esc(s.name) + '</h3>' +
-        '<p class="dom">' + esc(s.domain) + '</p>' +
-        '<span class="pill ' + esc(s.status) + '">' + (s.status === 'wix' ? 'Still on Wix' : s.status === 'preview' ? 'Rebuilt, preview' : 'Live') + '</span>' +
-        '<p class="note">' + esc(s.note || '') + '</p>' +
-        '<p class="note" style="margin-top:12px"><b style="color:var(--ink)">' + n + '</b> ' +
-          (n === 1 ? 'enquiry waiting' : 'enquiries waiting') +
-          (s.liveUrl ? ' &middot; <a href="' + esc(s.liveUrl) + '" target="_blank" rel="noreferrer">visit</a>' : '') +
-        '</p></div>';
+      var label = s.status === 'wix' ? 'On Wix' : s.status === 'preview' ? 'Rebuilt' : 'Live';
+      return '<a href="' + esc(s.liveUrl || '#') + '" target="_blank" rel="noreferrer">' +
+        '<span class="nm"><span class="dot ' + esc(s.status) + '"></span>' + esc(s.name) + '</span>' +
+        '<span class="dm">' + esc(s.domain) + '</span>' +
+        '<span class="n">' + label + (n ? ' &middot; <b>' + n + ' waiting</b>' : '') + '</span>' +
+        '</a>';
     }).join('');
 
     var sel = $('fSite');
@@ -248,6 +285,31 @@ footer{margin:56px 0 40px;padding-top:22px;border-top:1px solid var(--line);colo
         var o = document.createElement('option'); o.value = s.key; o.textContent = s.name; sel.appendChild(o);
       });
     }
+  }
+
+  // The headline states the real situation. No slogan, no "Everything in one
+  // place" -- if three people are waiting, it says three people are waiting.
+  function renderState() {
+    var open = ROWS.filter(function (r) { return !r.handled; });
+    var big, meta;
+    if (!ROWS.length) {
+      big = 'Nothing yet.';
+      meta = 'When someone fills in a form on any of your four sites, it lands here.';
+    } else if (!open.length) {
+      big = 'All clear.';
+      meta = 'Nothing waiting. ' + ROWS.length + ' enquir' + (ROWS.length === 1 ? 'y' : 'ies') + ' handled so far.';
+    } else {
+      var who = open.length === 1 ? 'One person is' : open.length + ' people are';
+      big = who + ' <em>waiting to hear</em> from you.';
+      var sites = {};
+      open.forEach(function (r) { sites[r.site] = 1; });
+      var ns = Object.keys(sites).length;
+      var oldest = open.reduce(function (a, r) { return r.created < a ? r.created : a; }, open[0].created);
+      meta = 'Across ' + ns + ' of your ' + SITES.length + ' sites \u00b7 oldest ' + ago(oldest) +
+             ' \u00b7 ' + ROWS.length + ' received in total.';
+    }
+    $('bigline').innerHTML = big;
+    $('metaline').textContent = meta;
   }
 
   function visible() {
@@ -266,16 +328,19 @@ footer{margin:56px 0 40px;padding-top:22px;border-top:1px solid var(--line);colo
   function renderList() {
     var rows = visible();
     if (!rows.length) {
-      $('list').innerHTML = '<div class="empty"><b>Nothing here yet</b>' +
-        (ROWS.length ? 'No enquiries match these filters.' : 'When someone fills in a form on any of your sites, it lands here.') + '</div>';
+      $('list').innerHTML = '<div class="empty">' + (ROWS.length
+        ? '<b>Nothing matches</b>Try a different filter.'
+        : '<b>No enquiries yet</b>The forms are live. The first one that comes in will be here.') + '</div>';
       return;
     }
     $('list').innerHTML = rows.map(function (r) {
       return '<div class="row' + (r.handled ? ' done' : '') + '" data-id="' + r.id + '">' +
-        '<div><span class="tag">' + esc(siteName(r.site)) + '</span><br><span class="tag" style="margin-top:5px">' + esc(r.kind) + '</span></div>' +
-        '<div><div class="nm">' + (esc(r.name) || '<span style="color:var(--faint)">No name given</span>') +
-          (r.email ? ' <span style="color:var(--faint);font-weight:400">&middot; ' + esc(r.email) + '</span>' : '') + '</div>' +
-          (r.message ? '<div class="msg">' + esc(r.message) + '</div>' : '') + '</div>' +
+        '<span class="badge' + (r.handled ? '' : ' new') + '">' + esc(r.kind) + '</span>' +
+        '<div class="who2">' +
+          '<div class="nm">' + (esc(r.name) || 'No name given') + '</div>' +
+          '<div class="em">' + esc(siteName(r.site)) + (r.email ? ' \u00b7 ' + esc(r.email) : '') + '</div>' +
+          (r.message ? '<div class="msg">' + esc(r.message) + '</div>' : '') +
+        '</div>' +
         '<div class="when">' + ago(r.created) + '</div></div>';
     }).join('');
     Array.prototype.forEach.call($('list').querySelectorAll('.row'), function (el) {
@@ -291,18 +356,18 @@ footer{margin:56px 0 40px;padding-top:22px;border-top:1px solid var(--line);colo
       return ['first', 'last', 'name', 'email', 'phone', 'message'].indexOf(k) === -1;
     });
     $('sheetBody').innerHTML =
-      '<div style="display:flex;align-items:center;gap:10px;margin-bottom:18px">' +
-        '<span class="tag">' + esc(siteName(r.site)) + '</span><span class="tag">' + esc(r.kind) + '</span>' +
+      '<div style="display:flex;align-items:center;gap:9px;margin-bottom:26px">' +
+        '<span class="badge">' + esc(siteName(r.site)) + '</span><span class="badge">' + esc(r.kind) + '</span>' +
         '<span style="flex:1"></span><button class="btn ghost sm" id="close">Close</button></div>' +
-      '<h2 style="margin:0 0 4px;font-size:21px">' + (esc(r.name) || 'No name given') + '</h2>' +
-      '<p class="note" style="margin:0 0 4px">' + ago(r.created) + '</p>' +
+      '<h2>' + (esc(r.name) || 'No name given') + '</h2>' +
+      '<p class="fine" style="margin:0">' + ago(r.created) + '</p>' +
       '<dl class="kv">' +
         (r.email ? '<dt>Email</dt><dd><a href="mailto:' + esc(r.email) + '">' + esc(r.email) + '</a></dd>' : '') +
         (r.phone ? '<dt>Phone</dt><dd><a href="tel:' + esc(r.phone) + '">' + esc(r.phone) + '</a></dd>' : '') +
         (r.sourceUrl ? '<dt>Sent from</dt><dd><a href="' + esc(r.sourceUrl) + '" target="_blank" rel="noreferrer">' + esc(r.sourceUrl) + '</a></dd>' : '') +
       '</dl>' +
-      (r.message ? '<h3 style="font-size:14px;color:var(--dim);margin:20px 0 7px">Message</h3><div style="white-space:pre-wrap">' + esc(r.message) + '</div>' : '') +
-      (extras.length ? '<h3 style="font-size:14px;color:var(--dim);margin:22px 0 7px">Everything else they sent</h3><pre>' +
+      (r.message ? '<div class="lbl">Message</div><div style="white-space:pre-wrap;color:var(--chalk)">' + esc(r.message) + '</div>' : '') +
+      (extras.length ? '<div class="lbl">Everything else they sent</div><pre>' +
         esc(JSON.stringify(extras.reduce(function (a, k) { a[k] = p[k]; return a; }, {}), null, 2)) + '</pre>' : '') +
       '<div style="margin-top:24px;display:flex;gap:10px;flex-wrap:wrap">' +
         (r.email ? '<a class="btn" href="mailto:' + esc(r.email) + '?subject=' + encodeURIComponent('Re: your message to ' + siteName(r.site)) + '">Reply by email</a>' : '') +
