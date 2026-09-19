@@ -286,3 +286,8 @@ section{padding-block:clamp(56px,7.5vw,110px)}
 /* mic locker: one long alphabetical list, as their PDF has it */
 .miclist{columns:3 210px;column-gap:34px}
 @media(max-width:640px){.miclist{columns:2 130px;column-gap:20px}}
+
+/* Form delivery status. Announced to screen readers via role=status on the element. */
+.formstatus{margin-top:16px;padding:12px 14px;border-radius:10px;font-size:15px;line-height:1.5}
+.formstatus.is-ok{background:rgba(52,199,89,.12);color:#8ff0ab;border:1px solid rgba(52,199,89,.35)}
+.formstatus.is-err{background:rgba(255,69,58,.12);color:#ff9d96;border:1px solid rgba(255,69,58,.35)}
