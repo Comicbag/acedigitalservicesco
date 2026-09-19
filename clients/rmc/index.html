@@ -126,6 +126,14 @@ pre{background:var(--surface);border:1px solid var(--line);padding:14px;overflow
   font-family:"JetBrains Mono",ui-monospace,monospace}
 footer{border-top:1px solid var(--line);padding-block:30px 60px}
 
+.demobar{background:rgba(216,31,56,.1);border-bottom:1px solid rgba(216,31,56,.4)}
+.demobar .wrap{display:flex;align-items:center;gap:16px;padding-block:13px;flex-wrap:wrap}
+.demobar p{margin:0;font-size:13.5px;color:var(--chalk-dim);flex:1 1 300px;line-height:1.5}
+.demobar b{color:var(--chalk)}
+.row.demo .badge,.todo .t.demo{opacity:1}
+.exmark{font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:800;color:var(--accent-hot);
+  border:1px solid rgba(216,31,56,.5);padding:2px 6px;margin-left:8px;vertical-align:2px}
+
 /* ---- tabs ---- */
 nav.tabs{border-bottom:1px solid var(--line);position:sticky;top:68px;background:rgba(10,10,13,.94);backdrop-filter:blur(10px);z-index:15}
 nav.tabs .wrap{display:flex;gap:0;overflow-x:auto;scrollbar-width:none}
@@ -219,6 +227,13 @@ nav.tabs button[aria-selected=true] .cnt{background:var(--accent);color:#fff}
     <h1 class="big" id="bigline">&nbsp;</h1>
     <p class="meta" id="metaline"></p>
   </div></section>
+
+  <div class="demobar hide" id="demobar"><div class="wrap">
+    <p><b>These enquiries are examples.</b> They are here so you can see how this works.
+    Your own will look exactly the same. Clear them whenever you like &mdash; this only ever
+    removes the examples, never a real enquiry.</p>
+    <button class="btn ghost sm" id="clearDemo">Clear the examples</button>
+  </div></div>
 
   <nav class="tabs"><div class="wrap" role="tablist">
     <button role="tab" data-tab="overview" aria-selected="true">Overview</button>
@@ -476,6 +491,7 @@ nav.tabs button[aria-selected=true] .cnt{background:var(--accent);color:#fff}
   // place" -- if three people are waiting, it says three people are waiting.
   function renderState() {
     var open = ROWS.filter(function (r) { return !r.handled; });
+    var allExamples = ROWS.length > 0 && ROWS.every(function (r) { return r.demo; });
     var big, meta;
     var blocking = TASKS.filter(function (t) { return !t.done && t.priority === 1; }).length;
     if (!ROWS.length) {
@@ -492,12 +508,15 @@ nav.tabs button[aria-selected=true] .cnt{background:var(--accent);color:#fff}
     } else {
       var who = open.length === 1 ? 'One person is' : open.length + ' people are';
       big = who + ' <em>waiting to hear</em> from you.';
+      if (allExamples) big = 'This is how it will look when <em>someone gets in touch</em>.';
       var sites = {};
       open.forEach(function (r) { sites[r.site] = 1; });
       var ns = Object.keys(sites).length;
       var oldest = open.reduce(function (a, r) { return r.created < a ? r.created : a; }, open[0].created);
-      meta = 'Across ' + ns + ' of your ' + SITES.length + ' sites \u00b7 oldest ' + ago(oldest) +
-             ' \u00b7 ' + ROWS.length + ' received in total.';
+      meta = allExamples
+        ? 'Everything below is an example. Clear it whenever you like.'
+        : 'Across ' + ns + ' of your ' + SITES.length + ' sites \u00b7 oldest ' + ago(oldest) +
+          ' \u00b7 ' + ROWS.length + ' received in total.';
     }
     $('bigline').innerHTML = big;
     $('metaline').textContent = meta;
@@ -525,10 +544,11 @@ nav.tabs button[aria-selected=true] .cnt{background:var(--accent);color:#fff}
       return;
     }
     $('list').innerHTML = rows.map(function (r) {
-      return '<div class="row' + (r.handled ? ' done' : '') + '" data-id="' + r.id + '">' +
+      return '<div class="row' + (r.handled ? ' done' : '') + (r.demo ? ' demo' : '') + '" data-id="' + r.id + '">' +
         '<span class="badge' + (r.handled ? '' : ' new') + '">' + esc(r.kind) + '</span>' +
         '<div class="who2">' +
-          '<div class="nm">' + (esc(r.name) || 'No name given') + '</div>' +
+          '<div class="nm">' + (esc(r.name) || 'No name given') +
+            (r.demo ? '<span class="exmark">Example</span>' : '') + '</div>' +
           '<div class="em">' + esc(siteName(r.site)) + (r.email ? ' \u00b7 ' + esc(r.email) : '') + '</div>' +
           (r.message ? '<div class="msg">' + esc(r.message) + '</div>' : '') +
         '</div>' +
@@ -580,6 +600,21 @@ nav.tabs button[aria-selected=true] .cnt{background:var(--accent);color:#fff}
   $('fQ').addEventListener('input', renderList);
   $('refresh').addEventListener('click', refresh);
 
+  // Deletes only rows flagged as examples. The collection's delete rule enforces
+  // that server side too, so this cannot remove a real enquiry even if the
+  // filter here were wrong.
+  $('clearDemo').addEventListener('click', function () {
+    var btn = $('clearDemo');
+    var demos = ROWS.filter(function (r) { return r.demo; });
+    if (!demos.length) return;
+    btn.disabled = true; btn.textContent = 'Clearing\u2026';
+    Promise.all(demos.map(function (r) {
+      return api('/api/collections/submissions/records/' + r.id, { method: 'DELETE' }).catch(function () {});
+    })).then(refresh).then(function () {
+      btn.disabled = false; btn.textContent = 'Clear the examples';
+    });
+  });
+
   function refresh() {
     return Promise.all([
       api('/api/collections/sites/records?sort=sortOrder&perPage=50'),
@@ -591,6 +626,7 @@ nav.tabs button[aria-selected=true] .cnt{background:var(--accent);color:#fff}
       TASKS = res[2].items || [];
       $('cntInbox').textContent = ROWS.filter(function (r) { return !r.handled; }).length;
       $('cntSites').textContent = SITES.length;
+      show($('demobar'), ROWS.some(function (r) { return r.demo; }));
       renderState(); renderSites(); renderSiteCards(); renderTasks(); renderList();
     });
   }
