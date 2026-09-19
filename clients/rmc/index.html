@@ -25,9 +25,17 @@ a{color:var(--info)}
 /* ---- login ---- */
 .login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
 .login .card{width:100%;max-width:400px;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:32px}
-.brandmark{display:flex;align-items:center;gap:11px;margin-bottom:6px}
-.brandmark .dot{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--accent-hot));flex:0 0 auto}
-.brandmark b{font-size:17px;font-weight:600;letter-spacing:-.01em}
+/* Their own logos, not a placeholder. RMC's is their real artwork from their
+   Drive, inverted to white so it reads on a dark panel; Inspiration Audio's is
+   already white on transparent. */
+.brandmark{display:flex;align-items:center;gap:14px;margin-bottom:6px;flex-wrap:wrap}
+.brandmark img{display:block;width:auto}
+.brandmark .rmc{height:30px}
+.brandmark .ia{height:22px}
+.brandmark .sep{width:1px;height:24px;background:var(--line);flex:0 0 auto}
+header.top .brandmark .rmc{height:24px}
+header.top .brandmark .ia{height:18px}
+header.top .brandmark .sep{height:20px}
 .sub{color:var(--dim);font-size:14px;margin:0 0 26px}
 label{display:block;font-size:13px;color:var(--dim);margin:0 0 6px}
 input[type=email],input[type=password],input[type=search],select,textarea{
@@ -97,7 +105,7 @@ footer{margin:56px 0 40px;padding-top:22px;border-top:1px solid var(--line);colo
 <!-- LOGIN -->
 <div class="login" id="login">
   <div class="card">
-    <div class="brandmark"><span class="dot"></span><b>RMC Studios &amp; Inspiration Audio</b></div>
+    <div class="brandmark"><img class="rmc" src="img/rmc-studios.png" alt="RMC Studios"><span class="sep"></span><img class="ia" src="img/inspiration-audio.png" alt="Inspiration Audio"></div>
     <p class="sub">Sign in to see enquiries from all four of your sites.</p>
     <form id="loginForm">
       <div class="field"><label for="u">Email</label><input id="u" type="email" autocomplete="username" required></div>
@@ -112,7 +120,7 @@ footer{margin:56px 0 40px;padding-top:22px;border-top:1px solid var(--line);colo
 <!-- APP -->
 <div id="app" class="hide">
   <header class="top"><div class="wrap">
-    <div class="brandmark"><span class="dot"></span><b>Your sites</b></div>
+    <div class="brandmark"><img class="rmc" src="img/rmc-studios.png" alt="RMC Studios"><span class="sep"></span><img class="ia" src="img/inspiration-audio.png" alt="Inspiration Audio"></div>
     <div class="who"><span id="whoami"></span><button class="btn ghost sm" id="out">Sign out</button></div>
   </div></header>
 
