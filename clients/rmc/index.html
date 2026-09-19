@@ -85,8 +85,8 @@ header.top .brandmark .sep{height:20px}
 .strip .dot.live{background:var(--ok)}
 .strip .dot.preview{background:var(--accent-hot)}
 .strip .dot.wix{background:var(--warn)}
-.strip .dm{color:var(--muted);font-size:12.5px;margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.strip .n{margin-top:12px;font-size:13px;color:var(--chalk-dim)}
+.strip .dm{display:block;color:var(--muted);font-size:12.5px;margin-top:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.strip .n{display:block;margin-top:12px;font-size:13px;color:var(--chalk-dim)}
 .strip .n b{color:var(--accent-hot);font-weight:800}
 
 /* ---- enquiries ---- */
@@ -401,7 +401,7 @@ footer{border-top:1px solid var(--line);padding-block:30px 60px}
     ]).then(function (res) {
       SITES = res[0].items || [];
       ROWS = res[1].items || [];
-      renderSites(); renderList();
+      renderState(); renderSites(); renderList();
     });
   }
 
