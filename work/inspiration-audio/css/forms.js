@@ -49,7 +49,21 @@
     return '';
   }
 
+  // Fill in what we already know about a signed-in member.
+  function prefill(form) {
+    var r = (window.IAMember && window.IAMember.record && window.IAMember.record()) || null;
+    if (!r) return;
+    var parts = String(r.name || '').split(' ');
+    var set = function (n, v) {
+      var el = form.querySelector('[name=' + n + ']');
+      if (el && !el.value && v) el.value = v;
+    };
+    set('first', parts[0]); set('last', parts.slice(1).join(' '));
+    set('name', r.name); set('email', r.email); set('phone', r.phone);
+  }
+
   Array.prototype.forEach.call(forms, function (form) {
+    prefill(form);
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       if (typeof form.reportValidity === 'function' && !form.reportValidity()) return;
@@ -59,6 +73,9 @@
       if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
 
       var p = collect(form);
+      // If they are signed in, attach the submission to their account so it
+      // shows on their own account page. Signed-out submissions still work.
+      var member = (window.IAMember && window.IAMember.record && window.IAMember.record()) || null;
       var body = {
         site: SITE,
         kind: form.getAttribute('data-ia-form') || 'other',
@@ -70,6 +87,10 @@
         sourceUrl: location.href,
         userAgent: navigator.userAgent.slice(0, 500)
       };
+      if (member && member.id) body.member = member.id;
+
+      // Prefill is friendlier than making a signed-in person retype their name.
+      
 
       fetch(ENDPOINT, {
         method: 'POST',

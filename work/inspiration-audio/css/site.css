@@ -291,3 +291,11 @@ section{padding-block:clamp(56px,7.5vw,110px)}
 .formstatus{margin-top:16px;padding:12px 14px;border-radius:10px;font-size:15px;line-height:1.5}
 .formstatus.is-ok{background:rgba(52,199,89,.12);color:#8ff0ab;border:1px solid rgba(52,199,89,.35)}
 .formstatus.is-err{background:rgba(255,69,58,.12);color:#ff9d96;border:1px solid rgba(255,69,58,.35)}
+
+/* Member auth: social buttons + divider */
+.oauthbox{display:flex;flex-direction:column;gap:10px;margin-bottom:8px}
+.oauthbox .btn{width:100%;justify-content:center}
+.oauthsep{display:flex;align-items:center;gap:14px;color:var(--muted);font-size:.86rem;margin:14px 0 4px}
+.oauthsep::before,.oauthsep::after{content:"";flex:1;height:1px;background:var(--line)}
+.deflist .row{display:flex;gap:18px;justify-content:space-between;align-items:flex-start;padding:16px 0;border-top:1px solid var(--line)}
+.deflist .row:first-child{border-top:0}
