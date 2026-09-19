@@ -23,7 +23,13 @@
     var t = M.token(); if (t) opts.headers.Authorization = t;
     return fetch(BASE + path, opts).then(function (r) {
       return r.json().catch(function () { return {}; }).then(function (j) {
-        if (!r.ok) { var e = new Error(j.message || ('HTTP ' + r.status)); e.data = j.data; e.status = r.status; throw e; }
+        if (!r.ok) {
+          // A token for an account that no longer exists, or an expired one,
+          // otherwise leaves the nav cheerfully greeting someone who cannot do
+          // anything. Drop the session so the site stops pretending.
+          if (r.status === 401 && M.token()) { M.clear(); }
+          var e = new Error(j.message || ('HTTP ' + r.status)); e.data = j.data; e.status = r.status; throw e;
+        }
         return j;
       });
     });
