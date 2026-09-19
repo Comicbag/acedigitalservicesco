@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Dashboard | RMC Studios &amp; Inspiration Audio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0c0d10; --panel:#14161b; --panel-2:#1a1d24; --line:#252932;
+  --ink:#f2f4f8; --dim:#9aa2b1; --faint:#6b7280;
+  --accent:#d81f38; --accent-hot:#ff4c67;
+  --ok:#34c759; --warn:#ffb020; --bad:#ff4d4d; --info:#4da3ff;
+  --radius:14px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--info)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+.hide{display:none!important}
+
+/* ---- login ---- */
+.login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+.login .card{width:100%;max-width:400px;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:32px}
+.brandmark{display:flex;align-items:center;gap:11px;margin-bottom:6px}
+.brandmark .dot{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--accent-hot));flex:0 0 auto}
+.brandmark b{font-size:17px;font-weight:600;letter-spacing:-.01em}
+.sub{color:var(--dim);font-size:14px;margin:0 0 26px}
+label{display:block;font-size:13px;color:var(--dim);margin:0 0 6px}
+input[type=email],input[type=password],input[type=search],select,textarea{
+  width:100%;padding:11px 13px;background:var(--panel-2);border:1px solid var(--line);
+  border-radius:10px;color:var(--ink);font:inherit;font-size:15px}
+input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--accent-hot);outline-offset:2px}
+.field{margin-bottom:16px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 18px;border:0;border-radius:10px;
+  background:var(--accent);color:#fff;font:inherit;font-weight:600;font-size:15px;cursor:pointer}
+.btn:hover{background:#b81529}
+.btn[disabled]{opacity:.55;cursor:not-allowed}
+.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--dim);font-weight:500}
+.btn.ghost:hover{background:var(--panel-2);color:var(--ink)}
+.btn.sm{padding:6px 11px;font-size:13px;border-radius:8px}
+.err{margin-top:14px;padding:11px 13px;border-radius:9px;background:rgba(255,77,77,.1);border:1px solid rgba(255,77,77,.35);color:#ff9d96;font-size:14px}
+
+/* ---- shell ---- */
+header.top{border-bottom:1px solid var(--line);background:rgba(12,13,16,.9);backdrop-filter:blur(8px);position:sticky;top:0;z-index:20}
+header.top .wrap{display:flex;align-items:center;gap:16px;height:64px}
+.who{margin-left:auto;display:flex;align-items:center;gap:12px;font-size:14px;color:var(--dim)}
+h1{font-size:26px;letter-spacing:-.02em;margin:30px 0 4px}
+.lede{color:var(--dim);margin:0 0 26px;font-size:15px}
+h2{font-size:18px;letter-spacing:-.01em;margin:34px 0 14px}
+.grid{display:grid;gap:14px}
+.sites{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+.site h3{margin:0 0 3px;font-size:16px}
+.site .dom{color:var(--faint);font-size:13px;margin:0 0 14px;word-break:break-all}
+.site .note{color:var(--dim);font-size:13px;line-height:1.5;margin:12px 0 0}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:500}
+.pill.live{background:rgba(52,199,89,.14);color:#7fe39b}
+.pill.preview{background:rgba(77,163,255,.14);color:#8cc4ff}
+.pill.wix{background:rgba(255,176,32,.14);color:#ffc95c}
+.count{font-size:30px;font-weight:600;letter-spacing:-.02em;line-height:1}
+.count small{display:block;font-size:13px;font-weight:400;color:var(--dim);margin-top:6px;letter-spacing:0}
+
+/* ---- enquiries ---- */
+.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.bar .spacer{flex:1}
+select,input[type=search]{width:auto;min-width:150px}
+.list{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--panel)}
+.row{display:grid;grid-template-columns:110px 1fr auto;gap:14px;padding:14px 16px;border-top:1px solid var(--line);cursor:pointer;align-items:start}
+.row:first-child{border-top:0}
+.row:hover{background:var(--panel-2)}
+.row.done{opacity:.5}
+.tag{font-size:11px;padding:3px 8px;border-radius:6px;background:var(--panel-2);color:var(--dim);white-space:nowrap;display:inline-block}
+.row .nm{font-weight:500}
+.row .msg{color:var(--dim);font-size:14px;margin-top:3px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.row .when{color:var(--faint);font-size:12px;white-space:nowrap;text-align:right}
+.empty{padding:40px 22px;text-align:center;color:var(--dim);font-size:15px}
+.empty b{display:block;color:var(--ink);font-weight:500;margin-bottom:6px}
+
+/* ---- detail ---- */
+.sheet{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;justify-content:flex-end;z-index:40}
+.sheet>div{width:min(560px,96vw);height:100%;background:var(--bg);border-left:1px solid var(--line);overflow-y:auto;padding:24px}
+.kv{display:grid;grid-template-columns:120px 1fr;gap:8px 14px;font-size:14px;margin:18px 0}
+.kv dt{color:var(--dim)}
+.kv dd{margin:0;word-break:break-word}
+pre{background:var(--panel-2);border:1px solid var(--line);border-radius:10px;padding:13px;overflow-x:auto;font-size:13px;color:var(--dim)}
+.note{color:var(--faint);font-size:13px;line-height:1.6}
+footer{margin:56px 0 40px;padding-top:22px;border-top:1px solid var(--line);color:var(--faint);font-size:13px}
+@media(max-width:620px){.row{grid-template-columns:1fr;gap:6px}.row .when{text-align:left}}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login" id="login">
+  <div class="card">
+    <div class="brandmark"><span class="dot"></span><b>RMC Studios &amp; Inspiration Audio</b></div>
+    <p class="sub">Sign in to see enquiries from all four of your sites.</p>
+    <form id="loginForm">
+      <div class="field"><label for="u">Email</label><input id="u" type="email" autocomplete="username" required></div>
+      <div class="field"><label for="p">Password</label><input id="p" type="password" autocomplete="current-password" required></div>
+      <button class="btn" style="width:100%" type="submit" id="loginBtn">Sign in</button>
+      <div class="err hide" id="loginErr"></div>
+    </form>
+    <p class="note" style="margin-top:22px">Built and maintained by Ace Digital. If you need an account, or you are locked out, contact Corey.</p>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app" class="hide">
+  <header class="top"><div class="wrap">
+    <div class="brandmark"><span class="dot"></span><b>Your sites</b></div>
+    <div class="who"><span id="whoami"></span><button class="btn ghost sm" id="out">Sign out</button></div>
+  </div></header>
+
+  <main class="wrap">
+    <h1>Everything in one place</h1>
+    <p class="lede" id="lede">All four of your sites, and every enquiry that comes in from any of them.</p>
+
+    <div class="grid sites" id="sites"></div>
+
+    <h2>Enquiries</h2>
+    <div class="bar">
+      <select id="fSite"><option value="">All sites</option></select>
+      <select id="fKind">
+        <option value="">All types</option>
+        <option value="contact">Contact</option>
+        <option value="scholarship">Scholarship</option>
+        <option value="membership">Membership</option>
+        <option value="booking">Booking</option>
+        <option value="other">Other</option>
+      </select>
+      <select id="fState"><option value="open">Not handled</option><option value="">All</option><option value="done">Handled</option></select>
+      <input type="search" id="fQ" placeholder="Search name, email, message">
+      <span class="spacer"></span>
+      <button class="btn ghost sm" id="refresh">Refresh</button>
+    </div>
+    <div class="list" id="list"></div>
+
+    <footer>
+      <p><b style="color:var(--dim)">What is not here yet.</b> Visitor numbers for rmcstudios.com, carriagecitystudios.com and rmcstaging.com need Search Console access on those domains, which we have asked you for. Store orders and Drum Club members appear once RMC moves off Wix. We would rather show you nothing than show you a number we made up.</p>
+    </footer>
+  </main>
+</div>
+
+<div class="sheet hide" id="sheet"><div id="sheetBody"></div></div>
+
+<script>
+/* Client dashboard for the EJ Gaub / Liz Robbins estate.
+   Talks straight to their own PocketBase through the same-origin /rmc-pb proxy.
+   No data is duplicated here: every figure on screen is a live read. */
+(function () {
+  'use strict';
+  var PB = location.origin + '/rmc-pb';
+  var AUTH = null, SITES = [], ROWS = [];
+
+  var $ = function (id) { return document.getElementById(id); };
+  function show(el, on) { el.classList.toggle('hide', !on); }
+
+  function api(path, opts) {
+    opts = opts || {};
+    opts.headers = Object.assign({ 'Content-Type': 'application/json' }, opts.headers || {});
+    if (AUTH) opts.headers.Authorization = AUTH.token;
+    return fetch(PB + path, opts).then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (j) {
+        if (!r.ok) throw new Error(j.message || ('HTTP ' + r.status));
+        return j;
+      });
+    });
+  }
+
+  function save(a) { AUTH = a; try { localStorage.setItem('rmc_auth', JSON.stringify(a)); } catch (e) {} }
+  function load() { try { AUTH = JSON.parse(localStorage.getItem('rmc_auth') || 'null'); } catch (e) { AUTH = null; } }
+
+  function ago(iso) {
+    if (!iso) return '';
+    var s = (Date.now() - new Date(iso.replace(' ', 'T'))) / 1000;
+    if (s < 60) return 'just now';
+    if (s < 3600) return Math.floor(s / 60) + 'm ago';
+    if (s < 86400) return Math.floor(s / 3600) + 'h ago';
+    if (s < 604800) return Math.floor(s / 86400) + 'd ago';
+    return new Date(iso.replace(' ', 'T')).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  }
+  function esc(t) { return String(t == null ? '' : t).replace(/[&<>"]/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]; }); }
+
+  // ---- login
+  $('loginForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var b = $('loginBtn'); b.disabled = true; b.textContent = 'Signing in…';
+    show($('loginErr'), false);
+    api('/api/collections/users/auth-with-password', {
+      method: 'POST', body: JSON.stringify({ identity: $('u').value, password: $('p').value })
+    }).then(function (a) { save(a); start(); })
+      .catch(function (err) {
+        $('loginErr').textContent = 'That did not work. Check the email and password, or contact Corey.';
+        show($('loginErr'), true);
+      })
+      .then(function () { b.disabled = false; b.textContent = 'Sign in'; });
+  });
+
+  $('out').addEventListener('click', function () {
+    AUTH = null; try { localStorage.removeItem('rmc_auth'); } catch (e) {}
+    show($('app'), false); show($('login'), true);
+  });
+
+  // ---- render
+  function siteName(key) { var s = SITES.find(function (x) { return x.key === key; }); return s ? s.name : key; }
+
+  function renderSites() {
+    var counts = {};
+    ROWS.forEach(function (r) { if (!r.handled) counts[r.site] = (counts[r.site] || 0) + 1; });
+    $('sites').innerHTML = SITES.map(function (s) {
+      var n = counts[s.key] || 0;
+      return '<div class="card site">' +
+        '<h3>' + esc(s.name) + '</h3>' +
+        '<p class="dom">' + esc(s.domain) + '</p>' +
+        '<span class="pill ' + esc(s.status) + '">' + (s.status === 'wix' ? 'Still on Wix' : s.status === 'preview' ? 'Rebuilt, preview' : 'Live') + '</span>' +
+        '<p class="note">' + esc(s.note || '') + '</p>' +
+        '<p class="note" style="margin-top:12px"><b style="color:var(--ink)">' + n + '</b> ' +
+          (n === 1 ? 'enquiry waiting' : 'enquiries waiting') +
+          (s.liveUrl ? ' &middot; <a href="' + esc(s.liveUrl) + '" target="_blank" rel="noreferrer">visit</a>' : '') +
+        '</p></div>';
+    }).join('');
+
+    var sel = $('fSite');
+    if (sel.options.length <= 1) {
+      SITES.forEach(function (s) {
+        var o = document.createElement('option'); o.value = s.key; o.textContent = s.name; sel.appendChild(o);
+      });
+    }
+  }
+
+  function visible() {
+    var site = $('fSite').value, kind = $('fKind').value, st = $('fState').value;
+    var q = $('fQ').value.trim().toLowerCase();
+    return ROWS.filter(function (r) {
+      if (site && r.site !== site) return false;
+      if (kind && r.kind !== kind) return false;
+      if (st === 'open' && r.handled) return false;
+      if (st === 'done' && !r.handled) return false;
+      if (q && (r.name + ' ' + r.email + ' ' + r.message).toLowerCase().indexOf(q) === -1) return false;
+      return true;
+    });
+  }
+
+  function renderList() {
+    var rows = visible();
+    if (!rows.length) {
+      $('list').innerHTML = '<div class="empty"><b>Nothing here yet</b>' +
+        (ROWS.length ? 'No enquiries match these filters.' : 'When someone fills in a form on any of your sites, it lands here.') + '</div>';
+      return;
+    }
+    $('list').innerHTML = rows.map(function (r) {
+      return '<div class="row' + (r.handled ? ' done' : '') + '" data-id="' + r.id + '">' +
+        '<div><span class="tag">' + esc(siteName(r.site)) + '</span><br><span class="tag" style="margin-top:5px">' + esc(r.kind) + '</span></div>' +
+        '<div><div class="nm">' + (esc(r.name) || '<span style="color:var(--faint)">No name given</span>') +
+          (r.email ? ' <span style="color:var(--faint);font-weight:400">&middot; ' + esc(r.email) + '</span>' : '') + '</div>' +
+          (r.message ? '<div class="msg">' + esc(r.message) + '</div>' : '') + '</div>' +
+        '<div class="when">' + ago(r.created) + '</div></div>';
+    }).join('');
+    Array.prototype.forEach.call($('list').querySelectorAll('.row'), function (el) {
+      el.addEventListener('click', function () { openRow(el.getAttribute('data-id')); });
+    });
+  }
+
+  function openRow(id) {
+    var r = ROWS.find(function (x) { return x.id === id; });
+    if (!r) return;
+    var p = r.payload || {};
+    var extras = Object.keys(p).filter(function (k) {
+      return ['first', 'last', 'name', 'email', 'phone', 'message'].indexOf(k) === -1;
+    });
+    $('sheetBody').innerHTML =
+      '<div style="display:flex;align-items:center;gap:10px;margin-bottom:18px">' +
+        '<span class="tag">' + esc(siteName(r.site)) + '</span><span class="tag">' + esc(r.kind) + '</span>' +
+        '<span style="flex:1"></span><button class="btn ghost sm" id="close">Close</button></div>' +
+      '<h2 style="margin:0 0 4px;font-size:21px">' + (esc(r.name) || 'No name given') + '</h2>' +
+      '<p class="note" style="margin:0 0 4px">' + ago(r.created) + '</p>' +
+      '<dl class="kv">' +
+        (r.email ? '<dt>Email</dt><dd><a href="mailto:' + esc(r.email) + '">' + esc(r.email) + '</a></dd>' : '') +
+        (r.phone ? '<dt>Phone</dt><dd><a href="tel:' + esc(r.phone) + '">' + esc(r.phone) + '</a></dd>' : '') +
+        (r.sourceUrl ? '<dt>Sent from</dt><dd><a href="' + esc(r.sourceUrl) + '" target="_blank" rel="noreferrer">' + esc(r.sourceUrl) + '</a></dd>' : '') +
+      '</dl>' +
+      (r.message ? '<h3 style="font-size:14px;color:var(--dim);margin:20px 0 7px">Message</h3><div style="white-space:pre-wrap">' + esc(r.message) + '</div>' : '') +
+      (extras.length ? '<h3 style="font-size:14px;color:var(--dim);margin:22px 0 7px">Everything else they sent</h3><pre>' +
+        esc(JSON.stringify(extras.reduce(function (a, k) { a[k] = p[k]; return a; }, {}), null, 2)) + '</pre>' : '') +
+      '<div style="margin-top:24px;display:flex;gap:10px;flex-wrap:wrap">' +
+        (r.email ? '<a class="btn" href="mailto:' + esc(r.email) + '?subject=' + encodeURIComponent('Re: your message to ' + siteName(r.site)) + '">Reply by email</a>' : '') +
+        '<button class="btn ghost" id="toggle">' + (r.handled ? 'Mark as not handled' : 'Mark as handled') + '</button>' +
+      '</div>';
+    show($('sheet'), true);
+    $('close').onclick = function () { show($('sheet'), false); };
+    $('toggle').onclick = function () {
+      api('/api/collections/submissions/records/' + r.id, {
+        method: 'PATCH', body: JSON.stringify({ handled: !r.handled })
+      }).then(function () { show($('sheet'), false); return refresh(); })
+        .catch(function () { alert('Could not save that. Try again in a moment.'); });
+    };
+  }
+
+  $('sheet').addEventListener('click', function (e) { if (e.target === $('sheet')) show($('sheet'), false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') show($('sheet'), false); });
+  ['fSite', 'fKind', 'fState'].forEach(function (id) { $(id).addEventListener('change', renderList); });
+  $('fQ').addEventListener('input', renderList);
+  $('refresh').addEventListener('click', refresh);
+
+  function refresh() {
+    return Promise.all([
+      api('/api/collections/sites/records?sort=sortOrder&perPage=50'),
+      api('/api/collections/submissions/records?sort=-created&perPage=500')
+    ]).then(function (res) {
+      SITES = res[0].items || [];
+      ROWS = res[1].items || [];
+      var open = ROWS.filter(function (r) { return !r.handled; }).length;
+      $('lede').textContent = SITES.length + ' sites · ' + ROWS.length + ' enquir' + (ROWS.length === 1 ? 'y' : 'ies') +
+        ' received · ' + open + ' still to deal with';
+      renderSites(); renderList();
+    });
+  }
+
+  function start() {
+    show($('login'), false); show($('app'), true);
+    $('whoami').textContent = (AUTH && AUTH.record && (AUTH.record.name || AUTH.record.email)) || '';
+    refresh().catch(function () {
+      // Token expired or revoked: send them back to the door rather than to an empty page.
+      AUTH = null; try { localStorage.removeItem('rmc_auth'); } catch (e) {}
+      show($('app'), false); show($('login'), true);
+    });
+  }
+
+  load();
+  if (AUTH && AUTH.token) start(); else { show($('login'), true); }
+})();
+</script>
+</body>
+</html>
