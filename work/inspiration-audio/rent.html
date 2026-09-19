@@ -4,19 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>document.documentElement.classList.add('js')</script>
-<title>Support us | Inspiration Audio</title>
-<meta name="description" content="Inspiration Audio is a registered 501(c)(3) nonprofit. Donate, sponsor a program, or donate gear that gets used by people learning on it.">
+<title>Rent a studio | Inspiration Audio</title>
+<meta name="description" content="Book recording or rehearsal time at Inspiration Audio, a nonprofit studio in Rahway, New Jersey. Choose the Rahway Studio or RMC Studios and pick a date.">
 <meta name="robots" content="noindex, nofollow">
-<link rel="canonical" href="https://acedigitalservicesco.com/work/inspiration-audio/support.html">
+<link rel="canonical" href="https://acedigitalservicesco.com/work/inspiration-audio/rent.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Inspiration Audio">
-<meta property="og:title" content="Support us | Inspiration Audio">
-<meta property="og:description" content="Inspiration Audio is a registered 501(c)(3) nonprofit. Donate, sponsor a program, or donate gear that gets used by people learning on it.">
-<meta property="og:url" content="https://acedigitalservicesco.com/work/inspiration-audio/support.html">
+<meta property="og:title" content="Rent a studio | Inspiration Audio">
+<meta property="og:description" content="Book recording or rehearsal time at Inspiration Audio, a nonprofit studio in Rahway, New Jersey. Choose the Rahway Studio or RMC Studios and pick a date.">
+<meta property="og:url" content="https://acedigitalservicesco.com/work/inspiration-audio/rent.html">
 <meta property="og:image" content="https://acedigitalservicesco.com/work/inspiration-audio/img/hero.webp">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Support us | Inspiration Audio">
-<meta name="twitter:description" content="Inspiration Audio is a registered 501(c)(3) nonprofit. Donate, sponsor a program, or donate gear that gets used by people learning on it.">
+<meta name="twitter:title" content="Rent a studio | Inspiration Audio">
+<meta name="twitter:description" content="Book recording or rehearsal time at Inspiration Audio, a nonprofit studio in Rahway, New Jersey. Choose the Rahway Studio or RMC Studios and pick a date.">
 <meta name="twitter:image" content="https://acedigitalservicesco.com/work/inspiration-audio/img/hero.webp">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a0a0d'/%3E%3Crect x='6' y='9' width='3' height='14' fill='%23e8384f'/%3E%3Crect x='12' y='5' width='3' height='22' fill='%23f4f4f7'/%3E%3Crect x='18' y='12' width='3' height='8' fill='%23f4f4f7'/%3E%3Crect x='24' y='8' width='3' height='16' fill='%23e8384f'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -40,42 +40,44 @@
 </header>
 <main id="main">
 
-<section class="phead withimg">
-  <div class="bg"><img src="img/support.webp" alt="Students gathered in a classroom during an outreach visit" fetchpriority="high" width="1600" height="1067"></div>
-  <div class="wrap"><h1>Support us</h1><p class="lede">Inspiration Audio is a registered 501(c)(3) New Jersey nonprofit organization dedicated to aiding and assisting underrepresented members of our community. Your donation helps us make dreams and futures a reality.</p></div>
+<section class="phead">
+  <div class="wrap"><h1>Rent a studio</h1><p class="lede">Book time in the room and practise your growing skills with state of the art equipment and programs.</p></div>
 </section>
 
 <section>
   <div class="wrap">
-    <h2 class="rv" style="margin-bottom:32px">Three ways to help</h2>
-    <div class="cols3">
-      <div class="panel accent rv">
-        <h3>Donate</h3>
-        <p>Your donation helps us make dreams and futures a reality.</p>
-        <a class="btn btn-primary" href="https://givebutter.com/inspiration-audio-create-opportunity" rel="noopener" target="_blank">Donate</a>
+    <div style="max-width:680px;margin:0 auto">
+    <h2 class="rv" style="margin-bottom:26px">Request a date</h2>
+    <!-- Fields match the Rent a Studio form on the live site exactly: first, last,
+         phone, email, studio type (Rahway Studio / RMC Studios) and a date. -->
+    <form class="form rv" method="post" action="https://acedigitalservicesco.com/rmc-pb/api/collections/submissions/records" data-ia-form="booking" novalidate>
+      <div class="cols2" style="gap:16px">
+        <div class="field"><label for="r-first">First name</label><input id="r-first" name="first" type="text" autocomplete="given-name" required></div>
+        <div class="field"><label for="r-last">Last name</label><input id="r-last" name="last" type="text" autocomplete="family-name" required></div>
       </div>
-      <div class="panel rv">
-        <h3>Sponsorships</h3>
-        <p>Get in touch and we will walk you through the options.</p>
-        <a class="btn btn-ghost" href="contact.html">Talk to us</a>
+      <div class="cols2" style="gap:16px">
+        <div class="field"><label for="r-phone">Phone</label><input id="r-phone" name="phone" type="tel" autocomplete="tel" required></div>
+        <div class="field"><label for="r-email">Email</label><input id="r-email" name="email" type="email" autocomplete="email" required></div>
       </div>
-      <div class="panel rv">
-        <h3>Donate gear</h3>
-        <p>Instruments, outboard, microphones, cables. Get in touch and we will arrange it.</p>
-        <a class="btn btn-ghost" href="contact.html">Offer gear</a>
-      </div>
-    </div>
-  </div>
-</section>
+      <fieldset style="border:0;padding:0;margin:0">
+        <legend class="field" style="font-size:.88rem;font-weight:600;color:var(--chalk);margin-bottom:9px">Studio</legend>
+        <div class="radios">
+          <label><input type="radio" name="studio" value="Rahway Studio" required><span>Rahway Studio</span></label>
+          <label><input type="radio" name="studio" value="RMC Studios"><span>RMC Studios</span></label>
+        </div>
+      </fieldset>
+      <div class="field"><label for="r-date">Date you would like</label><input id="r-date" name="date" type="date" required><span class="hint">We will come back to you to confirm before anything is booked.</span></div>
+      <div class="field"><label for="r-msg">Anything we should know</label><textarea id="r-msg" name="message" rows="4" placeholder="What are you working on, how long do you need, how many people"></textarea></div>
+      <div><button class="btn btn-primary" type="submit">Submit</button></div>
+      <p class="formnote">This form is live. Requests are delivered and kept in your dashboard. While this stays a preview, they reach Ace Digital rather than your own inbox &mdash; tell us which address to use and we will point it there.</p>
+    </form>
 
-<section class="tint rule">
-  <div class="wrap">
-    <div class="split">
-      <div class="rv"><p class="pull">If we had to choose between hunting down high-profile board members or donors and doing the real work, we'd choose the real work every day.</p></div>
-      <div class="rv narrow">
-        <p>Inspiration Audio is a gritty, DIY operation aimed at building a space of acceptance, creativity, education, and, most of all, opportunity for those who want it and are willing to put the time in.</p>
-        <p>If you want to help, cool. If not, we're moving ahead anyway.</p>
-      </div>
+    <div class="panel accent rv" style="margin-top:34px;max-width:640px">
+      <h3>Not sure what you need?</h3>
+      <p style="margin-bottom:16px">Have a look at the room and the equipment first, or just ask us.</p>
+      <a class="btn btn-primary" href="studio.html">The studio</a>
+      <a class="btn" href="gear.html" style="margin-left:10px">Gear list</a>
+    </div>
     </div>
   </div>
 </section>
@@ -129,6 +131,8 @@
     </div>
   </div>
 </footer>
+<script>window.IA_FORMS_ENDPOINT="https://acedigitalservicesco.com/rmc-pb"</script>
 <script src="css/ui.js?v=9" defer></script>
+<script src="css/forms.js?v=9" defer></script>
 </body>
 </html>
