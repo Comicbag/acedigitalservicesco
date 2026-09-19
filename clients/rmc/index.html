@@ -28,7 +28,7 @@ a{color:var(--info)}
 /* Their own logos, not a placeholder. RMC's is their real artwork from their
    Drive, inverted to white so it reads on a dark panel; Inspiration Audio's is
    already white on transparent. */
-.brandmark{display:flex;align-items:center;gap:14px;margin-bottom:6px;flex-wrap:wrap}
+.brandmark{display:flex;align-items:center;gap:14px;margin-bottom:6px;flex-wrap:wrap;min-width:0}
 .brandmark img{display:block;width:auto}
 .brandmark .rmc{height:30px}
 .brandmark .ia{height:22px}
@@ -98,6 +98,15 @@ pre{background:var(--panel-2);border:1px solid var(--line);border-radius:10px;pa
 .note{color:var(--faint);font-size:13px;line-height:1.6}
 footer{margin:56px 0 40px;padding-top:22px;border-top:1px solid var(--line);color:var(--faint);font-size:13px}
 @media(max-width:620px){.row{grid-template-columns:1fr;gap:6px}.row .when{text-align:left}}
+/* On a phone the header cannot hold two logos, a name and a button without
+   wrapping into itself. Keep the parent mark, drop the second one. */
+@media(max-width:560px){
+  header.top .brandmark{flex-wrap:nowrap}
+  header.top .brandmark .ia,header.top .brandmark .sep{display:none}
+  header.top .wrap{gap:10px}
+  .who{font-size:13px;gap:8px}
+  .who span{max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+}
 </style>
 </head>
 <body>
