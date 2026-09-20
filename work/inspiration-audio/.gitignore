@@ -4,3 +4,8 @@
 *.json
 *.md
 _*
+
+# The nine IA playlist tracks (59MB) are NOT committed. Raw copies live in the
+# capture on the SSD; the served copies are on the client's PocketBase at
+# /rmc-pb/audio/. Only playlist.json (the manifest) is tracked.
+audio/*.mp3
