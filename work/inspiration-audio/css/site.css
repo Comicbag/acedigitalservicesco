@@ -292,9 +292,25 @@ section{padding-block:clamp(56px,7.5vw,110px)}
 .formstatus.is-ok{background:rgba(52,199,89,.12);color:#8ff0ab;border:1px solid rgba(52,199,89,.35)}
 .formstatus.is-err{background:rgba(255,69,58,.12);color:#ff9d96;border:1px solid rgba(255,69,58,.35)}
 
-/* Member auth: social buttons + divider */
+/* Member auth: provider buttons, each to its own brand guidance.
+   Google's dark button: #131314 ground, white label, the four-colour G.
+   Facebook: their blue, white label, the f mark reversed out. */
 .oauthbox{display:flex;flex-direction:column;gap:10px;margin-bottom:8px}
 .oauthbox .btn{width:100%;justify-content:center}
+.oauth{display:flex;align-items:center;justify-content:center;gap:12px;
+  width:100%;padding:13px 18px;border-radius:0;font-weight:600;font-size:1rem;
+  letter-spacing:.005em;cursor:pointer;border:1px solid transparent;
+  transition:background .15s var(--ease),border-color .15s var(--ease)}
+.oauth .pmark{width:19px;height:19px;flex:0 0 auto;display:block}
+.oauth span{line-height:1}
+.oauth-google{background:#131314;color:#e3e3e3;border-color:#8e918f}
+.oauth-google:hover{background:#1c1c1d;border-color:#b5b8b6}
+.oauth-facebook{background:#fff;color:#1c1e21;border-color:#dddfe2}
+.oauth-facebook:hover{background:#f2f3f5}
+.oauth-microsoft{background:#fff;color:#5e5e5e;border-color:#8c8c8c}
+.oauth-microsoft:hover{background:#f3f3f3}
+.oauth-apple{background:#000;color:#fff;border-color:#000}
+.oauth-apple:hover{background:#1a1a1a}
 .oauthsep{display:flex;align-items:center;gap:14px;color:var(--muted);font-size:.86rem;margin:14px 0 4px}
 .oauthsep::before,.oauthsep::after{content:"";flex:1;height:1px;background:var(--line)}
 .deflist .row{display:flex;gap:18px;justify-content:space-between;align-items:flex-start;padding:16px 0;border-top:1px solid var(--line)}
