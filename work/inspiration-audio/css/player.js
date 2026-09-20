@@ -17,6 +17,7 @@
       audio.src=base+t.getAttribute('data-file');
       npT.textContent=t.querySelector('.tt').textContent;
       npA.textContent=t.querySelector('.ta').textContent;
+      var art=$('.np-art'); if(art){ art.src=t.getAttribute('data-art'); art.hidden=false; }
       tDur.textContent=t.querySelector('.td').textContent;
       tracks.forEach(function(x,k){ x.classList.toggle('on',k===i); x.querySelector('button').setAttribute('aria-pressed',k===i?'true':'false'); });
       seek.value=0; tCur.textContent='0:00';
