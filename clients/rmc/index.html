@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="RMC Dashboard">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png?v=2">
 <title>Site dashboard | RMC, Inspiration Audio, Carriage City, RMC Staging</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -110,6 +110,8 @@ input[type=email],input[type=password]{width:100%;padding:13px 14px;background:v
 .tile .last{font-size:13px;color:var(--chalk-dim);border-top:1px solid var(--line);padding-top:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .tile .last b{color:var(--chalk);font-weight:700}
 .tile .go{font-size:13px;font-weight:700;color:var(--accent-hot)}
+.tile .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
+.tile .acts .btn{flex:1 1 140px;min-height:44px}
 .spark{height:28px;width:100%;display:block;margin-top:8px}
 
 /* ---- sections */
@@ -445,19 +447,20 @@ input[type=email],input[type=password]{width:100%;padding:13px 14px;background:v
     html += '<div class="tiles">' + ORDER.map(function (k) {
       var s = site(k), list = rowsFor(k), w = waiting(list).length, last = list[0];
       var v7 = uniq(visitsFor(k, 7)), views7 = visitsFor(k, 7).length;
-      return '<button type="button" class="tile" data-k="' + k + '">' +
+      return '<div class="tile" data-k="' + k + '">' +
         '<div class="top"><img src="' + META[k].logo + '" alt=""><div><span class="tname">' + esc(s.name) + '</span><div class="dm">' + esc(s.domain) + '</div></div>' + statusChip(s) + '</div>' +
         '<div class="nums"><div><div class="big' + (w ? ' hot' : '') + '">' + w + '</div><div class="lab">' + (w === 1 ? 'enquiry waiting' : 'enquiries waiting') + '</div></div>' +
         '<div>' + (META[k].tracked ? '<div class="big">' + v7 + '</div><div class="lab">' + (v7 === 1 ? 'visitor' : 'visitors') + ', 7 days &middot; ' + plural(views7, 'view') + '</div>' + spark(k)
                                  : '<div class="big" style="color:var(--muted);font-size:22px">Not yet</div><div class="lab">Visits counted once the new site is live</div>') + '</div></div>' +
         '<div class="last">' + (last ? 'Latest: <b>' + esc(last.name || 'No name') + '</b>, ' + esc(formLabel(k, last.kind).toLowerCase()) + ', ' + ago(last.created) : 'No enquiries yet') + '</div>' +
-        '<span class="go">Open ' + esc(s.name) + '</span></button>';
+        '<div class="acts"><button type="button" class="btn ghost sm open-dash" data-k="' + k + '">View enquiries</button>' +
+        '<a class="btn sm" href="/work/' + k + '/" target="_blank" rel="noopener">Open site</a></div></div>';
     }).join('') + '</div>';
     var recent = ROWS.slice(0, 6);
     html += '<section class="sec"><h2>Latest across all four</h2><div class="list">' +
       (recent.length ? recent.map(function (r) { return rowHtml(r, true); }).join('') : '<div class="empty"><b>Nothing yet.</b>When someone fills in a form on any of the four sites, it shows up here.</div>') + '</div></section>';
     $('view').innerHTML = html;
-    Array.prototype.forEach.call(document.querySelectorAll('.tile'), function (t) { t.addEventListener('click', function () { go(t.getAttribute('data-k')); }); });
+    Array.prototype.forEach.call(document.querySelectorAll('.tile'), function (t) { t.addEventListener('click', function (e) { if (e.target.closest('a')) return; go(t.getAttribute('data-k')); }); });
     wireRows();
   }
 
