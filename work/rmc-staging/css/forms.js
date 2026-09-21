@@ -108,6 +108,12 @@
 
       var p = collect(form);
       var q = questions(form); p._labels = q.labels; p._order = q.order;
+      // What this enquiry is about, when the visitor arrived from a specific button
+      // (e.g. "Offer gear" links to contact.html?about=gear). Shown as its category in the dashboard.
+      var TOPICS = { gear: 'Gear donation', sponsorship: 'Sponsorship', training: 'Training and mentorship', session: 'Session booking', volunteer: 'Volunteering' };
+      var about = (location.search.match(/[?&]about=([a-z-]+)/) || [])[1];
+      if (about && TOPICS[about]) p._topic = TOPICS[about];
+      if (form.getAttribute('data-topic')) p._topic = form.getAttribute('data-topic');
       // If they are signed in, attach the submission to their account so it
       // shows on their own account page. Signed-out submissions still work.
       var member = (window.IAMember && window.IAMember.record && window.IAMember.record()) || null;

@@ -268,7 +268,7 @@ input[type=email],input[type=password]{width:100%;padding:13px 14px;background:v
       ['contact', 'Club House messages', 'From the form on the Club House page.'],
       ['mailing', 'Subscribe form signups', 'From the Subscribe Form at the bottom of every page.']] },
     'inspiration-audio': { logo: 'img/inspiration-audio.png', tracked: true, forms: [
-      ['contact', 'Contact messages', 'From the Contact page.'],
+      ['contact', 'General enquiries', 'From the Contact page. Enquiries from the Offer gear, Sponsorships, Get started and Book a session buttons are tagged with what they are about.'],
       ['recording', 'Recording applications', 'From Apply to record.'],
       ['scholarship', 'Scholarship applications', 'From the Scholarship page.'],
       ['membership', 'Membership inquiries', 'From the Membership page.'],
@@ -319,6 +319,9 @@ input[type=email],input[type=password]{width:100%;padding:13px 14px;background:v
     var f = (META[key] || { forms: [] }).forms.find(function (x) { return x[0] === kind; });
     return f ? f[1] : 'Other';
   }
+  // An enquiry's category: what it is about when the visitor came from a specific button
+  // (Offer gear, Sponsorships...), otherwise the form it came from.
+  function rowLabel(r) { return (r.payload && r.payload._topic) || formLabel(r.site, r.kind); }
   function statusChip(s) {
     var t = s.status === 'wix' ? ['wix', 'Old site, on Wix'] : s.status === 'preview' ? ['preview', 'New site, in preview'] : ['live', 'New site, live'];
     return '<span class="chip ' + t[0] + '">' + t[1] + '</span>';
@@ -452,7 +455,7 @@ input[type=email],input[type=password]{width:100%;padding:13px 14px;background:v
         '<div class="nums"><div><div class="big' + (w ? ' hot' : '') + '">' + w + '</div><div class="lab">' + (w === 1 ? 'enquiry waiting' : 'enquiries waiting') + '</div></div>' +
         '<div>' + (META[k].tracked ? '<div class="big">' + v7 + '</div><div class="lab">' + (v7 === 1 ? 'visitor' : 'visitors') + ', 7 days &middot; ' + plural(views7, 'view') + '</div>' + spark(k)
                                  : '<div class="big" style="color:var(--muted);font-size:22px">Not yet</div><div class="lab">Visits counted once the new site is live</div>') + '</div></div>' +
-        '<div class="last">' + (last ? 'Latest: <b>' + esc(last.name || 'No name') + '</b>, ' + esc(formLabel(k, last.kind).toLowerCase()) + ', ' + ago(last.created) : 'No enquiries yet') + '</div>' +
+        '<div class="last">' + (last ? 'Latest: <b>' + esc(last.name || 'No name') + '</b>, ' + esc(rowLabel(last).toLowerCase()) + ', ' + ago(last.created) : 'No enquiries yet') + '</div>' +
         '<div class="acts"><button type="button" class="btn ghost sm open-dash" data-k="' + k + '">View enquiries</button>' +
         '<a class="btn sm" href="/work/' + k + '/" target="_blank" rel="noopener">Open site</a></div></div>';
     }).join('') + '</div>';
@@ -522,7 +525,7 @@ input[type=email],input[type=password]{width:100%;padding:13px 14px;background:v
   function rowHtml(r, withSite) {
     return '<div class="row' + (r.handled ? ' done' : '') + '" data-id="' + r.id + '" tabindex="0" role="button">' +
       '<div><div class="nm">' + (esc(r.name) || 'No name given') + (r.demo ? '<span class="ex">Example</span>' : '') + '</div>' +
-      '<div class="sm">' + (withSite ? esc(site(r.site).name) + ' &middot; ' : '') + esc(formLabel(r.site, r.kind)) + (r.email ? ' &middot; ' + esc(r.email) : '') + '</div>' +
+      '<div class="sm">' + (withSite ? esc(site(r.site).name) + ' &middot; ' : '') + esc(rowLabel(r)) + (r.email ? ' &middot; ' + esc(r.email) : '') + '</div>' +
       (r.message ? '<div class="msg">' + esc(r.message) + '</div>' : '') + '</div>' +
       '<div class="when">' + ago(r.created) + (r.handled ? '<br>Handled' : '') + '</div></div>';
   }
@@ -557,7 +560,7 @@ input[type=email],input[type=password]{width:100%;padding:13px 14px;background:v
     });
     function qtext(k) { var t = labels[k]; if (t) return t; t = k.replace(/_/g, ' '); return t.charAt(0).toUpperCase() + t.slice(1); }
     $('sheetBody').innerHTML =
-      '<div style="display:flex;align-items:center;gap:8px;margin-bottom:24px;flex-wrap:wrap"><span class="chip">' + esc(site(r.site).name) + '</span><span class="chip">' + esc(formLabel(r.site, r.kind)) + '</span>' +
+      '<div style="display:flex;align-items:center;gap:8px;margin-bottom:24px;flex-wrap:wrap"><span class="chip">' + esc(site(r.site).name) + '</span><span class="chip">' + esc(rowLabel(r)) + '</span>' + (r.payload && r.payload._topic ? '<span class="chip">' + esc(formLabel(r.site, r.kind)) + '</span>' : '') +
         (r.demo ? '<span class="ex" style="margin:0">Example</span>' : '') + '<span style="flex:1"></span><button class="btn ghost sm" id="close">Close</button></div>' +
       '<h2>' + (esc(r.name) || 'No name given') + '</h2><p class="fine" style="margin:0">' + ago(r.created) + '</p>' +
       '<dl class="kv">' +
