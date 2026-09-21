@@ -4,6 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0a0a0d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="RMC Dashboard">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <title>Site dashboard | RMC, Inspiration Audio, Carriage City, RMC Staging</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -175,6 +181,10 @@ input[type=email],input[type=password]{width:100%;padding:13px 14px;background:v
 .lbl{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:24px 0 8px}
 
 /* ---- responsive */
+.pushbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding:12px 14px;margin:0 0 18px;border:1px solid var(--line);background:var(--surface)}
+.pushbar p{margin:0;flex:1 1 220px;font-size:14px;color:var(--chalk-dim)}
+.pushbar p b{color:var(--chalk)}
+.pushbar .acts{display:flex;gap:8px;flex-wrap:wrap}
 @media (max-width:980px){ .stats{grid-template-columns:repeat(2,minmax(0,1fr))} .stats > div:nth-child(2){border-right:0} .stats > div:nth-child(-n+2){border-bottom:1px solid var(--line)} .traffic{grid-template-columns:1fr} .traffic > div + div{border-left:0;border-top:1px solid var(--line)} }
 @media (max-width:860px){
   .shell{grid-template-columns:minmax(0,1fr)}
@@ -226,6 +236,10 @@ input[type=email],input[type=password]{width:100%;padding:13px 14px;background:v
     <div class="demobar hide" id="demobar">
       <p id="demotext"></p>
       <button class="btn ghost sm hide" id="clearDemo">Clear the examples</button>
+    </div>
+    <div class="pushbar hide" id="pushbar">
+      <p id="pushtext"><b>Phone notifications.</b> Get a notification the moment anyone sends a form on any of the four sites.</p>
+      <div class="acts"><button class="btn sm" type="button" id="pushOn">Turn on notifications</button><button class="btn ghost sm hide" type="button" id="pushTest">Send a test</button><button class="btn ghost sm hide" type="button" id="pushOff">Turn off</button></div>
     </div>
     <div id="view"></div>
   </div></div>
@@ -603,8 +617,55 @@ input[type=email],input[type=password]{width:100%;padding:13px 14px;background:v
     show($('app'), false); show($('login'), true);
   });
 
+
+  // ---- phone notifications (push). Service: /rmc-push/ on the same origin.
+  var PUSH = '/rmc-push';
+  function b64(s) { s = s.replace(/-/g, '+').replace(/_/g, '/'); while (s.length % 4) s += '='; var r = atob(s), a = new Uint8Array(r.length); for (var i = 0; i < r.length; i++) a[i] = r.charCodeAt(i); return a; }
+  function pushSay(html) { $('pushtext').innerHTML = html; }
+  function pushState(on) { show($('pushOn'), !on); show($('pushTest'), on); show($('pushOff'), on); }
+  function pushCall(path, data) {
+    return fetch(PUSH + path, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: AUTH.token }, body: JSON.stringify(data || {}) })
+      .then(function (r) { return r.json().then(function (d) { if (!r.ok) throw new Error(d.error || ('HTTP ' + r.status)); return d; }); });
+  }
+  var iOS = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  var standalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+  function pushInit() {
+    show($('pushbar'), true);
+    if (!('serviceWorker' in navigator) || !('PushManager' in window) || !('Notification' in window)) {
+      if (iOS && !standalone) pushSay('<b>Phone notifications.</b> On iPhone, tap the Share button, then <b>Add to Home Screen</b>. Open the dashboard from your home screen and turn notifications on there.');
+      else pushSay('<b>Phone notifications</b> are not supported in this browser.');
+      show($('pushOn'), false); return;
+    }
+    navigator.serviceWorker.register('sw.js').then(function (reg) { return reg.pushManager.getSubscription(); }).then(function (sub) {
+      if (sub && Notification.permission === 'granted') { pushState(true); pushSay('<b>Notifications are on</b> for this device. Tap Send a test to see one.'); }
+    }).catch(function () {});
+  }
+  $('pushOn').addEventListener('click', function () {
+    var btn = this; btn.disabled = true;
+    Notification.requestPermission().then(function (perm) {
+      if (perm !== 'granted') throw new Error('Notifications were not allowed. You can allow them in your phone settings.');
+      return Promise.all([navigator.serviceWorker.ready, fetch(PUSH + '/vapid').then(function (r) { return r.json(); })]);
+    }).then(function (x) {
+      return x[0].pushManager.getSubscription().then(function (old) { return old || x[0].pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64(x[1].key) }); });
+    }).then(function (sub) { return pushCall('/subscribe', { subscription: sub.toJSON() }); })
+      .then(function () { pushState(true); pushSay(isDemo() ? '<b>Notifications are on</b> for this device. The demo login only receives tests. Tap Send a test.' : '<b>Notifications are on</b> for this device. Tap Send a test to see one.'); })
+      .catch(function (e) { pushSay('<b>Could not turn on notifications.</b> ' + esc(e.message)); })
+      .then(function () { btn.disabled = false; });
+  });
+  $('pushTest').addEventListener('click', function () {
+    var btn = this; btn.disabled = true;
+    pushCall('/test').then(function (d) { pushSay(d.sent ? '<b>Test sent.</b> It should appear on this device in a few seconds.' : '<b>The test did not reach this device.</b> Turn notifications off and on again.'); })
+      .catch(function (e) { pushSay('<b>Test failed.</b> ' + esc(e.message)); }).then(function () { btn.disabled = false; });
+  });
+  $('pushOff').addEventListener('click', function () {
+    navigator.serviceWorker.ready.then(function (reg) { return reg.pushManager.getSubscription(); }).then(function (sub) {
+      if (!sub) return; var ep = sub.endpoint; return sub.unsubscribe().then(function () { return pushCall('/unsubscribe', { endpoint: ep }); });
+    }).then(function () { pushState(false); pushSay('<b>Notifications are off</b> for this device.'); }).catch(function () {});
+  });
+
   function start() {
     show($('login'), false); show($('app'), true);
+    try { pushInit(); } catch (e) {}
     $('whoami').textContent = (AUTH && AUTH.record && (AUTH.record.name || AUTH.record.email)) || '';
     refresh().catch(function (err) {
       if (err && err.authFailed) { AUTH = null; try { localStorage.removeItem('rmc_auth'); } catch (e) {} show($('app'), false); show($('login'), true); return; }
