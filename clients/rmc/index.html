@@ -89,7 +89,7 @@ input[type=email],input[type=password]{width:100%;padding:13px 14px;background:v
 
 /* ---- overview tiles */
 .tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
-.tile{display:flex;flex-direction:column;gap:14px;text-align:left;background:var(--surface);border:1px solid var(--line);padding:22px 22px 20px;cursor:pointer;color:inherit;transition:border-color .15s,background-color .15s}
+.tile{min-width:0;display:flex;flex-direction:column;gap:14px;text-align:left;background:var(--surface);border:1px solid var(--line);padding:22px 22px 20px;cursor:pointer;color:inherit;transition:border-color .15s,background-color .15s}
 .tile:hover{border-color:var(--line-2);background:#15151c}
 .tile .top{display:flex;align-items:center;gap:14px}
 .tile .top img{height:40px;width:auto;max-width:90px;object-fit:contain}
@@ -182,7 +182,7 @@ input[type=email],input[type=password]{width:100%;padding:13px 14px;background:v
   .side .foot{margin:0;padding:0;border:0}
   .side .who{display:none}
 }
-@media (max-width:640px){ .tiles{grid-template-columns:1fr} .row{grid-template-columns:1fr;gap:6px} .row .when{text-align:left} .nav .nm{max-width:120px} }
+@media (max-width:640px){ .tiles{grid-template-columns:minmax(0,1fr)} .tile .top{flex-wrap:wrap} .tile .top .chip{margin-left:0} .row{grid-template-columns:1fr;gap:6px} .row .when{text-align:left} .nav .nm{max-width:120px} }
 @media (prefers-reduced-motion:reduce){ *{transition:none!important} }
 </style>
 </head>
