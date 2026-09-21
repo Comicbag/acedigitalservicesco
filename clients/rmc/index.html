@@ -247,8 +247,10 @@ input[type=email],input[type=password]{width:100%;padding:13px 14px;background:v
   // What each site actually offers, in the order a visitor meets it. A form with
   // nothing in it still gets its own inbox, so they can see where things will land.
   var META = {
-    'rmc-studios':       { logo: 'img/rmc-studios.png', tracked: false, forms: [
-      ['contact', 'Contact messages', 'Its contact form still sends to Wix. Messages arrive here once the new RMC Studios site is built.']] },
+    'rmc-studios':       { logo: 'img/rmc-studios.png', tracked: true, forms: [
+      ['enrollment', 'Enrollment inquiries', 'From Enroll Now, the Class Information Form.'],
+      ['contact', 'Club House messages', 'From the form on the Club House page.'],
+      ['mailing', 'Subscribe form signups', 'From the Subscribe Form at the bottom of every page.']] },
     'inspiration-audio': { logo: 'img/inspiration-audio.png', tracked: true, forms: [
       ['contact', 'Contact messages', 'From the Contact page.'],
       ['recording', 'Recording applications', 'From Apply to record.'],
