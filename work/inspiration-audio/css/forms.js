@@ -86,6 +86,16 @@
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       if (typeof form.reportValidity === 'function' && !form.reportValidity()) return;
+      // A checkbox question marked data-required needs at least one box ticked;
+      // browsers have no built-in rule for "one of these".
+      var groups = form.querySelectorAll('fieldset[data-required]');
+      for (var g = 0; g < groups.length; g++) {
+        if (!groups[g].querySelector('input:checked')) {
+          say(form, 'Please answer: ' + (groups[g].querySelector('legend') || {}).textContent, false);
+          var first = groups[g].querySelector('input'); if (first) first.focus();
+          return;
+        }
+      }
 
       var btn = form.querySelector('[type=submit]');
       var label = btn ? btn.textContent : '';
