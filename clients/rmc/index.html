@@ -126,6 +126,18 @@ pre{background:var(--surface);border:1px solid var(--line);padding:14px;overflow
   font-family:"JetBrains Mono",ui-monospace,monospace}
 footer{border-top:1px solid var(--line);padding-block:30px 60px}
 
+.flagrow{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:16px;padding:14px 16px;border:1px solid var(--line-2);border-radius:10px;flex-wrap:wrap}
+.flagrow .fl{font-size:14px;color:var(--chalk);font-weight:600}
+.flagrow .fs{font-size:12.5px;color:var(--muted);margin-top:3px}
+.switch{position:relative;display:inline-flex;align-items:center;gap:10px;cursor:pointer;font-size:13.5px;font-weight:600;color:var(--chalk)}
+.switch input{position:absolute;opacity:0;width:1px;height:1px}
+.switch .tr{width:46px;height:26px;border-radius:13px;background:var(--line-2);position:relative;transition:background-color .18s ease}
+.switch .tr::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:transform .18s cubic-bezier(.23,1,.32,1)}
+.switch input:checked + .tr{background:#1f9d55}
+.switch input:checked + .tr::after{transform:translateX(20px)}
+.switch input:focus-visible + .tr{outline:2px solid var(--chalk);outline-offset:2px}
+.switch input:disabled + .tr{opacity:.45;cursor:not-allowed}
+.demobtn{margin-top:12px;width:100%}
 .demobar{background:rgba(216,31,56,.1);border-bottom:1px solid rgba(216,31,56,.4)}
 .demobar .wrap{display:flex;align-items:center;gap:16px;padding-block:13px;flex-wrap:wrap}
 .demobar p{margin:0;font-size:13.5px;color:var(--chalk-dim);flex:1 1 300px;line-height:1.5}
@@ -211,6 +223,7 @@ nav.tabs button[aria-selected=true] .cnt{background:var(--accent);color:#fff}
       <button class="btn" style="width:100%" type="submit" id="loginBtn">Sign in</button>
       <div class="err hide" id="loginErr"></div>
     </form>
+    <button class="btn ghost demobtn" type="button" id="demoBtn">Look around with the demo</button>
     <p class="fine" style="margin-top:24px">Built and maintained by Ace Digital. If you need an account, or you are locked out, contact Corey.</p>
   </div>
 </div>
@@ -263,6 +276,7 @@ nav.tabs button[aria-selected=true] .cnt{background:var(--accent);color:#fff}
             <option value="contact">Contact</option>
             <option value="scholarship">Scholarship</option>
             <option value="recording">Recording application</option>
+            <option value="mailing">Mailing list</option>
             <option value="membership">Membership</option>
             <option value="booking">Booking or quote</option>
             <option value="other">Other</option>
@@ -346,13 +360,26 @@ nav.tabs button[aria-selected=true] .cnt{background:var(--accent);color:#fff}
   function esc(t) { return String(t == null ? '' : t).replace(/[&<>"]/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]; }); }
 
   // ---- login
+  // The demo account only ever sees example enquiries (enforced by the database's
+  // access rules, not by this page), and cannot change anything, so it is safe to share.
+  var DEMO = { identity: 'demo@acedigitalservicesco.com', password: 'RockOn2026' };
+  function signIn(identity, password) {
+    return api('/api/collections/users/auth-with-password', {
+      method: 'POST', body: JSON.stringify({ identity: identity, password: password })
+    }).then(function (a) { save(a); start(); });
+  }
+  $('demoBtn').addEventListener('click', function () {
+    var b = $('demoBtn'); b.disabled = true; b.textContent = 'Opening the demo…';
+    signIn(DEMO.identity, DEMO.password).catch(function () {
+      $('loginErr').textContent = 'The demo is not available right now. Tell Corey.'; show($('loginErr'), true);
+    }).then(function () { b.disabled = false; b.textContent = 'Look around with the demo'; });
+  });
+
   $('loginForm').addEventListener('submit', function (e) {
     e.preventDefault();
     var b = $('loginBtn'); b.disabled = true; b.textContent = 'Signing in…';
     show($('loginErr'), false);
-    api('/api/collections/users/auth-with-password', {
-      method: 'POST', body: JSON.stringify({ identity: $('u').value, password: $('p').value })
-    }).then(function (a) { save(a); start(); })
+    signIn($('u').value, $('p').value)
       .catch(function (err) {
         $('loginErr').textContent = 'That did not work. Check the email and password, or contact Corey.';
         show($('loginErr'), true);
@@ -393,6 +420,27 @@ nav.tabs button[aria-selected=true] .cnt{background:var(--accent);color:#fff}
   }
 
   // ---- per-site detail
+  var FLAGS = [];
+  function isDemo() { return !!(AUTH && AUTH.record && AUTH.record.demo); }
+  function flagRows(key) {
+    return FLAGS.filter(function (f) { return f.site === key; }).map(function (f) {
+      var dis = isDemo();
+      return '<div class="flagrow"><div><div class="fl">' + esc(f.label || f.flag) + '</div>' +
+        '<div class="fs">' + (dis ? 'The demo can look but not change this.' : 'Changes the live site within a few seconds.') + '</div></div>' +
+        '<label class="switch"><input type="checkbox" data-flag="' + f.id + '"' + (f.on ? ' checked' : '') + (dis ? ' disabled' : '') + '>' +
+        '<span class="tr"></span><span>' + (f.on ? 'On' : 'Off') + '</span></label></div>';
+    }).join('');
+  }
+  function wireFlags() {
+    Array.prototype.forEach.call(document.querySelectorAll('[data-flag]'), function (box) {
+      box.addEventListener('change', function () {
+        var want = box.checked; box.disabled = true;
+        api('/api/collections/site_flags/records/' + box.getAttribute('data-flag'), { method: 'PATCH', body: JSON.stringify({ on: want }) })
+          .then(function (r) { FLAGS = FLAGS.map(function (f) { return f.id === r.id ? r : f; }); renderSiteCards(); })
+          .catch(function () { box.checked = !want; box.disabled = false; alert('That did not save. Try again, or tell Corey.'); });
+      });
+    });
+  }
   function renderSiteCards() {
     var counts = {};
     ROWS.forEach(function (r) { if (!r.handled) counts[r.site] = (counts[r.site] || 0) + 1; });
@@ -416,8 +464,10 @@ nav.tabs button[aria-selected=true] .cnt{background:var(--accent);color:#fff}
         '</dl>' +
         (f.length ? '<div class="findings"><div class="lbl2">What we found on it</div><ul>' +
           f.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></div>' : '') +
+        flagRows(s.key) +
         '</div>';
     }).join('');
+    wireFlags();
   }
 
   // ---- their homework
@@ -463,7 +513,7 @@ nav.tabs button[aria-selected=true] .cnt{background:var(--accent);color:#fff}
   }
 
   // ---- render
-  var KIND_LABEL = { contact: 'Contact', scholarship: 'Scholarship', membership: 'Membership', booking: 'Booking or quote', recording: 'Recording application', other: 'Other' };
+  var KIND_LABEL = { contact: 'Contact', scholarship: 'Scholarship', membership: 'Membership', booking: 'Booking or quote', recording: 'Recording application', mailing: 'Mailing list', other: 'Other' };
   function kindName(k) { return KIND_LABEL[k] || k; }
   function siteName(key) { var s = SITES.find(function (x) { return x.key === key; }); return s ? s.name : key; }
 
@@ -626,8 +676,10 @@ nav.tabs button[aria-selected=true] .cnt{background:var(--accent);color:#fff}
     return Promise.all([
       api('/api/collections/sites/records?sort=sortOrder&perPage=50'),
       api('/api/collections/submissions/records?sort=-created&perPage=500'),
-      api('/api/collections/tasks/records?perPage=200')
+      api('/api/collections/tasks/records?perPage=200'),
+      api('/api/collections/site_flags/records?perPage=50').catch(function () { return { items: [] }; })
     ]).then(function (res) {
+      FLAGS = res[3].items || [];
       SITES = res[0].items || [];
       ROWS = res[1].items || [];
       TASKS = res[2].items || [];
@@ -636,6 +688,12 @@ nav.tabs button[aria-selected=true] .cnt{background:var(--accent);color:#fff}
       show($('demobar'), ROWS.some(function (r) { return r.demo; }));
       renderState(); renderSites(); renderSiteCards(); renderTasks(); renderList();
     });
+  }
+
+  if (/[?&]demo\b/.test(location.search) || location.hash === '#demo') {
+    history.replaceState(null, '', location.pathname);
+    try { localStorage.removeItem('rmc_auth'); } catch (e) {}
+    setTimeout(function () { $('demoBtn').click(); }, 0);
   }
 
   function start() {
