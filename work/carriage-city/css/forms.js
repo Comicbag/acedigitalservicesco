@@ -1,4 +1,4 @@
-/* RMC Staging: form delivery (same kit as Inspiration Audio).
+/* Carriage City: form delivery (same kit as Inspiration Audio).
 
    Every form on this site posted to action="#", which silently did nothing: a
    visitor filled it in, pressed send, and the enquiry evaporated. These now
@@ -14,7 +14,7 @@
   'use strict';
 
   var BASE = window.IA_FORMS_ENDPOINT || '';
-  var SITE = 'rmc-staging';
+  var SITE = 'carriage-city';
   var forms = document.querySelectorAll('form[data-ia-form]');
   if (!BASE || !forms.length) return;
   var ENDPOINT = BASE.replace(/\/$/, '') + '/api/collections/submissions/records';

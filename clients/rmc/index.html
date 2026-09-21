@@ -168,6 +168,10 @@ input[type=email],input[type=password]{width:100%;padding:13px 14px;background:v
 .kv dt{color:var(--muted);font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:600}
 .kv dd{margin:0;word-break:break-word;color:var(--chalk);white-space:pre-wrap}
 .kv a{color:var(--accent-hot)}
+.qa{border-top:1px solid var(--line)}
+.qa .q{font-size:13px;color:var(--muted);font-weight:600;padding-top:12px}
+.qa .a{color:var(--chalk);white-space:pre-wrap;word-break:break-word;padding:3px 0 12px;border-bottom:1px solid var(--line)}
+.qa .a.none{color:var(--muted);font-style:italic}
 .lbl{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:24px 0 8px}
 
 /* ---- responsive */
@@ -525,8 +529,15 @@ input[type=email],input[type=password]{width:100%;padding:13px 14px;background:v
   function openRow(id) {
     var r = ROWS.find(function (x) { return x.id === id; }); if (!r) return;
     var p = r.payload || {};
-    var skip = ['first', 'last', 'name', 'email', 'phone', 'message'];
-    var extras = Object.keys(p).filter(function (k) { return skip.indexOf(k) === -1; });
+    // Newer submissions carry the form's own question text (_labels) and order
+    // (_order), so every answer is shown under the question the person actually
+    // read. Older ones fall back to a tidied field name.
+    var asked = !!p._labels, labels = p._labels || {};
+    var header = ['first', 'last', 'name', 'email', 'phone'];
+    var order = (p._order || Object.keys(p)).filter(function (k) {
+      return k.charAt(0) !== '_' && header.indexOf(k) === -1 && (asked || k !== 'message');
+    });
+    function qtext(k) { var t = labels[k]; if (t) return t; t = k.replace(/_/g, ' '); return t.charAt(0).toUpperCase() + t.slice(1); }
     $('sheetBody').innerHTML =
       '<div style="display:flex;align-items:center;gap:8px;margin-bottom:24px;flex-wrap:wrap"><span class="chip">' + esc(site(r.site).name) + '</span><span class="chip">' + esc(formLabel(r.site, r.kind)) + '</span>' +
         (r.demo ? '<span class="ex" style="margin:0">Example</span>' : '') + '<span style="flex:1"></span><button class="btn ghost sm" id="close">Close</button></div>' +
@@ -536,12 +547,12 @@ input[type=email],input[type=password]{width:100%;padding:13px 14px;background:v
         (r.phone ? '<dt>Phone</dt><dd><a href="tel:' + esc(r.phone) + '">' + esc(r.phone) + '</a></dd>' : '') +
         (r.sourceUrl ? '<dt>Sent from</dt><dd><a href="' + esc(r.sourceUrl) + '" target="_blank" rel="noreferrer">' + esc(r.sourceUrl.replace(/^https?:\/\//, '').split('?')[0]) + '</a></dd>' : '') +
       '</dl>' +
-      (r.message ? '<div class="lbl">Message</div><div style="white-space:pre-wrap;color:var(--chalk)">' + esc(r.message) + '</div>' : '') +
-      (extras.length ? '<div class="lbl">Everything else they sent</div><dl class="kv" style="margin-top:6px">' + extras.map(function (k) {
+      (!asked && r.message ? '<div class="lbl">Message</div><div style="white-space:pre-wrap;color:var(--chalk)">' + esc(r.message) + '</div>' : '') +
+      (order.length ? '<div class="lbl">' + (asked ? 'Their answers' : 'Everything else they sent') + '</div><div class="qa">' + order.map(function (k) {
         var v = p[k]; if (Array.isArray(v)) v = v.join(', ');
-        var label = k.replace(/_/g, ' '); label = label.charAt(0).toUpperCase() + label.slice(1);
-        return '<dt>' + esc(label) + '</dt><dd>' + (esc(String(v == null ? '' : v)) || '<span class="fine">not answered</span>') + '</dd>';
-      }).join('') + '</dl>' : '') +
+        v = String(v == null ? '' : v).trim();
+        return '<div class="q">' + esc(qtext(k)) + '</div><div class="a' + (v ? '' : ' none') + '">' + (v ? esc(v) : 'Not answered') + '</div>';
+      }).join('') + '</div>' : '') +
       '<div style="margin-top:22px;display:flex;gap:10px;flex-wrap:wrap">' +
         (r.email ? '<a class="btn" href="mailto:' + esc(r.email) + '?subject=' + encodeURIComponent('Re: your message to ' + site(r.site).name) + '">Reply by email</a>' : '') +
         (isDemo() ? '<span class="fine" style="align-self:center">The demo cannot mark enquiries handled.</span>'

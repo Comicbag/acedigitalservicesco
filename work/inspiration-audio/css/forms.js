@@ -42,6 +42,25 @@
     return out;
   }
 
+  // The question each answer belongs to, taken from the form itself, so the
+  // dashboard can show "What ignited your interest in music?" rather than "why".
+  function questions(form) {
+    var labels = {}, order = [];
+    Array.prototype.forEach.call(form.querySelectorAll('[name]'), function (el) {
+      var n = el.name; if (!n || labels[n] !== undefined) return;
+      var t = '';
+      if (el.type === 'radio' || el.type === 'checkbox') {
+        var fs = el.closest('fieldset'), lg = fs && fs.querySelector('legend');
+        t = lg ? lg.textContent : '';
+      } else if (el.id) {
+        var lb = form.querySelector('label[for="' + el.id + '"]');
+        t = lb ? lb.textContent : '';
+      }
+      labels[n] = t.replace(/\s+/g, ' ').trim(); order.push(n);
+    });
+    return { labels: labels, order: order };
+  }
+
   // Lift name/email/phone out of whatever this particular form calls them,
   // without losing anything: the complete set still goes into payload.
   function pick(p, keys) {
@@ -73,6 +92,7 @@
       if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
 
       var p = collect(form);
+      var q = questions(form); p._labels = q.labels; p._order = q.order;
       // If they are signed in, attach the submission to their account so it
       // shows on their own account page. Signed-out submissions still work.
       var member = (window.IAMember && window.IAMember.record && window.IAMember.record()) || null;
