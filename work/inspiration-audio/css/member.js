@@ -44,7 +44,12 @@
   }
 
   // ---- nav: show Account / Sign in depending on state
+  // Hidden on Inspiration Audio (Corey, 2026-09-20): the old site never had a sign-in and
+  // the member area is being pitched separately as a portal. login.html still works by URL,
+  // and anyone already signed in keeps their Account link. Flip SHOW_SIGN_IN to bring it back.
+  var SHOW_SIGN_IN = false;
   function paintNav() {
+    if (!SHOW_SIGN_IN && !M.record()) return;
     var menus = document.querySelectorAll('#navmenu');
     Array.prototype.forEach.call(menus, function (ul) {
       if (ul.querySelector('[data-member-link]')) return;
