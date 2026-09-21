@@ -17,6 +17,7 @@
   var SITE = 'rmc-studios';
   var forms = document.querySelectorAll('form[data-ia-form]');
   if (!BASE || !forms.length) return;
+  var LOADED = Date.now();
   var ENDPOINT = BASE.replace(/\/$/, '') + '/api/collections/submissions/records';
 
   function say(form, msg, ok) {
@@ -35,6 +36,7 @@
   function collect(form) {
     var out = {};
     new FormData(form).forEach(function (v, k) {
+      if (typeof v === 'string') v = v.trim().slice(0, 5000);
       if (out[k] === undefined) out[k] = v;
       else if (Array.isArray(out[k])) out[k].push(v);
       else out[k] = [out[k], v];
@@ -56,7 +58,7 @@
         var lb = form.querySelector('label[for="' + el.id + '"]');
         t = lb ? lb.textContent : '';
       }
-      labels[n] = t.replace(/\s+/g, ' ').trim(); order.push(n);
+      labels[n] = t.replace(/\s+/g, ' ').replace(/\s*\*\s*$/, '').trim(); order.push(n);
     });
     return { labels: labels, order: order };
   }
@@ -85,6 +87,9 @@
     prefill(form);
     form.addEventListener('submit', function (e) {
       e.preventDefault();
+      // HARDENED: automated spam fills and sends a form within a second or two of
+      // the page loading. A person cannot. Those are thanked and quietly dropped.
+      if (Date.now() - LOADED < 2500) { form.reset(); say(form, form.getAttribute('data-success') || 'Thank you. We have got it and will be in touch.', true); return; }
       if (typeof form.reportValidity === 'function' && !form.reportValidity()) return;
       // A checkbox question marked data-required needs at least one box ticked;
       // browsers have no built-in rule for "one of these".

@@ -151,6 +151,7 @@ h2.display,.h2{font-family:var(--display);font-weight:400;text-transform:upperca
 .tags a{color:var(--ink);text-decoration:none}.tags a:hover{color:var(--orange-t)}
 .tags li{display:flex;align-items:center;gap:26px}
 .tags li+li::before{content:"";width:10px;height:10px;background:var(--orange);flex:none}
+@media (max-width:760px){.tags{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 20px;font-size:2.1rem}.tags li{gap:0;border-bottom:1px solid var(--line);min-height:56px}.tags li+li::before{display:none}.tags a{display:flex;align-items:center;min-height:56px;width:100%}}
 .chips{display:flex;flex-wrap:wrap;gap:10px}
 .chips a{display:inline-flex;align-items:center;min-height:48px;padding:8px 18px;border:1px solid var(--line2);color:var(--ink);text-decoration:none;font-family:var(--display);font-size:1.35rem;letter-spacing:.04em;text-transform:uppercase}
 .chips a:hover,.chips a[aria-current]{background:var(--orange);border-color:var(--orange);color:var(--dark)}
