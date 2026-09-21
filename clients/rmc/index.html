@@ -264,7 +264,7 @@ nav.tabs button[aria-selected=true] .cnt{background:var(--accent);color:#fff}
             <option value="scholarship">Scholarship</option>
             <option value="recording">Recording application</option>
             <option value="membership">Membership</option>
-            <option value="booking">Booking</option>
+            <option value="booking">Booking or quote</option>
             <option value="other">Other</option>
           </select>
           <select id="fState"><option value="open">To deal with</option><option value="">All</option><option value="done">Done</option></select>
@@ -463,6 +463,8 @@ nav.tabs button[aria-selected=true] .cnt{background:var(--accent);color:#fff}
   }
 
   // ---- render
+  var KIND_LABEL = { contact: 'Contact', scholarship: 'Scholarship', membership: 'Membership', booking: 'Booking or quote', recording: 'Recording application', other: 'Other' };
+  function kindName(k) { return KIND_LABEL[k] || k; }
   function siteName(key) { var s = SITES.find(function (x) { return x.key === key; }); return s ? s.name : key; }
 
   // A compact strip. These four are reference, not the subject of the page, so
@@ -546,7 +548,7 @@ nav.tabs button[aria-selected=true] .cnt{background:var(--accent);color:#fff}
     }
     $('list').innerHTML = rows.map(function (r) {
       return '<div class="row' + (r.handled ? ' done' : '') + (r.demo ? ' demo' : '') + '" data-id="' + r.id + '">' +
-        '<span class="badge' + (r.handled ? '' : ' new') + '">' + esc(r.kind) + '</span>' +
+        '<span class="badge' + (r.handled ? '' : ' new') + '">' + esc(kindName(r.kind)) + '</span>' +
         '<div class="who2">' +
           '<div class="nm">' + (esc(r.name) || 'No name given') +
             (r.demo ? '<span class="exmark">Example</span>' : '') + '</div>' +
@@ -569,7 +571,7 @@ nav.tabs button[aria-selected=true] .cnt{background:var(--accent);color:#fff}
     });
     $('sheetBody').innerHTML =
       '<div style="display:flex;align-items:center;gap:9px;margin-bottom:26px">' +
-        '<span class="badge">' + esc(siteName(r.site)) + '</span><span class="badge">' + esc(r.kind) + '</span>' +
+        '<span class="badge">' + esc(siteName(r.site)) + '</span><span class="badge">' + esc(kindName(r.kind)) + '</span>' +
         '<span style="flex:1"></span><button class="btn ghost sm" id="close">Close</button></div>' +
       '<h2>' + (esc(r.name) || 'No name given') + '</h2>' +
       '<p class="fine" style="margin:0">' + ago(r.created) + '</p>' +
