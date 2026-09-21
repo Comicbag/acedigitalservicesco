@@ -80,7 +80,7 @@ input[type=email],input[type=password]{width:100%;padding:13px 14px;background:v
 .phead{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-bottom:28px}
 .phead h1{font-size:clamp(1.7rem,1.2rem + 1.6vw,2.4rem);font-weight:900;letter-spacing:-.035em}
 .phead .meta{color:var(--muted);font-size:14.5px;margin-top:6px}
-.phead .logo{height:52px;width:auto;flex:none}
+.phead .logo{height:44px;width:auto;max-width:180px;object-fit:contain;flex:none}
 .phead .acts{margin-left:auto;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .chip{display:inline-block;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;padding:4px 8px;border:1px solid var(--line-2);color:var(--muted);white-space:nowrap;vertical-align:middle}
 .chip.preview{border-color:rgba(255,76,103,.6);color:var(--accent-hot)}
@@ -403,7 +403,8 @@ input[type=email],input[type=password]{width:100%;padding:13px 14px;background:v
         x.d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + ': ' + plural(x.n, 'view') + '</title></rect>';
     }).join('');
     var lab = [0, 14, 29].map(function (i) {
-      return '<text x="' + (L + i * cw + cw / 2) + '" y="' + (H - 6) + '" text-anchor="middle" font-size="10" fill="#8e8e9e">' +
+      var anchor = i === 0 ? 'start' : i === 29 ? 'end' : 'middle', x = i === 0 ? L : i === 29 ? W : L + i * cw + cw / 2;
+      return '<text x="' + x + '" y="' + (H - 6) + '" text-anchor="' + anchor + '" font-size="10" fill="#8e8e9e">' +
         d[i].d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + '</text>';
     }).join('');
     return '<svg class="chart" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Page views per day, last 30 days">' + grid + bars + lab + '</svg>';
