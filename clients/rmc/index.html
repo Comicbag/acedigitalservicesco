@@ -91,7 +91,8 @@ input[type=email],input[type=password]{width:100%;padding:13px 14px;background:v
 .tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 .tile{min-width:0;display:flex;flex-direction:column;gap:14px;text-align:left;background:var(--surface);border:1px solid var(--line);padding:22px 22px 20px;cursor:pointer;color:inherit;transition:border-color .15s,background-color .15s}
 .tile:hover{border-color:var(--line-2);background:#15151c}
-.tile .top{display:flex;align-items:center;gap:14px}
+.tile .top{display:flex;align-items:center;gap:10px 14px;flex-wrap:wrap}
+.tile .top > div{min-width:0}
 .tile .top img{height:40px;width:auto;max-width:90px;object-fit:contain}
 .tile .tname{display:block;font-size:19px;font-weight:800;color:var(--chalk);letter-spacing:-.02em}
 .tile .dm{font-size:12.5px;color:var(--muted);margin-top:2px}
