@@ -372,3 +372,4 @@ section{padding-block:clamp(56px,7.5vw,110px)}
 fieldset:has(input[required]) > legend::after{content:" *";color:var(--accent-hot);font-weight:700}
 .reqnote{font-size:.85rem;color:var(--muted);margin:0 0 18px}
 .reqnote b{color:var(--accent-hot)}
+fieldset > legend.field{display:block}
