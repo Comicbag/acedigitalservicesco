@@ -262,6 +262,7 @@ nav.tabs button[aria-selected=true] .cnt{background:var(--accent);color:#fff}
             <option value="">Every type</option>
             <option value="contact">Contact</option>
             <option value="scholarship">Scholarship</option>
+            <option value="recording">Recording application</option>
             <option value="membership">Membership</option>
             <option value="booking">Booking</option>
             <option value="other">Other</option>
@@ -578,8 +579,12 @@ nav.tabs button[aria-selected=true] .cnt{background:var(--accent);color:#fff}
         (r.sourceUrl ? '<dt>Sent from</dt><dd><a href="' + esc(r.sourceUrl) + '" target="_blank" rel="noreferrer">' + esc(r.sourceUrl) + '</a></dd>' : '') +
       '</dl>' +
       (r.message ? '<div class="lbl">Message</div><div style="white-space:pre-wrap;color:var(--chalk)">' + esc(r.message) + '</div>' : '') +
-      (extras.length ? '<div class="lbl">Everything else they sent</div><pre>' +
-        esc(JSON.stringify(extras.reduce(function (a, k) { a[k] = p[k]; return a; }, {}), null, 2)) + '</pre>' : '') +
+      (extras.length ? '<div class="lbl">Everything else they sent</div><dl class="kv">' +
+        extras.map(function (k) {
+          var v = p[k]; if (Array.isArray(v)) v = v.join(', ');
+          var label = k.replace(/_/g, ' '); label = label.charAt(0).toUpperCase() + label.slice(1);
+          return '<dt>' + esc(label) + '</dt><dd style="white-space:pre-wrap">' + (esc(String(v || '')) || '<span class="fine">not answered</span>') + '</dd>';
+        }).join('') + '</dl>' : '') +
       '<div style="margin-top:24px;display:flex;gap:10px;flex-wrap:wrap">' +
         (r.email ? '<a class="btn" href="mailto:' + esc(r.email) + '?subject=' + encodeURIComponent('Re: your message to ' + siteName(r.site)) + '">Reply by email</a>' : '') +
         '<button class="btn ghost" id="toggle">' + (r.handled ? 'Mark as not handled' : 'Mark as handled') + '</button>' +
