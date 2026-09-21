@@ -131,7 +131,7 @@
         return r.json();
       }).then(function () {
         form.reset();
-        say(form, 'Thank you. We have got it and will be in touch.', true);
+        say(form, form.getAttribute('data-success') || 'Thank you. We have got it and will be in touch.', true);
         if (btn) btn.textContent = 'Sent';
       }).catch(function () {
         say(form, 'Sorry, that did not send. Please try again, or email us directly.', false);
