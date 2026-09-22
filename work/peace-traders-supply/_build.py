@@ -19,6 +19,7 @@ def slug_confirm(text): return f'<span class="todo">[Confirm with Kyle: {esc(tex
 
 # ---------- the 17 posts (verbatim captions in captures/ig/posts*.tsv) ----------
 POSTS = [
+ dict(code="DdXRdUEGqW-", kind="p", date="September 16, 2026", cat="aows", title="Heckler & Koch SP5K AOW", spec="9mm, UTG Pro monolithic handguard, B&T telescopic brace, Gearhead Works Mod 1C", w=1000, h=1333),
  dict(code="DdT1WsIREtA", kind="p", date="September 15, 2026", cat="aows", title="Palmetto State Armory Sabre Enhanced Mixtape Vol. 1", spec="8 inch, 300 BLK, Maxim Defense CQB brace, Magpul M-Lok SVG", w=1000, h=1333),
  dict(code="DdEgNZ5x-Wi", kind="p", date="September 9, 2026", cat="rifles", title="Henry Big Boy Hush", spec=".357 Mag / .38 Spl, threaded carbon fiber barrel", w=1000, h=1000),
  dict(code="Dc4kp1-vjOm", kind="p", date="September 4, 2026", cat="aows", title="Palmetto State Armory Sabre Enhanced AOW", spec="300 BLK, Maxim Defense CQB brace", w=1000, h=1000),
@@ -189,6 +190,14 @@ tiles = [
  ("handguns", BY["DcWqzI-Puvf"]), ("aows", BY["Dc4kp1-vjOm"]), ("rifles", BY["DdEgNZ5x-Wi"]), ("shotguns", None), ("ammo", None), ("optics", BY["DcW3MBTvxH8"]),
 ]
 counts = {k: sum(1 for p in POSTS if p["cat"] == k) for k in CATS}
+
+_ONES = "zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen".split()
+_TENS = "_ _ twenty thirty forty fifty sixty seventy eighty ninety".split()
+def nword(n):
+    """Numbers in prose are written out and computed from POSTS, so a new post never leaves a stale count."""
+    if n < 20: return _ONES[n]
+    t, o = divmod(n, 10)
+    return _TENS[t] + ("" if o == 0 else " " + _ONES[o])
 def tile(key, p, rel):
     c = CATS[key]; n = counts.get(key, 0)
     count = f'<span class="tile-count">{n} in the case</span>' if n else '<span class="tile-count">Ask at the counter</span>'
@@ -240,7 +249,7 @@ home += f'''<section class="hero" aria-labelledby="hero-h" data-video="assets/he
   <div class="wrap aow-grid">
     <div class="aow-copy reveal">
       <h2 id="aowt-h">AOWs <span class="amp">&amp;</span> Others.</h2>
-      <p class="lead">Ten of the shop's posts are AOW or Non NFA Other builds, the short configurations New Jersey buyers ask about most. As a licensed SOT, Peace Traders can sell and transfer AOWs in store.</p>
+      <p class="lead">{nword(counts['aows']).capitalize()} of the shop's posts are AOW or Non NFA Other builds, the short configurations New Jersey buyers ask about most. As a licensed SOT, Peace Traders can sell and transfer AOWs in store.</p>
       <div class="cta-row"><a class="btn btn-accent" href="firearms/aows-and-others/">See the AOWs and Others</a><a class="btn btn-ghost" href="buying-in-nj/">How buying works in NJ</a></div>
     </div>
     <figure class="aow-photo reveal" style="--i:1">{photo(BY["DcrzsPZPohv"], rel, "aow-ph")}<figcaption><span class="kicker">Posted Aug 30</span><a class="textlink" href="{BY["DcrzsPZPohv"]["url"]}" target="_blank" rel="noopener">Daniel Defense DD4 MK18 pair, see the post</a></figcaption></figure>
@@ -286,7 +295,7 @@ rel = "../"
 chips = [("all", "Everything", len(POSTS)), ("handguns", "Handguns", counts["handguns"]), ("rifles", "Rifles", counts["rifles"]), ("aows", "AOWs and Others", counts["aows"])]
 case = head("The case | Peace Traders Supply, Lebanon NJ", "Every firearm Peace Traders Supply has posted since opening: handguns, rifles, AOWs and Non NFA Others, with the shop's own photos.", rel, "the-case/")
 case += header(rel, "the-case/")
-case += page_hero("The case.", f"Everything the shop has posted since August 22, seventeen firearms so far. Tap a type to narrow it down. Inventory moves, so <a href=\"{PHONE_TEL}\">call</a> to confirm what is still in the case.")
+case += page_hero("The case.", f"Everything the shop has posted since August 22, {nword(len(POSTS))} firearms so far. Tap a type to narrow it down. Inventory moves, so <a href=\"{PHONE_TEL}\">call</a> to confirm what is still in the case.")
 case += '<section class="catalog"><div class="wrap">'
 case += '<div class="chips" role="group" aria-label="Filter by type">' + "".join(f'<button class="chip{" is-on" if k=="all" else ""}" data-filter="{k}" aria-pressed="{"true" if k=="all" else "false"}">{n} <span>{c}</span></button>' for k, n, c in chips) + '</div>'
 case += masonry(POSTS, rel)
@@ -333,7 +342,7 @@ category_page("shotguns",
     ("Shotgun inventory", ["Shotguns stocked and the brands carried", "Whether the shop orders shotguns on request", "Gauges kept in stock"]),
     "A Firearms Purchaser Identification Card covers a shotgun purchase in New Jersey. The dealer completes the NICS check at the time of transfer.")
 category_page("aows",
-    "Ten posts and counting: SP5K, MPX K, Kuna, AK V, two Sabre Enhanced builds, Honey Badger and MR556, plus a matched pair of Daniel Defense DD4 MK18s. As a licensed SOT, the shop can sell and transfer AOWs in store.",
+    f"{nword(counts['aows']).capitalize()} posts and counting: two SP5Ks, MPX K, Kuna, AK V, two Sabre Enhanced builds, Honey Badger, MR556 and a Geissele Super Duty, plus a matched pair of Daniel Defense DD4 MK18s. As a licensed SOT, the shop can sell and transfer AOWs in store.",
     ("AOW and Other builds", ["Whether the builds above were configured in house", "Turnaround on an AOW transfer", "Braces, handguards and optics available for a custom configuration"]),
     "An AOW is an NFA item: the transfer runs on an ATF Form 4. The federal transfer tax on an AOW dropped to zero on January 1, 2026, though the registration and ATF approval still apply. A Non NFA Other is configured to stay outside the National Firearms Act, so no stamp is involved. New Jersey still requires your Firearms Purchaser Identification Card or Permit to Purchase as the item requires.",
     extra_html='''<section class="glossary-wrap reveal"><h2>Three terms, in plain words.</h2><dl class="glossary">
@@ -390,7 +399,7 @@ about += f'''<section class="about">
 <section class="about-people">
   <div class="wrap two-col">
     <div class="reveal"><h2>Who you will meet.</h2><p>Kyle Quick is the shop's contact. {slug_confirm("title, a short bio and a photo for this page")}</p></div>
-    <div class="reveal" style="--i:1"><h2>What the shop posts.</h2><p>Eighteen posts since June 18, 2026: seventeen firearms and the storefront. New arrivals go up on Instagram most days, with the brand, the caliber and what is mounted on it.</p><p><a class="textlink" href="{IG}" target="_blank" rel="noopener">Instagram, 373 followers</a><br><a class="textlink" href="{FB}" target="_blank" rel="noopener">Facebook, 752 followers</a></p></div>
+    <div class="reveal" style="--i:1"><h2>What the shop posts.</h2><p>{nword(len(POSTS) + 1).capitalize()} posts of its own since June 18, 2026: {nword(len(POSTS))} firearms and the storefront. New arrivals go up on Instagram most days, with the brand, the caliber and what is mounted on it.</p><p><a class="textlink" href="{IG}" target="_blank" rel="noopener">Instagram</a><br><a class="textlink" href="{FB}" target="_blank" rel="noopener">Facebook</a></p></div>
   </div>
 </section>
 <section class="community" aria-labelledby="comm2-h">
