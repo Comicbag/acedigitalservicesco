@@ -25,8 +25,3 @@ Not recorded in the repo.
 - `clients/rmc/` — live, installable enquiries-dashboard PWA
 - `_ops/check-box-drift.py` — box-vs-git drift detector for this repo + `ace-demos`
 - `assets/` — homepage branding + work-showcase photos
-
----
-
-## See Also
-[[ace-digital-co|Ace Digital Co]] | [[zimaos|ZimaOS]]
